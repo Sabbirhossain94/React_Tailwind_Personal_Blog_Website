@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom'
 import supabase from '../supabaseClient';
 
-export default function Navigation() {
+export default function Navigation({session}) {
   const [showDropDown, setShowDropDown] = useState(false);
-  const [session, setSession] = useState(null);
+  
 
   const dropDownOpener = useRef();
 
@@ -14,17 +14,6 @@ export default function Navigation() {
 
   }
 
-  useEffect(() => {
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-    })
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-
-  }, [])
 
   useEffect(() => {
     const closeDropDown = e => {
