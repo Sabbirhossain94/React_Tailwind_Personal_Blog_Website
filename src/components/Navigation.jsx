@@ -6,15 +6,25 @@ import Account from './pages/Profiles/Account';
 export default function Navigation({session}) {
   const [showDropDown, setShowDropDown] = useState(false);
   const [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false);
-
+  const [avatar, setAvatar] = useState(null);
   const dropDownOpener = useRef();
+  const storageUrl = 'https://uytustuoqlniazcbopzo.supabase.co/storage/v1/object/avatars/';
+  const avatarUrl = async(e) => {
+    let { data, error } = await supabase
+    .from('profiles')
+    .select('avatar_url')
+    setAvatar(storageUrl+data[0].avatar_url)
+  }
 
   const logOut = async (e) => {
 
     let { error } = await supabase.auth.signOut()
 
   }
-
+   
+  useEffect(() => {
+    avatarUrl()
+}, [session])
 
   useEffect(() => {
     const closeDropDown = e => {
@@ -89,14 +99,13 @@ export default function Navigation({session}) {
                   <div>
                     <button type="button" className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                       <span className="sr-only">Open user menu</span>
-                      <img ref={dropDownOpener} onClick={() => setShowDropDown(!showDropDown)} className="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                      <img ref={dropDownOpener} onClick={() => setShowDropDown(!showDropDown)} className="h-8 w-8 rounded-full" src={avatar} alt="" />
                     </button>
                   </div>
                   {showDropDown ? <div onClick={(e) => e.stopPropagation()} className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
 
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
 
-                    <a onClick={()=>{setShowUpdateProfileModal(true);setShowDropDown(false)}} href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
+                    <a onClick={()=>{setShowUpdateProfileModal(true);setShowDropDown(false)}} href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Profile</a>
 
                     <a href="#" onClick={logOut} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
                   </div> : ''}
@@ -110,6 +119,7 @@ export default function Navigation({session}) {
         </div>
 
         {/* mobilw mwnu */}
+        
         <div className="md:hidden" id="mobile-menu">
           <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
 
