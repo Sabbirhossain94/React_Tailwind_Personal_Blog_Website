@@ -5,6 +5,7 @@ import Navigation from './Navigation'
 import Content from './pages/Content'
 import SignIn from './pages/SignIn'
 import supabase from '../supabaseClient'
+import Account from './pages/Profiles/Account'
 
 export default function () {
 
@@ -25,10 +26,10 @@ export default function () {
             <div>
                 <Navigation session={session} />
                 <Routes>
-                    <Route path="/" element={<App />} />
+                    <Route path="/" element={<App session={session} />} />
                     <Route path="/signin" element={<SignIn />} />
                     <Route path="/content" element={<Content />} />
-                    
+                    <Route path="/account" element={<Account session={session} />} />
 
                 </Routes>
             </div>

@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom'
 import supabase from '../supabaseClient';
-
+import Modal from '../Sub-components/Modal';
+import Account from './pages/Profiles/Account';
 export default function Navigation({session}) {
   const [showDropDown, setShowDropDown] = useState(false);
-  
+  const [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false);
 
   const dropDownOpener = useRef();
 
@@ -33,6 +34,21 @@ export default function Navigation({session}) {
 
   return (
     <div>
+      {
+        showUpdateProfileModal ? 
+        (
+          <Modal
+       header={
+        'Profile'
+      }
+      content={
+       <Account session={session}/>
+      }
+     
+      />
+        ) : ''
+      }
+      
       <nav className="bg-gray-800">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 justify-between">
@@ -60,6 +76,7 @@ export default function Navigation({session}) {
                 <Link to="/" className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Home</Link>
                 <Link to="/content" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Content</Link>
                 <Link to="/signin" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign In</Link>
+                <Link to="/account" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">User Profile</Link>
                
 
 
@@ -79,7 +96,7 @@ export default function Navigation({session}) {
 
                     <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
 
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
+                    <a onClick={()=>{setShowUpdateProfileModal(true);setShowDropDown(false)}} href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
 
                     <a href="#" onClick={logOut} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
                   </div> : ''}
