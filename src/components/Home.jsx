@@ -4,6 +4,8 @@ import App from '../App'
 import Navigation from './Navigation'
 import Content from './pages/Content'
 import SignIn from './pages/SignIn'
+
+
 export default function () {
     
     return (
@@ -14,6 +16,7 @@ export default function () {
                     <Route path="/" element={<App />} />
                     <Route path="/signin" element={<SignIn />} />
                     <Route path="/content" element={<Content />} />
+                    
 
                 </Routes>
             </div>

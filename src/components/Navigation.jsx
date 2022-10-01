@@ -1,8 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom'
+import supabase from '../supabaseClient';
+
 export default function Navigation() {
   const [showDropDown, setShowDropDown] = useState(false);
+  const [session, setSession] = useState(null);
+
   const dropDownOpener = useRef();
+
+  const logOut = async (e) => {
+
+    let { error } = await supabase.auth.signOut()
+
+  }
+
+  useEffect(() => {
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+    })
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+
+  }, [])
+
   useEffect(() => {
     const closeDropDown = e => {
       if (e.path[0] !== dropDownOpener.current) {
@@ -16,6 +39,8 @@ export default function Navigation() {
 
     }
   }, [])
+
+
 
   return (
     <div>
@@ -44,9 +69,9 @@ export default function Navigation() {
               <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
 
                 <Link to="/" className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Home</Link>
-
                 <Link to="/content" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Content</Link>
                 <Link to="/signin" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign In</Link>
+               
 
 
               </div>
@@ -54,7 +79,7 @@ export default function Navigation() {
             <div className="flex items-center">
               <div className="hidden md:ml-4 md:flex md:flex-shrink-0 md:items-center">
 
-                <div className="relative ml-3">
+                {session ? <div className="relative ml-3">
                   <div>
                     <button type="button" className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                       <span className="sr-only">Open user menu</span>
@@ -67,10 +92,12 @@ export default function Navigation() {
 
                     <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
 
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
+                    <a href="#" onClick={logOut} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
                   </div> : ''}
 
-                </div>
+                </div> : ''}
+
+
               </div>
             </div>
           </div>
