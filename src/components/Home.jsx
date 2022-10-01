@@ -31,7 +31,7 @@ export default function () {
                     <Route path="/signin" element={<SignIn />} />
                     <Route path="/content" element={<Content />} />
                     <Route path="/account" element={<Account session={session} />} />
-                    <Route path="/createblog" element={<CreateBlog />} />
+                    <Route path="/createblog" element={<CreateBlog session={session} />} />
 
                 </Routes>
             </div>

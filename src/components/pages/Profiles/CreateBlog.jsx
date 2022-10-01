@@ -2,19 +2,12 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import supabase from '../../../supabaseClient'
 
-export default function CreateBlog() {
-    const [session, setSession] = useState(null);
-  
-    useEffect(() => {
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            setSession(session)
-        })
+export default function CreateBlog({session}) {
+    // const [session, setSession] = useState(null);
+    const [title, setTitle] = useState(" ")
+    const [content, setContent] = useState(" ")
 
-        supabase.auth.onAuthStateChange((_event, session) => {
-            setSession(session)
-        })
-    }, [])
-
+   
     // adding records to database here
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -22,7 +15,7 @@ export default function CreateBlog() {
         const { data, error } = await supabase
             .from('blogs')
             .insert(
-                {user_id: session.user.id, title: 'someValue', content: 'otherValueotherValueotherValueotherValueotherValueotherValueotherValueotherValueotherValueotherValueotherValueotherValue' },
+                { user_id: session.user.id, title: title, content: content },
             )
             .single();
         if (error) {
@@ -33,24 +26,25 @@ export default function CreateBlog() {
         }
 
     }
+    
 
     return (
         <div class="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28"><div class="relative mx-auto max-w-7xl"></div>
             <div >
 
                 <div class="">
-                    <form  onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit}>
                         <div class="shadow sm:overflow-hidden sm:rounded-md">
                             <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
                                 <div>
                                     <label for="about" class="block text-sm font-medium text-gray-700">Title</label>
                                     <div class="mt-1">
-                                        <input id="title" name="title" class="ring-1 mt-1 h-8 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                        <input onChange={(e) => setTitle(e.target.value)} value={title} id="title" name="title" class="ring-1 mt-1 h-8 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                                     </div>
                                     <div class="mt-5">
                                         <label for="comment" class="mt-5 lock text-sm font-medium text-gray-700">Content</label>
                                         <div class="mt-2">
-                                            <textarea rows="6" name="comment" id="comment" class="ring-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+                                            <textarea onChange={(e) => setContent(e.target.value)} value={content} rows="6" name="comment" id="comment" class="ring-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
                                         </div>
                                     </div>
                                 </div>

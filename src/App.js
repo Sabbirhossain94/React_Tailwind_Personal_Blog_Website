@@ -1,8 +1,25 @@
 import "./index.css"
-import React from 'react';
-
+import supabase from "./supabaseClient";
+import React, { useState, useEffect } from 'react'
 
 function App({session}) {
+  
+const [allBlog, setAllBlog] = useState(null);  
+
+const getAllBlogs = async(e) => {
+  
+let { data, error } = await supabase
+.from('blogs')
+.select('*')
+.range(0, 1)
+setAllBlog(data);
+}
+ 
+useEffect(() => {
+  getAllBlogs()
+
+}, [])
+
   return (<div>
       <div className="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
         <div className="absolute inset-0">
