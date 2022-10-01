@@ -29,10 +29,11 @@ export default function () {
                 <Routes>
                     <Route path="/" element={<App session={session} />} />
                     <Route path="/signin" element={<SignIn />} />
-                    <Route path="/content" element={<Content />} />
+                    <Route path="/content/:id" element={<Content />} />
                     <Route path="/account" element={<Account session={session} />} />
                     <Route path="/createblog" element={<CreateBlog session={session} />} />
-
+                    <Route path="/blog/:id/update" element={<CreateBlog session={session} />} />
+                    
                 </Routes>
             </div>
         </Router>

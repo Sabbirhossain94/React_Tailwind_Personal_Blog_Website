@@ -1,15 +1,32 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import supabase from '../../../supabaseClient'
+import { useParams } from 'react-router-dom'
 
-export default function CreateBlog({session}) {
+export default function CreateBlog({ session }) {
     // const [session, setSession] = useState(null);
+    const params = useParams();
     const [title, setTitle] = useState(" ")
     const [content, setContent] = useState(" ")
+    // console.log(params.id)
 
-   
     // adding records to database here
-    const handleSubmit = async (e) => {
+
+     const  handleSubmit = async (e) =>{
+        e.preventDefault();
+
+        if(params.id){
+            
+            updateBlogContent(e)
+        }
+        else {
+            
+            createBlog(e)
+        }
+     }
+
+
+    const createBlog = async (e) => {
         e.preventDefault()
 
         const { data, error } = await supabase
@@ -26,14 +43,52 @@ export default function CreateBlog({session}) {
         }
 
     }
-    
+
+    const [singleBlog, setSingleBlog] = useState([])
+
+    const loadBlogContent = async (e) => {
+     
+        let { data, error } = await supabase
+            .from('blogs')
+            .select('*')
+            .eq('id', params.id)
+        if (error) {
+            console.log(error)
+        }
+        else {
+          setTitle(data[0].title)
+          setContent(data[0].content)
+        }
+    }
+
+    const updateBlogContent = async (e) => {
+
+        const { data, error } = await supabase
+        .from('blogs')
+        .update(
+            { user_id: session.user.id, title: title, content: content },
+            )
+            .match({ id: params.id })
+      
+    }
+
+
+    useEffect(() => {
+         
+        if(params.id !==undefined) {
+            loadBlogContent() 
+            
+        }
+
+    }, [])
+
 
     return (
         <div class="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28"><div class="relative mx-auto max-w-7xl"></div>
             <div >
 
                 <div class="">
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={(e)=>handleSubmit(e)}>
                         <div class="shadow sm:overflow-hidden sm:rounded-md">
                             <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
                                 <div>
