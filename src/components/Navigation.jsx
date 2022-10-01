@@ -102,12 +102,12 @@ export default function Navigation({session}) {
                       <img ref={dropDownOpener} onClick={() => setShowDropDown(!showDropDown)} className="h-8 w-8 rounded-full" src={avatar} alt="" />
                     </button>
                   </div>
-                  {showDropDown ? <div onClick={(e) => e.stopPropagation()} className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                  {showDropDown ? <div onClick={(e) => e.stopPropagation()} className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
 
 
-                    <a onClick={()=>{setShowUpdateProfileModal(true);setShowDropDown(false)}} href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Profile</a>
-
-                    <a href="#" onClick={logOut} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
+                    <a onClick={()=>{setShowUpdateProfileModal(true);setShowDropDown(false)}} href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Profile</a>
+                    <Link to="/createblog" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Create Blog</Link>
+                    <a href="#" onClick={logOut} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">Sign out</a>
                   </div> : ''}
 
                 </div> : ''}
@@ -119,7 +119,7 @@ export default function Navigation({session}) {
         </div>
 
         {/* mobilw mwnu */}
-        
+
         <div className="md:hidden" id="mobile-menu">
           <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
 

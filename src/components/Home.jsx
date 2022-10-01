@@ -6,6 +6,7 @@ import Content from './pages/Content'
 import SignIn from './pages/SignIn'
 import supabase from '../supabaseClient'
 import Account from './pages/Profiles/Account'
+import CreateBlog from './pages/Profiles/CreateBlog'
 
 export default function () {
 
@@ -30,6 +31,7 @@ export default function () {
                     <Route path="/signin" element={<SignIn />} />
                     <Route path="/content" element={<Content />} />
                     <Route path="/account" element={<Account session={session} />} />
+                    <Route path="/createblog" element={<CreateBlog />} />
 
                 </Routes>
             </div>
