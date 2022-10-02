@@ -84,7 +84,7 @@ export default function Content() {
                             <div class="mt-8 lg:mt-0">
 
                                 <div class="prose prose-indigo mx-auto mt-5 text-gray-500 lg:col-start-1 lg:row-start-1 lg:max-w-none">
-                                    <p>{item.content}</p>
+                                     <div dangerouslySetInnerHTML={{ __html: item.content }} />
                                 </div>
                             </div>
                         </div>

@@ -1,29 +1,33 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import supabase from '../../../supabaseClient'
 import { useParams } from 'react-router-dom'
+import JoditEditor from 'jodit-react';
+import Notification from '../../../Sub-components/Notification';
 
 export default function CreateBlog({ session }) {
     // const [session, setSession] = useState(null);
+
     const params = useParams();
+    const editor = useRef(null)
     const [title, setTitle] = useState(" ")
-    const [content, setContent] = useState(" ")
-    // console.log(params.id)
+    const [content, setContent] = useState(null)
+    const [message, setMessage] = useState({})
 
     // adding records to database here
 
-     const  handleSubmit = async (e) =>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if(params.id){
-            
+        if (params.id) {
+
             updateBlogContent(e)
         }
         else {
-            
+
             createBlog(e)
         }
-     }
+    }
 
 
     const createBlog = async (e) => {
@@ -35,11 +39,21 @@ export default function CreateBlog({ session }) {
                 { user_id: session.user.id, title: title, content: content },
             )
             .single();
+
         if (error) {
-            console.log(error)
+
+            setMessage({
+                type:'Error',
+                msg:error.message,
+                remove: ()=>setMessage({})
+               })
         }
         else {
-            console.log(data)
+            setMessage({
+                type:'Success',
+                msg:'Successfully Saved The Blog Post',
+                remove: ()=>setMessage({})
+               })
         }
 
     }
@@ -47,7 +61,7 @@ export default function CreateBlog({ session }) {
     const [singleBlog, setSingleBlog] = useState([])
 
     const loadBlogContent = async (e) => {
-     
+
         let { data, error } = await supabase
             .from('blogs')
             .select('*')
@@ -56,28 +70,28 @@ export default function CreateBlog({ session }) {
             console.log(error)
         }
         else {
-          setTitle(data[0].title)
-          setContent(data[0].content)
+            setTitle(data[0].title)
+            setContent(data[0].content)
         }
     }
 
     const updateBlogContent = async (e) => {
 
         const { data, error } = await supabase
-        .from('blogs')
-        .update(
-            { user_id: session.user.id, title: title, content: content },
+            .from('blogs')
+            .update(
+                { user_id: session.user.id, title: title, content: content },
             )
             .match({ id: params.id })
-      
+
     }
 
 
     useEffect(() => {
-         
-        if(params.id !==undefined) {
-            loadBlogContent() 
-            
+
+        if (params.id !== undefined) {
+            loadBlogContent()
+
         }
 
     }, [])
@@ -86,21 +100,26 @@ export default function CreateBlog({ session }) {
     return (
         <div class="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28"><div class="relative mx-auto max-w-7xl"></div>
             <div >
-
+              <Notification message={message} />
                 <div class="">
-                    <form onSubmit={(e)=>handleSubmit(e)}>
+                    <form onSubmit={(e) => handleSubmit(e)}>
                         <div class="shadow sm:overflow-hidden sm:rounded-md">
                             <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
                                 <div>
-                                    <label for="about" class="block text-sm font-medium text-gray-700">Title</label>
+                                    <label htmlFor="about" class="block text-sm font-medium text-gray-700">Title</label>
                                     <div class="mt-1">
                                         <input onChange={(e) => setTitle(e.target.value)} value={title} id="title" name="title" class="ring-1 mt-1 h-8 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                                     </div>
                                     <div class="mt-5">
-                                        <label for="comment" class="mt-5 lock text-sm font-medium text-gray-700">Content</label>
-                                        <div class="mt-2">
+                                        <label htmlFor="comment" class="mt-5 lock text-sm font-medium text-gray-700">Content</label>
+                                        {/* <div class="mt-2">
                                             <textarea onChange={(e) => setContent(e.target.value)} value={content} rows="6" name="comment" id="comment" class="ring-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
-                                        </div>
+                                        </div> */}
+                                        <JoditEditor
+                                            ref={editor}
+                                            value={content}
+                                            onChange={newContent => setContent(newContent)}
+                                        />
                                     </div>
                                 </div>
                             </div>

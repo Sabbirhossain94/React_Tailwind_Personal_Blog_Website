@@ -51,7 +51,7 @@ function App() {
                       </p>
                       <Link to={`/content/`+ item.id} className="mt-2 block">
                         <p className="text-xl font-semibold text-gray-900">{item.title}</p>
-                        <p className="mt-3 text-base text-gray-500">{item.content}</p>
+                        <div className="mt-3 text-base text-gray-500">  <div dangerouslySetInnerHTML={{ __html: item.content }} /></div>
                       </Link>
                     </div>
                     <div className="mt-6 flex items-center">
