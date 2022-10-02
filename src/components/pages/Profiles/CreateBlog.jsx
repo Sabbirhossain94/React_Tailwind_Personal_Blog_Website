@@ -43,17 +43,17 @@ export default function CreateBlog({ session }) {
         if (error) {
 
             setMessage({
-                type:'Error',
-                msg:error.message,
-                remove: ()=>setMessage({})
-               })
+                type: 'Error',
+                msg: error.message,
+                remove: () => setMessage({})
+            })
         }
         else {
             setMessage({
-                type:'Success',
-                msg:'Successfully Saved The Blog Post',
-                remove: ()=>setMessage({})
-               })
+                type: 'Success',
+                msg: 'Successfully Saved The Blog Post',
+                remove: () => setMessage({})
+            })
         }
 
     }
@@ -83,6 +83,23 @@ export default function CreateBlog({ session }) {
                 { user_id: session.user.id, title: title, content: content },
             )
             .match({ id: params.id })
+        if (error) {
+
+            setMessage({
+                type: 'Error',
+                msg: error.message,
+                remove: () => setMessage({})
+            })
+        }
+        else {
+            setMessage({
+                type: 'Success',
+                msg: 'Successfully Saved The Blog Post',
+                remove: () => setMessage({})
+            })
+        }
+
+
 
     }
 
@@ -100,7 +117,7 @@ export default function CreateBlog({ session }) {
     return (
         <div class="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28"><div class="relative mx-auto max-w-7xl"></div>
             <div >
-              <Notification message={message} />
+                <Notification message={message} />
                 <div class="">
                     <form onSubmit={(e) => handleSubmit(e)}>
                         <div class="shadow sm:overflow-hidden sm:rounded-md">
