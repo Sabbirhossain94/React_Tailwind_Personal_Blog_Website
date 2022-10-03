@@ -6,10 +6,11 @@ import JoditEditor from 'jodit-react';
 import Notification from '../../../Sub-components/Notification';
 
 export default function CreateBlog({ session }) {
-    // const [session, setSession] = useState(null);
+
 
     const params = useParams();
     const editor = useRef(null)
+    const [category, setCategory] = useState("")
     const [title, setTitle] = useState(" ")
     const [content, setContent] = useState(null)
     const [message, setMessage] = useState({})
@@ -36,7 +37,7 @@ export default function CreateBlog({ session }) {
         const { data, error } = await supabase
             .from('blogs')
             .insert(
-                { user_id: session.user.id, title: title, content: content },
+                { user_id: session.user.id, category: category, title: title, content: content },
             )
             .single();
 
@@ -80,7 +81,7 @@ export default function CreateBlog({ session }) {
         const { data, error } = await supabase
             .from('blogs')
             .update(
-                { user_id: session.user.id, title: title, content: content },
+                { user_id: session.user.id, category: category, title: title, content: content },
             )
             .match({ id: params.id })
         if (error) {
@@ -115,7 +116,7 @@ export default function CreateBlog({ session }) {
 
 
     return (
-        <div className="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28"><div class="relative mx-auto max-w-7xl"></div>
+        <div className="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28"><div className="relative mx-auto max-w-7xl"></div>
             <div >
                 <Notification message={message} />
                 <div className="">
@@ -123,11 +124,15 @@ export default function CreateBlog({ session }) {
                         <div className="shadow sm:overflow-hidden sm:rounded-md">
                             <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
                                 <div>
-                                    <label htmlFor="about" className="block text-sm font-medium text-gray-700">Title</label>
+                                    <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category</label>
+                                    <div className="mt-1">
+                                        <input onChange={(e) => setCategory(e.target.value)} value={category} id="category" name="category" className="ring-1 mt-1 h-8 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                    </div>
+                                    <label htmlFor="title" className="mt-5 block text-sm font-medium text-gray-700">Title</label>
                                     <div className="mt-1">
                                         <input onChange={(e) => setTitle(e.target.value)} value={title} id="title" name="title" className="ring-1 mt-1 h-8 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                                     </div>
-                                    <div class="mt-5">
+                                    <div className="mt-5">
                                         <label htmlFor="comment" className="mt-5 lock text-sm font-medium text-gray-700">Content</label>
                                         {/* <div class="mt-2">
                                             <textarea onChange={(e) => setContent(e.target.value)} value={content} rows="6" name="comment" id="comment" class="ring-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
@@ -136,6 +141,7 @@ export default function CreateBlog({ session }) {
                                             ref={editor}
                                             value={content}
                                             onChange={newContent => setContent(newContent)}
+
                                         />
                                     </div>
                                 </div>

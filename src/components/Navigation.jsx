@@ -1,19 +1,33 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import supabase from '../supabaseClient';
 import Modal from '../Sub-components/Modal';
 import Account from './pages/Profiles/Account';
-export default function Navigation({session}) {
+export default function Navigation({ session }) {
+
+  const navLinkStyles = ({ isActive }) => {
+    return {
+      fontWeight: isActive ? 'bold' : 'normal',
+      color: isActive ? "white" : "white",
+      background: isActive ? "rgb(55,65,81)" : "rgb(31,41,55)",
+      borderRadius: isActive ? "5px" : "none",
+      paddingLeft: isActive ? "12px" : "none",
+      paddingRight: isActive ? "12px" : "none",
+      paddingTop: isActive ? "6px" : "none",
+      paddingBottom: isActive ? "6px" : "none",
+
+    }
+  }
   const [showDropDown, setShowDropDown] = useState(false);
   const [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false);
   const [avatar, setAvatar] = useState(null);
   const dropDownOpener = useRef();
   const storageUrl = 'https://uytustuoqlniazcbopzo.supabase.co/storage/v1/object/avatars/';
-  const avatarUrl = async(e) => {
+  const avatarUrl = async (e) => {
     let { data, error } = await supabase
-    .from('profiles')
-    .select('avatar_url')
-    setAvatar(storageUrl+data[0].avatar_url)
+      .from('profiles')
+      .select('avatar_url')
+    setAvatar(storageUrl + data[0].avatar_url)
   }
 
   const logOut = async (e) => {
@@ -21,10 +35,10 @@ export default function Navigation({session}) {
     let { error } = await supabase.auth.signOut()
 
   }
-   
+
   useEffect(() => {
     avatarUrl()
-}, [session])
+  }, [session])
 
   useEffect(() => {
     const closeDropDown = e => {
@@ -45,20 +59,20 @@ export default function Navigation({session}) {
   return (
     <div>
       {
-        showUpdateProfileModal ? 
-        (
-          <Modal
-       header={
-        'Profile'
+        showUpdateProfileModal ?
+          (
+            <Modal
+              header={
+                'Profile'
+              }
+              content={
+                <Account session={session} />
+              }
+
+            />
+          ) : ''
       }
-      content={
-       <Account session={session}/>
-      }
-     
-      />
-        ) : ''
-      }
-      
+
       <nav className="bg-gray-800">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 justify-between">
@@ -78,17 +92,14 @@ export default function Navigation({session}) {
                 </button>
               </div>
               <div className="flex flex-shrink-0 items-center">
-                <img className="block h-8 w-auto lg:hidden" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" />
-                <img className="hidden h-8 w-auto lg:block" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" />
+                <h1 className='font-bold text-xl text-sky-600'>&lt; MyBlogs &nbsp;&frasl;&gt;</h1>
               </div>
-              <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
+              <div className="hidden p-8 md:ml-6 md:flex md:items-center md:space-x-4">
 
-                <Link to="/" className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Home</Link>
-                <Link to="/content" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Content</Link>
-                <Link to="/signin" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign In</Link>
-                <Link to="/account" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">User Profile</Link>
-               
+                <NavLink to="/" style={{ color: "white", paddingLeft: "12px", paddingRight: "12px", paddingTop: "6px", paddingBottom: "6px" }} aria-current="page">Home</NavLink>
 
+                <NavLink to="/signin" style={navLinkStyles}>SignIn</NavLink>
+                <NavLink to="/account" style={navLinkStyles}>Update Profile</NavLink>
 
               </div>
             </div>
@@ -100,12 +111,13 @@ export default function Navigation({session}) {
                     <button type="button" className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                       <span className="sr-only">Open user menu</span>
                       <img ref={dropDownOpener} onClick={() => setShowDropDown(!showDropDown)} className="h-8 w-8 rounded-full" src={avatar} alt="" />
+
                     </button>
                   </div>
                   {showDropDown ? <div onClick={(e) => e.stopPropagation()} className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
 
 
-                    <a onClick={()=>{setShowUpdateProfileModal(true);setShowDropDown(false)}} href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Profile</a>
+                    <Link to="/signin" onClick={() => { setShowUpdateProfileModal(true); setShowDropDown(false) }} href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Sign In</Link>
                     <Link to="/createblog" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Create Blog</Link>
                     <a href="#" onClick={logOut} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">Sign out</a>
                   </div> : ''}

@@ -28,6 +28,7 @@ export default function () {
                 <Navigation session={session} />
                 <Routes>
                     <Route path="/" element={<App session={session} />} />
+                    <Route path="/:id" element={<App session={session} />} />
                     <Route path="/signin" element={<SignIn />} />
                     <Route path="/content/:id" element={<Content />} />
                     <Route path="/account" element={<Account session={session} />} />
