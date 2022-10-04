@@ -2,25 +2,36 @@ import React, { useEffect } from 'react'
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 
-export default function Pagination({ currentPage, setCurrentPage, totalPage, getblogs }) {
+export default function Pagination({ currentPage, getblogs, blogLength, perPage }) {
 
-    let location = useLocation();
-    let parameter = location.search.substring(0, (location.search.indexOf("=") + 1))
+    // let location = useLocation();
+    // let parameter = location.search.substring(0, (location.search.indexOf("=") + 1))
+    // console.log(location.search)
 
+    const totalPage = Math.ceil(blogLength / perPage)
+    console.log(currentPage)
     function previousPage() {
         if (currentPage !== 1) {
-            setCurrentPage(e => e - 1)
+            currentPage--;
+            console.log(currentPage)
+
         }
+        return currentPage
+
     }
     function nextPage() {
         if (currentPage !== totalPage) {
-            setCurrentPage(e => e + 1)
+            currentPage++;
+            console.log(currentPage)
+
         }
+        return currentPage
+
     }
 
     useEffect(() => {
         getblogs()
-    },[currentPage])
+    }, [currentPage])
 
     return (
         <div>
@@ -34,8 +45,8 @@ export default function Pagination({ currentPage, setCurrentPage, totalPage, get
                     </p>
                 </div>
                 <div className="flex flex-1 justify-between sm:justify-end">
-                    <Link to={`/${parameter}${currentPage}`} onClick={() => previousPage()} className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</Link>
-                    <Link to={`/${parameter}${currentPage}`} onClick={() => nextPage()} className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</Link>
+                    <Link onClick={()=>previousPage()} className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</Link>
+                    <Link onClick={()=>nextPage()} className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</Link>
                 </div>
             </nav></div>
     )

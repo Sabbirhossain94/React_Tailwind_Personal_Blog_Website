@@ -14,15 +14,13 @@ function App({ session }) {
   let location = useLocation();
   // console.log(location.search)
 
-  React.useEffect(() => {
-    getAllBlogs()
-  }, [allBlog.length]);
+
 
   const perPage = 3;
   let currentPage;
   if (location.search) {
     currentPage = parseInt(location.search.substring(location.search.indexOf('=') + 1));
-    console.log(currentPage)
+    
   }
   else {
     currentPage = 1;
@@ -57,8 +55,36 @@ function App({ session }) {
   const storageUrl = 'https://uytustuoqlniazcbopzo.supabase.co/storage/v1/object/avatars/'
 
   useEffect(() => {
+    getAllBlogs()
+  }, []);
+
+  useEffect(() => {
     getProfile()
   }, [session])
+
+
+  const [blogLength, setblogLength] = useState(null)
+
+  const totalBlogs = async (e) => {
+
+    let { data, error } = await supabase
+      .from('blogs')
+      .select('*')
+    if (error) {
+      console.log(error)
+    }
+    else {
+      setblogLength(data.length)
+    }
+
+  }
+
+  useEffect(() => {
+    totalBlogs()
+  }, [])
+
+
+
 
   return (
     <div>
@@ -130,6 +156,7 @@ function App({ session }) {
         currentPage={currentPage}
         perPage={perPage}
         getblogs={getAllBlogs}
+        blogLength={blogLength}
       />
     </div>
   );
