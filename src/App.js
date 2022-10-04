@@ -12,18 +12,15 @@ function App({ session }) {
   const [profile, setProfile] = useState([]);
 
   let location = useLocation();
-  // console.log(location.search)
-
-
 
   const perPage = 3;
   let currentPage;
   if (location.search) {
     currentPage = parseInt(location.search.substring(location.search.indexOf('=') + 1));
-    
+
   }
   else {
-    currentPage = 1;
+    currentPage = 1
   }
 
 
@@ -56,7 +53,7 @@ function App({ session }) {
 
   useEffect(() => {
     getAllBlogs()
-  }, []);
+  }, [currentPage]);
 
   useEffect(() => {
     getProfile()
@@ -157,6 +154,7 @@ function App({ session }) {
         perPage={perPage}
         getblogs={getAllBlogs}
         blogLength={blogLength}
+        blogsPerPage={allBlog}
       />
     </div>
   );
