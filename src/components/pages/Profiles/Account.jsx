@@ -2,17 +2,16 @@ import React from 'react'
 import supabase from '../../../supabaseClient'
 import { useState, useEffect } from 'react'
 import Avatar from './Avatar'
+
 const Account = ({ session }) => {
+
     const [loading, setLoading] = useState(true)
     const [username, setUsername] = useState(null)
     const [website, setWebsite] = useState(null)
     const [avatar_url, setAvatarUrl] = useState(null)
+   // const [getSession, setGetSession] = useState(session);
 
-
-    useEffect(() => {
-        getProfile()
-    }, [session])
-
+   
     const getProfile = async () => {
         try {
             setLoading(true)
@@ -66,6 +65,10 @@ const Account = ({ session }) => {
             setLoading(false)
         }
     }
+
+    useEffect(() => {
+        getProfile()
+    }, [])
 
     return (
         <div>

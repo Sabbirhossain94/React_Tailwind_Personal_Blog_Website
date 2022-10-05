@@ -11,14 +11,23 @@ import CreateBlog from './pages/Profiles/CreateBlog'
 export default function () {
 
   const [session, setSession] = useState(null);
+
   useEffect(() => {
 
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
+      console.log(session)
     })
 
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
+      console.log(session)
+    })
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event == 'SIGNED_IN'){
+        setSession(session)
+        console.log(session)
+      }
     })
 
   }, [])
@@ -29,7 +38,7 @@ export default function () {
                 <Routes>
                     <Route path="/" element={<App session={session} />} />
                     <Route path="/:id" element={<App session={session} />} />
-                    <Route path="/signin" element={<SignIn />} />
+                    <Route path="/signin" element={<SignIn  />} />
                     <Route path="/content/:id" element={<Content />} />
                     <Route path="/account" element={<Account session={session} />} />
                     <Route path="/createblog" element={<CreateBlog session={session} />} />

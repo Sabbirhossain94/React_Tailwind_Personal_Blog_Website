@@ -38,6 +38,7 @@ export default function Content() {
     useEffect(() => {
         showBlog()
     }, [])
+    
     return (
         <div>
             {singleBlog.map((item) => (
@@ -74,7 +75,7 @@ export default function Content() {
                                     <rect width="404" height="384" fill="url(#de316486-4a29-4312-bdfc-fbce2132a2c1)" />
                                 </svg>
                                 <div className="relative mx-auto max-w-prose text-base lg:max-w-none">
-                                    <figure>
+                                    {/* <figure>
                                         <div className="aspect-w-12 aspect-h-7 lg:aspect-none">
                                             <img className="rounded-lg object-cover object-center shadow-lg" src="https://i.imgur.com/ihfKcKx.jpg" alt="Whitney leaning against a railing on a downtown street" width="1184" height="1376" />
                                         </div>
@@ -85,12 +86,12 @@ export default function Content() {
                                             </svg>
                                             <span className="ml-2">Photograph by Marcus O’Leary</span>
                                         </figcaption>
-                                    </figure>
+                                    </figure> */}
                                 </div>
                             </div>
                             <div className="mt-8 lg:mt-0">
 
-                                <div className="prose prose-indigo mx-auto mt-5 text-gray-500 lg:col-start-1 lg:row-start-1 lg:max-w-none">
+                                <div className="prose prose-indigo ml-auto mt-5 text-gray-500 lg:col-start-1 lg:row-start-1 lg:max-w-none">
                                     <div dangerouslySetInnerHTML={{ __html: item.content }} />
                                 </div>
                             </div>
