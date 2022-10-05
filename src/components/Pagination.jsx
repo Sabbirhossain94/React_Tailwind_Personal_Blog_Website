@@ -44,7 +44,6 @@ export default function Pagination({ currentPage, getblogs, blogLength, perPage,
                     <p className="text-sm text-gray-700">
                         Showing
                         <span className="font-medium text-blue-600">&nbsp;{blogsPerPage.length}</span>
-
                         <span className="">&nbsp;out of&nbsp;<span className="font-medium text-blue-600">{blogLength} </span></span>
                         results
                     </p>

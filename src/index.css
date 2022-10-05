@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.slide-appear {
+/* .slide-appear {
    scroll-behavior: smooth;
     opacity: 0;
     transform: translateX(-500px) scale(0.6);
@@ -38,4 +38,25 @@
     opacity: 0;
     transition: all 400ms ease-in;
     transform: translateX(500px) scale(0.3);
+  } */
+
+  .slide-down-enter {
+    opacity: 0;
+    max-height: 0;
+  }
+  
+  .slide-down-enter-active {
+    transition: max-height 500ms ease-out, opacity 300ms ease-out;
+    opacity: 1;
+    max-height: 120px;
+  }
+  
+  .slide-down-exit {
+    opacity: 1;
+  }
+  
+  .slide-down-exit-active {
+    opacity: 0;
+    transition: max-height 500ms ease-out, opacity 300ms ease-out;
+    max-height: 0;
   }

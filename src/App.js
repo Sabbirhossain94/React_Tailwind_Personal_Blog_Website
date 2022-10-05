@@ -81,8 +81,6 @@ function App({ session }) {
   }, [currentPage])
 
 
-
-
   return (
     <div>
 
@@ -91,7 +89,7 @@ function App({ session }) {
           <TransitionGroup>
             <CSSTransition key={item.id}
               in={boolean.current}
-              classNames="slide-horizontal"
+              classNames="slide-down"
               timeout={300}
             >
               <div className="">
