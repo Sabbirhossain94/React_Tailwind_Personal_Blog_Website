@@ -1,4 +1,5 @@
 import "../../src/index.css"
+import "../animation.css"
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, Link } from 'react-router-dom'
 import supabase from '../supabaseClient';
@@ -131,36 +132,29 @@ export default function Navigation({ session }) {
         </div>
 
         {/* mobile menu */}
-        <div className="md:hidden" >
-          <CSSTransition
-            in={true}
-            timeout={500}
-            classNames="slide-down"
-            unmountOnExit
-          >
-            <div className={openMenuIcon ? "" : "hidden"}>
-              <div className={`space-y-1 px-2 pt-2 pb-3 sm:px-3 `}>
-                <Link to="/" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</Link>
-                <Link to="/signin" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Sign In</Link>
-                <Link to="/account" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Update Profile</Link>
+        <div className="md:hidden " >
+          <div className={openMenuIcon ? "slide-down" : "slide-up "}>
+            <div className={`space-y-1 px-2 pt-2 pb-3 sm:px-3 $`}>
+              <Link to="/" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</Link>
+              <Link to="/signin" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Sign In</Link>
+              <Link to="/account" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Update Profile</Link>
+            </div>
+            <div className={`border-t border-gray-700 pt-4 pb-3$`}>
+              <div className="flex items-center px-5 sm:px-6">
+                <div className="flex-shrink-0">
+                  <img className="h-10 w-10 rounded-full" src={avatar} alt="" />
+                </div>
+                <div className="ml-3">
+                  <div className="text-sm font-medium text-gray-400">{/*session.user.email*/}
+                  </div>
+                </div>
               </div>
-              <div className={`border-t border-gray-700 pt-4 pb-3$`}>
-                <div className="flex items-center px-5 sm:px-6">
-                  <div className="flex-shrink-0">
-                    <img className="h-10 w-10 rounded-full" src={avatar} alt="" />
-                  </div>
-                  <div className="ml-3">
-                    <div className="text-sm font-medium text-gray-400">{/*session.user.email*/}
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-3 space-y-1 px-2 sm:px-3">
-                  <Link to="/createblog" className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Create blog</Link>
-                  <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign out </a>
-                </div>
+              <div className="mt-3 space-y-1 px-2 sm:px-3">
+                <Link to="/createblog" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Create blog</Link>
+                <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Sign out </a>
               </div>
             </div>
-          </CSSTransition>
+          </div>
         </div>
         {/* </div> */}
       </nav>

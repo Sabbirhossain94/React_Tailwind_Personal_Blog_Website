@@ -85,7 +85,7 @@ function App({ session }) {
     <div>
 
       <div>
-        {allBlog.map((item, key) => (
+        {allBlog.map((item) => (
           <TransitionGroup>
             <CSSTransition key={item.id}
               in={boolean.current}
@@ -94,6 +94,7 @@ function App({ session }) {
             >
               <div className="">
                 <div key={item.id} className=" mx-auto mt-12 grid max-w-lg gap-5 sm:flex-shrink sm:w-1/2">
+
                   <div className="flex flex-col rounded-lg shadow-lg">
                     <div className="flex-shrink-0">
                       <img className="h-48 w-full object-cover" src="https://i.imgur.com/iW9aFdD.jpg" alt="" />
@@ -111,7 +112,7 @@ function App({ session }) {
                         </div>
                       </div>
 
-                      {profile.map((item, key) => (
+                      {profile.map((item) => (
 
                         <div key={item.id} className="mt-6 flex items-center">
                           <div className="flex-shrink-0">
@@ -150,7 +151,7 @@ function App({ session }) {
           blogsPerPage={allBlog}
         />
       </div>
-    </div>
+    </div >
   );
 }
 
