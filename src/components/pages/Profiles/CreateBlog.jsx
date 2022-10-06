@@ -91,6 +91,7 @@ export default function CreateBlog({ session }) {
                 remove: () => setMessage({})
             })
         }
+        
         else {
             setMessage({
                 type: 'Success',
