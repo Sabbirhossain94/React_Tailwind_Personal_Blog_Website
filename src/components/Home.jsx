@@ -14,15 +14,15 @@ export default function () {
 
   useEffect(() => {
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-      console.log(session)
-    })
+    // supabase.auth.getSession().then(({ data: { session } }) => {
+    //   setSession(session)
+    //   console.log(session)
+    // })
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-      console.log(session)
-    })
+    // supabase.auth.onAuthStateChange((_event, session) => {
+    //   setSession(session)
+    //   console.log(session)
+    // })
     supabase.auth.onAuthStateChange((event, session) => {
       if (event == 'SIGNED_IN'){
         setSession(session)

@@ -99,9 +99,6 @@ export default function CreateBlog({ session }) {
                 remove: () => setMessage({})
             })
         }
-
-
-
     }
 
 
