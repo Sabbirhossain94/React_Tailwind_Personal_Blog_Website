@@ -73,12 +73,13 @@ export default function Navigation({ session }) {
                   <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                   </svg>
-                  <Link to="/" ><h1 className='ml-[10px] font-bold text-xl text-sky-600'>&lt; MyBlogs &nbsp;&frasl;&gt;</h1></Link>
-
+                 
                   <svg className="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
+                <Link to="/" ><h1 className='font-bold text-xl text-sky-600'>&lt; MyBlogs &nbsp;&frasl;&gt;</h1></Link>
+
               </div>
 
               <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
@@ -99,7 +100,7 @@ export default function Navigation({ session }) {
                   </div>
                   {showDropDown ? <div onClick={(e) => e.stopPropagation()} className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
 
-                    <Link to="/signin" className="block px-4 py-2 text-sm text-gray-700" >Sign In</Link>
+                    {session ? " " : (<Link to="/signin" className="block px-4 py-2 text-sm text-gray-700" >Sign In</Link>)}
                     <Link to="/createblog" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Create Blog</Link>
                     <Link onClick={() => { setShowUpdateProfileModal(true); setShowDropDown(false) }} to="/account" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Update Profile</Link>
                     <a href="#" onClick={logOut} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-3">Sign out</a>
@@ -118,12 +119,12 @@ export default function Navigation({ session }) {
                 <img className="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
               </div>
               <div className="ml-3">
-                <div className="text-base font-medium text-white">Tom Cook</div>
-                <div className="text-sm font-medium text-gray-400">tom@example.com</div>
+                
+                <div className="text-sm font-medium text-gray-400">{session.user.email}</div>
               </div>
             </div>
             <div className="mt-3 space-y-1 px-2 sm:px-3">
-              <Link to="/signin" className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign In</Link>
+              {session ? "" : (<Link to="/signin" className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign In</Link>)}
               <Link to="/createblog" className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Create Blog</Link>
               <Link to="/account" className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Update Profile</Link>
               <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign out</a>
