@@ -1,0 +1,13 @@
+.slide-up {
+    opacity: 0;
+    height: 0;
+    transition-property: all;
+    transition-duration: 500ms;
+}
+
+.slide-down {
+    opacity: 1;
+    height: 210px;
+    transition-property: all;
+    transition-duration: 500ms;
+}

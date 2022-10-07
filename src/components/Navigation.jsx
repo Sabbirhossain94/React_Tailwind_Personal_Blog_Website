@@ -1,3 +1,4 @@
+import "../../src/animation.css"
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom'
 import supabase from '../supabaseClient';
@@ -9,6 +10,7 @@ export default function Navigation({ session }) {
   const [showDropDown, setShowDropDown] = useState(false);
   const [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false);
   const [avatar, setAvatar] = useState(null);
+  const [openMenuIcon, setOpenMenuIcon] = useState(false)
   const dropDownOpener = useRef();
   const storageUrl = 'https://uytustuoqlniazcbopzo.supabase.co/storage/v1/object/avatars/';
 
@@ -70,13 +72,11 @@ export default function Navigation({ session }) {
 
                 <button type="button" className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
                   <span className="sr-only">Open main menu</span>
-                  <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                  </svg>
-                 
-                  <svg className="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
+                  {openMenuIcon ? (<svg onClick={() => setOpenMenuIcon(false)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
+                  </svg>) : (<svg onClick={() => setOpenMenuIcon(true)} className=" block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                  </svg>)}
                 </button>
                 <Link to="/" ><h1 className='font-bold text-xl text-sky-600'>&lt; MyBlogs &nbsp;&frasl;&gt;</h1></Link>
 
@@ -112,22 +112,25 @@ export default function Navigation({ session }) {
         </div>
 
         {/* mobilw mwnu */}
-        <div className="md:hidden" id="mobile-menu">
-          <div className="border-t border-gray-700 pt-4 pb-3">
-            <div className="flex items-center px-5 sm:px-6">
-              <div className="flex-shrink-0">
-                <img className="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+        <div className="md:hidden" >
+          <div className={openMenuIcon ? "slide-down " : "slide-up "}>
+            <div className={openMenuIcon ? " " : "hidden "}>
+              <div className="border-t border-gray-700 pt-4 pb-3">
+                <div className="flex items-center px-5 sm:px-6">
+                  <div className="flex-shrink-0">
+                    <img className="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                  </div>
+                  <div className="ml-3">
+                   {session ? (<div className="text-sm font-medium text-gray-400">{session.user.email}</div>) : "" }
+                  </div>
+                </div>
+                <div className="mt-3 space-y-1 px-2 sm:px-3">
+                  {session ? "" : (<Link to="/signin" className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign In</Link>)}
+                  <Link to="/createblog" className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Create Blog</Link>
+                  <Link to="/account" className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Update Profile</Link>
+                  <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign out</a>
+                </div>
               </div>
-              <div className="ml-3">
-                
-                <div className="text-sm font-medium text-gray-400">{session.user.email}</div>
-              </div>
-            </div>
-            <div className="mt-3 space-y-1 px-2 sm:px-3">
-              {session ? "" : (<Link to="/signin" className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign In</Link>)}
-              <Link to="/createblog" className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Create Blog</Link>
-              <Link to="/account" className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Update Profile</Link>
-              <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign out</a>
             </div>
           </div>
         </div>
