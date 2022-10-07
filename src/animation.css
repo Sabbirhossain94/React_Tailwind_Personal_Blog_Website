@@ -11,3 +11,41 @@
     transition-property: all;
     transition-duration: 500ms;
 }
+
+.slide-appear {
+    scroll-behavior: smooth;
+    opacity: 0;
+    transform: translateX(-500px) scale(0.6);
+}
+
+.slide-appear-done {
+    scroll-behavior: smooth;
+    opacity: 1;
+    transition: all 400ms;
+    transform: translateX(0) scale(1);
+}
+
+.slide-enter {
+    scroll-behavior: smooth;
+    opacity: 0;
+    transform: translateX(-500px) scale(0.3);
+}
+
+.slide-enter-active {
+    scroll-behavior: smooth;
+    opacity: 1;
+    transition: all 400ms ease-out;
+    transform: translateX(0) scale(1);
+}
+
+.slide-exit {
+    scroll-behavior: smooth;
+    opacity: 1;
+}
+
+.slide-exit-active {
+    scroll-behavior: smooth;
+    opacity: 0;
+    transition: all 400ms ease-in;
+    transform: translateX(500px) scale(0.3);
+}

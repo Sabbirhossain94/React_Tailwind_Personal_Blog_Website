@@ -6,12 +6,11 @@ import JoditEditor from 'jodit-react';
 import Notification from '../../../Sub-components/Notification';
 
 export default function CreateBlog({ session }) {
-    // const [session, setSession] = useState(null);
-
+   
     const params = useParams();
     const editor = useRef(null)
     const [title, setTitle] = useState(" ")
-    const [content, setContent] = useState(null)
+    const [content, setContent] = useState("")
     const [message, setMessage] = useState({})
     const date= new Date().toLocaleDateString()
     // adding records to database here

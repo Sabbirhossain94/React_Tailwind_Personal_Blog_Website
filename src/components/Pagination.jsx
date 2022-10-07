@@ -29,7 +29,7 @@ export default function Pagination({ currentPage, getblogs, blogLength, perPage,
     }, [currentPage])
 
     useEffect(() => {
-
+       
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }, []);
 
