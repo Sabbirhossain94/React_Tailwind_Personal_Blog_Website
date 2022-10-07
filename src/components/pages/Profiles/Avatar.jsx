@@ -55,18 +55,18 @@ export default function Avatar({ url, size, onUpload }) {
     }
   
     return (
-      <div style={{ width: size }} aria-live="polite">
+      <div className='' style={{ width: size }} aria-live="polite">
         <img
-          src={avatarUrl ? avatarUrl : `https://place-hold.it/${size}x${size}`}
+          src={avatarUrl? avatarUrl : `https://i.imgur.com/W2AT377.jpg`}
           alt={avatarUrl ? 'Avatar' : 'No image'}
-          className="avatar image"
+          className="avatar image ring-1"
           style={{ height: size, width: size }}
         />
         {uploading ? (
           'Uploading...'
         ) : (
           <>
-            <label className="text-center" htmlFor="single">
+            <label className="mt-[15px] text-center" htmlFor="single">
               Upload an avatar
             </label>
             <div className="visually-hidden">
@@ -76,6 +76,7 @@ export default function Avatar({ url, size, onUpload }) {
                 accept="image/*"
                 onChange={uploadAvatar}
                 disabled={uploading}
+                className=" text-blue-400"
               />
             </div>
           </>
