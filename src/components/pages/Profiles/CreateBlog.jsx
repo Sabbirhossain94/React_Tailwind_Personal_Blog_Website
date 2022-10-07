@@ -13,7 +13,7 @@ export default function CreateBlog({ session }) {
     const [title, setTitle] = useState(" ")
     const [content, setContent] = useState(null)
     const [message, setMessage] = useState({})
-
+   
     // adding records to database here
 
     const handleSubmit = async (e) => {

@@ -3,6 +3,7 @@ import supabase from "./supabaseClient";
 import { useLocation } from 'react-router-dom';
 import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import Pagination from "../src/components/Pagination"
 
 function App() {
 
@@ -91,7 +92,7 @@ function App() {
                 </p>
                 <Link to={`/content/` + item.id} className="mt-2 block">
                   <p className="text-xl font-semibold text-gray-900">{item.title}</p>
-                  <div className="mt-3 text-base text-gray-500">  <div dangerouslySetInnerHTML={{ __html: item.content }} /></div>
+                  <div className="mt-3 text-base text-gray-500">  <div dangerouslySetInnerHTML={{ __html: item.content.substring(0,30) }} /></div>
                 </Link>
               </div>
               {profile.map((item) => (
@@ -121,6 +122,14 @@ function App() {
       )
       )}
       {/* blogs end */}
+      
+      <Pagination
+          currentPage={currentPage}
+          perPage={perPage}
+          getblogs={getAllBlogs}
+          blogLength={blogLength}
+          blogsPerPage={allBlog}
+        />
     </div>
 
   );
