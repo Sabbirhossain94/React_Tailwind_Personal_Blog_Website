@@ -79,7 +79,7 @@ function App() {
     <div>
 
       <TransitionGroup>
-        
+
         {allBlog.map((item, key) => (
           <CSSTransition
             key={item.id}
@@ -88,20 +88,20 @@ function App() {
             timeout={300}
           >
             <li key={item.id} className="list-none">
-              <div className="mx-auto mt-12 grid max-w-lg gap-5 sm:flex-shrink sm:w-1/2">
-                <div className="flex flex-col rounded-lg shadow-lg">
+              <div className="mx-auto mt-12 grid max-w-lg gap-5 flex-shrink w-1/2">
+                <Link to={`/content/` + item.id} className="flex flex-col rounded-lg shadow-lg">
                   <div className="flex-shrink-0">
                     <img className="h-48 w-full object-cover" src="https://i.imgur.com/iW9aFdD.jpg" alt="" />
                   </div>
                   <div className="flex flex-1 flex-col justify-between bg-white p-6">
                     <div className="flex-1">
                       <div className="text-sm font-medium text-indigo-600">
-                        <a href="#" >{item.inserted_at}</a>
+                        <p >{item.inserted_at}</p>
                       </div>
-                      <Link to={`/content/` + item.id} className="mt-2 block">
+                      <div className="mt-2 block">
                         <p className="text-xl font-semibold text-gray-900">{item.title}</p>
                         <div className="mt-3 text-base text-gray-500">  <div dangerouslySetInnerHTML={{ __html: item.content.substring(0, 30) }} /></div>
-                      </Link>
+                      </div>
                     </div>
 
                     {profile.map((item) => (
@@ -122,12 +122,12 @@ function App() {
                       </div>
                     ))}
                   </div>
-                </div>
+                </Link>
               </div>
             </li>
-          </CSSTransition>    
-      ))}
-        </TransitionGroup>
+          </CSSTransition>
+        ))}
+      </TransitionGroup>
       {/* blogs end */}
 
       < Pagination
