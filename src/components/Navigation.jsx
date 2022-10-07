@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom'
 import supabase from '../supabaseClient';
 import Modal from '../Sub-components/Modal';
 import Account from './pages/Profiles/Account';
+
 export default function Navigation({session}) {
+
   const [showDropDown, setShowDropDown] = useState(false);
   const [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false);
   const [avatar, setAvatar] = useState(null);
   const dropDownOpener = useRef();
   const storageUrl = 'https://uytustuoqlniazcbopzo.supabase.co/storage/v1/object/avatars/';
+  
   const avatarUrl = async(e) => {
     let { data, error } = await supabase
     .from('profiles')
@@ -77,10 +80,7 @@ export default function Navigation({session}) {
                   </svg>
                 </button>
               </div>
-              <div className="flex flex-shrink-0 items-center">
-                <img className="block h-8 w-auto lg:hidden" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" />
-                <img className="hidden h-8 w-auto lg:block" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" />
-              </div>
+              
               <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
 
                 <Link to="/" className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Home</Link>
