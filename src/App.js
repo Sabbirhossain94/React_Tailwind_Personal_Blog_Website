@@ -87,16 +87,17 @@ function App() {
             </div>
             <div className="flex flex-1 flex-col justify-between bg-white p-6">
               <div className="flex-1">
-                <p className="text-sm font-medium text-indigo-600">
-                  <a href="#" className="hover:underline">Article</a>
-                </p>
+                <div className="text-sm font-medium text-indigo-600">
+                  <a href="#" >{item.inserted_at}</a>
+                </div>
                 <Link to={`/content/` + item.id} className="mt-2 block">
-                  <p className="text-xl font-semibold text-gray-900">{item.title}</p>
-                  <div className="mt-3 text-base text-gray-500">  <div dangerouslySetInnerHTML={{ __html: item.content.substring(0,30) }} /></div>
+                  <p className="text-xl font-semibold text-gray-900">{item.title}</p>            
+                <div className="mt-3 text-base text-gray-500">  <div dangerouslySetInnerHTML={{ __html: item.content.substring(0,30) }} /></div>
+              
                 </Link>
               </div>
-              {profile.map((item) => (
 
+              {profile.map((item) => (
                 <div key={item.id} className="mt-6 flex items-center">
                   <div className="flex-shrink-0">
                     <a href="#">
@@ -108,10 +109,7 @@ function App() {
                     <p className="text-sm font-medium text-gray-900">
                       <a href="#" className="hover:underline">{item.username}</a>
                     </p>
-                    <div className="flex space-x-1 text-sm text-gray-500">
-                      <time dateTime="2020-03-16">{item.updated_at}</time>
-                      <span aria-hidden="true">&middot;</span>
-                      <span>6 min read</span>
+                    <div className="flex space-x-1 text-sm text-gray-500">                                                     
                     </div>
                   </div>
                 </div>

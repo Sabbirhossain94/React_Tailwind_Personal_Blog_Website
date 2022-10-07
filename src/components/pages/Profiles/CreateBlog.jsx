@@ -13,7 +13,7 @@ export default function CreateBlog({ session }) {
     const [title, setTitle] = useState(" ")
     const [content, setContent] = useState(null)
     const [message, setMessage] = useState({})
-   
+    const date= new Date().toLocaleDateString()
     // adding records to database here
 
     const handleSubmit = async (e) => {
@@ -36,7 +36,7 @@ export default function CreateBlog({ session }) {
         const { data, error } = await supabase
             .from('blogs')
             .insert(
-                { user_id: session.user.id, title: title, content: content },
+                { user_id: session.user.id, title: title, content: content ,inserted_at: date},
             )
             .single();
 
