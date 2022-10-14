@@ -35,7 +35,7 @@ export default function Pagination({ currentPage, getblogs, blogLength, perPage,
 
     return (
         <div>
-            <nav className="mt-[50px] relative flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6" aria-label="Pagination">
+            <nav className="mt-[50px] fixed bottom-0 left-0 right-0 flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6" aria-label="Pagination">
                 <div className="hidden sm:block">
                     <p className="text-sm text-gray-700">
                         Showing

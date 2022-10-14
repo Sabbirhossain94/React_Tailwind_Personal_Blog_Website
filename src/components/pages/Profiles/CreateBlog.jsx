@@ -2,17 +2,22 @@ import React from 'react'
 import { useState, useEffect, useRef } from 'react';
 import supabase from '../../../supabaseClient'
 import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
+
 import JoditEditor from 'jodit-react';
 import Notification from '../../../Sub-components/Notification';
 
 export default function CreateBlog({ session }) {
-   
+
     const params = useParams();
+    let location = useLocation();
+    let getString = location.pathname;
     const editor = useRef(null)
     const [title, setTitle] = useState(" ")
     const [content, setContent] = useState("")
     const [message, setMessage] = useState({})
-    const date= new Date().toLocaleDateString()
+
+    const date = new Date().toLocaleDateString()
     // adding records to database here
 
     const handleSubmit = async (e) => {
@@ -29,13 +34,15 @@ export default function CreateBlog({ session }) {
     }
 
 
+
+
     const createBlog = async (e) => {
         e.preventDefault()
 
         const { data, error } = await supabase
             .from('blogs')
             .insert(
-                { user_id: session.user.id, title: title, content: content ,inserted_at: date},
+                { user_id: session.user.id, title: title, content: content, inserted_at: date },
             )
             .single();
 
@@ -90,7 +97,7 @@ export default function CreateBlog({ session }) {
                 remove: () => setMessage({})
             })
         }
-        
+
         else {
             setMessage({
                 type: 'Success',
@@ -140,9 +147,11 @@ export default function CreateBlog({ session }) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                            { getString === "/createblog" ? (<div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
                                 <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Post</button>
-                            </div>
+                            </div>) : (<div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                                <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Update</button>
+                            </div>)}
                         </div>
                     </form>
                 </div>
