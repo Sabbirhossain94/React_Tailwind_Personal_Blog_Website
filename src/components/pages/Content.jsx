@@ -24,11 +24,11 @@ export default function Content({ session }) {
       .from("blogs")
       .delete()
       .match({ id: id });
-      if(error){
-        console.log(error)
-      } else {
-        console.log(data)
-      }
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(data);
+    }
   };
   useEffect(() => {
     showBlog();
@@ -36,7 +36,7 @@ export default function Content({ session }) {
   return (
     <div>
       {singleBlog.map((item, key) => (
-        <li key={item.id} className="list-none">
+        <li key={key} className="list-none">
           <div key={item.id} className="overflow-hidden bg-white">
             <div className="relative mx-auto max-w-7xl py-16 px-4 sm:px-6 lg:px-8">
               <div className="mx-auto max-w-prose text-left lg:grid lg:max-w-none lg:grid-cols-2 lg:gap-8">
