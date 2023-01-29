@@ -12,15 +12,14 @@ export default function Navigation({ session }) {
   const [openMenuIcon, setOpenMenuIcon] = useState(false);
   const dropDownOpener = useRef();
 
-  // const avatarUrl = async (e) => {
-  //   let { data, error } = await supabase.storage.from("avatar").select("*");
-  //   if (error) {
-  //     console.log(error);
-  //   } else {
-  //     setAvatar(data);
-  //     console.log(avatar);
-  //   }
-  // };
+  const avatarUrl = async (e) => {
+    let { data, error } = await supabase.from("profiles").select("avatar_url");
+    if (error) {
+      console.log(error);
+    } else {
+      setAvatar(data.avatar_url);
+    }
+  };
 
   const logOut = async (e) => {
     let { error } = await supabase.auth.signOut();
@@ -29,9 +28,9 @@ export default function Navigation({ session }) {
     }
   };
 
-  // useEffect(() => {
-  //   avatarUrl();
-  // }, [session]);
+  useEffect(() => {
+    avatarUrl();
+  }, [session]);
 
   useEffect(() => {
     const closeDropDown = (e) => {
@@ -132,7 +131,7 @@ export default function Navigation({ session }) {
                       {session ? (
                         <img
                           className="h-8 w-8 rounded-full"
-                          src={""}
+                          src={avatar}
                           alt="error"
                         />
                       ) : (

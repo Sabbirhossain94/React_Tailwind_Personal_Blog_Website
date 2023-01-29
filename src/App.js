@@ -5,11 +5,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "../src/components/Pagination";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import AuthAlert from "./Sub-components/AuthAlert";
 
 function App({ session }) {
   const [allBlog, setAllBlog] = useState([]);
   const [profile, setProfile] = useState([]);
   const [blogLength, setblogLength] = useState(null);
+  const [message, setMessage] = useState("");
+  const [alert, setAlert] = useState(false);
   const boolean = useRef(true);
   let location = useLocation();
 
@@ -62,8 +65,26 @@ function App({ session }) {
     totalBlogs();
   }, [blogLength]);
 
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event == "SIGNED_OUT") {
+        setMessage("Successfully logged out!");
+        setAlert(!alert);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event == "SIGNED_IN") {
+        setMessage("Successfully logged in!");
+        setAlert(!alert);
+      }
+    });
+  }, []);
   return (
     <div>
+     <AuthAlert alert={alert} message={message} setAlert={setAlert}/>
       <TransitionGroup>
         {allBlog.map((item, key) => (
           <CSSTransition

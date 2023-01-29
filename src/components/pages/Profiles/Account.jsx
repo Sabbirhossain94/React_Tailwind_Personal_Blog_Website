@@ -1,7 +1,6 @@
 import React from "react";
 import supabase from "../../../supabaseClient";
 import { useState, useEffect } from "react";
-import Avatar from "./Avatar";
 
 const Account = ({ session }) => {
   const [loading, setLoading] = useState(true);
@@ -72,12 +71,11 @@ const Account = ({ session }) => {
 
       const file = event.target.files[0];
       const fileExt = file.name.split(".").pop();
-      const fileName = `${Math.random()}.${fileExt}`;
-      const filePath = `${fileName}`;
+      const filePath = `${Math.random()}.${fileExt}`;
 
       let { error: uploadError } = await supabase.storage
         .from("avatars")
-        .upload(filePath, file);
+        .upload("Profile Photo/" + filePath, file);
 
       if (uploadError) {
         throw uploadError;
@@ -95,7 +93,7 @@ const Account = ({ session }) => {
     try {
       const { data, error } = await supabase.storage
         .from("avatars")
-        .download(path);
+        .download(`Profile Photo/${path}`);
       if (error) {
         throw error;
       }
