@@ -5,19 +5,19 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "../src/components/Pagination";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import AuthAlert from "./Sub-components/AuthAlert";
+import moment from "moment/moment";
 
 function App({ session }) {
   const [allBlog, setAllBlog] = useState([]);
   const [profile, setProfile] = useState([]);
   const [blogLength, setblogLength] = useState(null);
-  const [message, setMessage] = useState("");
-  const [alert, setAlert] = useState(false);
+  const [avatar, setAvatar] = useState(null);
   const boolean = useRef(true);
   let location = useLocation();
-
+  const blogCoverUrl = process.env.REACT_APP_STORAGE_PUBLIC_URL;
   const perPage = 3;
   let currentPage;
+
   if (location.search) {
     currentPage = parseInt(
       location.search.substring(location.search.indexOf("=") + 1)
@@ -25,66 +25,41 @@ function App({ session }) {
   } else {
     currentPage = 1;
   }
-  const getAllBlogs = async (e) => {
-    let { data, error } = await supabase
-      .from("blogs")
-      .select("*")
-      .range((currentPage - 1) * perPage, perPage * currentPage - 1);
-    if (error) {
-      console.log(error);
-    } else {
-      setAllBlog(data);
-    }
-  };
-  const getProfile = async (e) => {
-    let { data, error } = await supabase.from("profiles").select("*");
-    if (error) {
-      console.log(error);
-    } else {
-      setProfile(data);
-    }
-  };
 
   const totalBlogs = async (e) => {
-    let { data, error } = await supabase.from("blogs").select("*");
+    let { data, error } = await supabase.from("blogs").select(`*,profiles(*)`);
     if (error) {
       console.log(error);
     } else {
       setblogLength(data.length);
+      setAllBlog(data);
+      const [file] = data;
+      getAvatarFromStorage(file.profiles.avatar_url);
     }
   };
-  useEffect(() => {
-    getAllBlogs();
-  }, [allBlog]);
 
-  useEffect(() => {
-    getProfile();
-  }, [profile]);
+  const getAvatarFromStorage = async (file) => {
+    let { data, error } = await supabase.storage
+      .from("avatars")
+      .download(`Profile Photo/${file}`);
+    if (data) {
+      const url = URL.createObjectURL(data);
+      setAvatar(url);
+    } else {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     totalBlogs();
-  }, [blogLength]);
-
-  useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event == "SIGNED_OUT") {
-        setMessage("Successfully logged out!");
-        setAlert(!alert);
-      }
-    });
   }, []);
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event == "SIGNED_IN") {
-        setMessage("Successfully logged in!");
-        setAlert(!alert);
-      }
-    });
+    totalBlogs();
   }, []);
+
   return (
     <div>
-     <AuthAlert alert={alert} message={message} setAlert={setAlert}/>
       <TransitionGroup>
         {allBlog.map((item, key) => (
           <CSSTransition
@@ -93,57 +68,56 @@ function App({ session }) {
             classNames="slide"
             timeout={300}
           >
-            <li key={item.id} className="list-none">
-              <div className="relative mx-auto mt-12 grid max-w-lg gap-5 flex-shrink w-1/2">
+            <li key={item.id} className="list-none ">
+              <div className=" relative mx-auto mt-12 grid max-w-lg gap-5 flex-shrink w-1/2 scale-100 transition duration-300 hover:scale-105">
                 <Link
                   to={`/content/` + item.id}
-                  className="flex flex-col rounded-lg shadow-lg"
+                  className="flex flex-col rounded-xl shadow-lg"
                 >
-                  <div className="flex-shrink-0">
+                  <div className="border border-slate-300 flex-shrink-0">
                     <img
-                      className="h-48 w-full object-cover"
-                      src="https://i.imgur.com/ihfKcKx.jpg"
+                      className="h-48 w-full object-contain rounded-md"
+                      src={blogCoverUrl + item.thumbnail}
                       alt="error"
                     />
                   </div>
                   <div className="flex flex-1 flex-col justify-between bg-white p-6">
                     <div className="flex-1">
-                      <div className="text-sm font-medium text-indigo-600">
-                        <p>{item.inserted_at}</p>
-                      </div>
                       <div className="mt-2 block">
                         <p className="text-xl font-semibold text-gray-900">
                           {item.title}
                         </p>
-                        <div className="mt-3 text-base text-gray-500">
+                        {/* <div className="mt-3 text-base text-gray-500">
                           <div
                             dangerouslySetInnerHTML={{
                               __html: item.content.slice(0, 20),
                             }}
                           />
+                        </div> */}
+                        <div className="mt-6 flex items-center">
+                          <div className="flex-shrink-0">
+                            <div>
+                              <img
+                                className="h-10 w-10 rounded-full"
+                                src={avatar}
+                                alt="error"
+                              />
+                            </div>
+                          </div>
+                          <div className="ml-3">
+                            <h3 className="text-sm font-medium text-gray-900">
+                              <p href="#" className="text-md">
+                                {item.profiles.username}
+                              </p>
+                              <p href="#" className="text-xs text-blue-600">
+                                {item.inserted_at}
+                              </p>
+                            </h3>
+                            <div className="flex space-x-1 text-sm text-gray-500"></div>
+                          </div>
                         </div>
                       </div>
                     </div>
-
-                    {profile.map((item) => (
-                      <div key={item.id} className="mt-6 flex items-center">
-                        <div className="flex-shrink-0">
-                          <div>
-                            <img
-                              className="h-10 w-10 rounded-full"
-                              src={item.avatar_url}
-                              alt="error"
-                            />
-                          </div>
-                        </div>
-                        <div className="ml-3">
-                          <h3 className="text-sm font-medium text-gray-900">
-                            <p href="#">{item.username}</p>
-                          </h3>
-                          <div className="flex space-x-1 text-sm text-gray-500"></div>
-                        </div>
-                      </div>
-                    ))}
                   </div>
                 </Link>
               </div>
@@ -151,13 +125,13 @@ function App({ session }) {
           </CSSTransition>
         ))}
       </TransitionGroup>
-      <Pagination
+      {/* <Pagination
         currentPage={currentPage}
         perPage={perPage}
         getblogs={getAllBlogs}
         blogLength={blogLength}
         blogsPerPage={allBlog}
-      />
+      /> */}
     </div>
   );
 }

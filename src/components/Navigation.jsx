@@ -5,6 +5,7 @@ import supabase from "../supabaseClient";
 import Modal from "../Sub-components/Modal";
 import Account from "./pages/Profiles/Account";
 import { AiOutlineUser } from "react-icons/ai";
+
 export default function Navigation({ session }) {
   const [showDropDown, setShowDropDown] = useState(false);
   const [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false);
@@ -12,12 +13,32 @@ export default function Navigation({ session }) {
   const [openMenuIcon, setOpenMenuIcon] = useState(false);
   const dropDownOpener = useRef();
 
-  const avatarUrl = async (e) => {
-    let { data, error } = await supabase.from("profiles").select("avatar_url");
-    if (error) {
-      console.log(error);
+  const avatarFIle = async (e) => {
+    try {
+      let { data, error, status } = await supabase
+        .from("profiles")
+        .select("avatar_url");
+
+      if (error && status !== 406) {
+        throw error;
+      }
+      if (data) {
+        const [file] = data;
+        getAvatarFromStorage(file);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  const getAvatarFromStorage = async (file) => {
+    let { data, error } = await supabase.storage
+      .from("avatars")
+      .download(`Profile Photo/${file.avatar_url}`);
+    if (data) {
+      const url = URL.createObjectURL(data);
+      setAvatar(url);
     } else {
-      setAvatar(data.avatar_url);
+      console.log(error);
     }
   };
 
@@ -29,7 +50,7 @@ export default function Navigation({ session }) {
   };
 
   useEffect(() => {
-    avatarUrl();
+    avatarFIle();
   }, [session]);
 
   useEffect(() => {
@@ -46,7 +67,6 @@ export default function Navigation({ session }) {
       document.body.removeEventListener("click", closeDropDown);
     };
   }, [dropDownOpener, setShowDropDown]);
-
   return (
     <div>
       {showUpdateProfileModal ? (
@@ -131,7 +151,7 @@ export default function Navigation({ session }) {
                       {session ? (
                         <img
                           className="h-8 w-8 rounded-full"
-                          src={avatar}
+                          src={session ? avatar : ""}
                           alt="error"
                         />
                       ) : (
@@ -206,7 +226,7 @@ export default function Navigation({ session }) {
                     <div className="flex-shrink-0">
                       <img
                         className="h-10 w-10 rounded-full"
-                        src={""}
+                        src={session ? avatar : ""}
                         alt="error"
                       />
                     </div>

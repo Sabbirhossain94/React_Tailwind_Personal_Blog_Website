@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import JoditEditor from "jodit-react";
 import Notification from "../../../Sub-components/Notification";
+import moment from "moment/moment";
 
 export default function CreateBlog({ session }) {
   const params = useParams();
@@ -14,8 +15,8 @@ export default function CreateBlog({ session }) {
   const [title, setTitle] = useState(" ");
   const [content, setContent] = useState("");
   const [message, setMessage] = useState({});
-
-  const date = new Date().toLocaleDateString();
+  const [coverphoto, setCoverPhoto] = useState(null);
+  const date = new Date().toLocaleString();
   // adding records to database here
 
   const handleSubmit = async (e) => {
@@ -31,13 +32,14 @@ export default function CreateBlog({ session }) {
   const createBlog = async (e) => {
     e.preventDefault();
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("blogs")
       .insert({
         user_id: session.user.id,
         title: title,
         content: content,
         inserted_at: date,
+        thumbnail: coverphoto,
       })
       .single();
 
@@ -70,9 +72,15 @@ export default function CreateBlog({ session }) {
   };
 
   const updateBlogContent = async (e) => {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("blogs")
-      .update({ user_id: session.user.id, title: title, content: content })
+      .update({
+        user_id: session.user.id,
+        title: title,
+        content: content,
+        inserted_at: date,
+        thumbnail: coverphoto,
+      })
       .match({ id: params.id });
     if (error) {
       setMessage({
@@ -94,7 +102,29 @@ export default function CreateBlog({ session }) {
       loadBlogContent();
     }
   }, []);
+  // var config = {
+  //   controls: {
+  //     font: {
+  //       list: {
+  //         "Roboto Medium,Arial,sans-serif": "Roboto",
+  //       },
+  //     },
+  //   },
+  // };
+  const handleCoverImage = async (e) => {
+    const file = e.target.files[0];
+    const fileExt = file.name.split(".").pop();
+    const filePath = `${Math.random()}.${fileExt}`;
 
+    let { error: uploadError } = await supabase.storage
+      .from("thumbnail")
+      .upload("Thumbnail/" + filePath, file);
+    if (uploadError) {
+      console.log(uploadError);
+    } else {
+      setCoverPhoto(filePath);
+    }
+  };
   return (
     <div className="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
       <div className="relative mx-auto max-w-7xl"></div>
@@ -105,6 +135,15 @@ export default function CreateBlog({ session }) {
             <div className="shadow sm:overflow-hidden sm:rounded-md">
               <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
                 <div>
+                  <label></label>
+                  <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    value={""}
+                    onChange={handleCoverImage}
+                  />
+
                   <label
                     htmlFor="about"
                     className="block text-sm font-medium text-gray-700"
@@ -133,6 +172,7 @@ export default function CreateBlog({ session }) {
                     <JoditEditor
                       ref={editor}
                       value={content}
+                      
                       onChange={(newContent) => setContent(newContent)}
                     />
                   </div>

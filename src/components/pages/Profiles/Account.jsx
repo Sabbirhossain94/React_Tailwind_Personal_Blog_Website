@@ -5,8 +5,9 @@ import { useState, useEffect } from "react";
 const Account = ({ session }) => {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState(null);
-  const [uploading, setUploading] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [preview, setPreview] = useState(null);
+  const date = new Date().toLocaleString();
   useEffect(() => {
     getProfile();
   }, []);
@@ -39,7 +40,6 @@ const Account = ({ session }) => {
 
   const updateProfile = async (e) => {
     e.preventDefault();
-
     try {
       setLoading(true);
       const userId = session.user.id;
@@ -49,6 +49,7 @@ const Account = ({ session }) => {
         .update({
           username: username,
           avatar_url: avatarUrl,
+          updated_at: date,
         })
         .match({ id: userId });
       if (error) {
@@ -63,8 +64,6 @@ const Account = ({ session }) => {
   };
   const uploadAvatar = async (event) => {
     try {
-      setUploading(true);
-
       if (!event.target.files || event.target.files.length === 0) {
         throw new Error("You must select an image to upload.");
       }
@@ -84,8 +83,6 @@ const Account = ({ session }) => {
       downloadImage(filePath);
     } catch (error) {
       alert(error.message);
-    } finally {
-      setUploading(false);
     }
   };
 
@@ -98,7 +95,7 @@ const Account = ({ session }) => {
         throw error;
       }
       const url = URL.createObjectURL(data);
-      setAvatarUrl(url);
+      setPreview(url);
     } catch (error) {
       console.log("Error downloading image: ", error.message);
     }
@@ -111,35 +108,29 @@ const Account = ({ session }) => {
             "Saving ..."
           ) : (
             <form onSubmit={updateProfile}>
-              <div className="" style={{ width: 250 }} aria-live="polite">
+              <div className="" style={{ width: 250 }}>
                 <img
-                  src={
-                    avatarUrl ? avatarUrl : `https://i.imgur.com/W2AT377.jpg`
-                  }
-                  alt={avatarUrl ? "Avatar" : "No image"}
+                  src={preview ? preview : `https://i.imgur.com/W2AT377.jpg`}
+                  alt={preview ? "Avatar" : "No image"}
                   className="avatar image ring-1 rounded-md"
                   style={{ height: 200, width: 200 }}
                 />
-                {uploading ? (
-                  "Uploading..."
-                ) : (
-                  <>
-                    <label className="mt-[15px] text-center" htmlFor="single">
-                      Upload an avatar
-                    </label>
-                    <div className="">
-                      <input
-                        type="file"
-                        id="single"
-                        accept="image/*"
-                        value={""}
-                        onChange={uploadAvatar}
-                        disabled={uploading}
-                        className=" text-blue-400"
-                      />
-                    </div>
-                  </>
-                )}
+
+                <>
+                  <label className="mt-[15px] text-center" htmlFor="single">
+                    Upload an avatar
+                  </label>
+                  <div className="">
+                    <input
+                      type="file"
+                      name="image"
+                      accept="image/*"
+                      value={""}
+                      onChange={uploadAvatar}
+                      className=" text-blue-400"
+                    />
+                  </div>
+                </>
               </div>
               <label htmlFor="email">Email</label>
               <div className='"form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"'>
@@ -149,7 +140,7 @@ const Account = ({ session }) => {
                 <label htmlFor="username">Name</label>
                 <input
                   className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  id="username"
+                  name="username"
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
