@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import JoditEditor from "jodit-react";
 import Notification from "../../../Sub-components/Notification";
-import moment from "moment/moment";
+import UploadCoverImage from "./UploadCoverImage";
 
 export default function CreateBlog({ session }) {
   const params = useParams();
@@ -15,7 +15,9 @@ export default function CreateBlog({ session }) {
   const [title, setTitle] = useState(" ");
   const [content, setContent] = useState("");
   const [message, setMessage] = useState({});
+  const [preview, setPreview] = useState(null);
   const [coverphoto, setCoverPhoto] = useState(null);
+  const [file, setFile] = useState(null);
   const date = new Date().toLocaleString();
   // adding records to database here
 
@@ -24,8 +26,10 @@ export default function CreateBlog({ session }) {
 
     if (params.id) {
       updateBlogContent(e);
+      uploadToStorage(e);
     } else {
       createBlog(e);
+      uploadToStorage(e);
     }
   };
 
@@ -57,17 +61,28 @@ export default function CreateBlog({ session }) {
       });
     }
   };
+  const uploadToStorage = async (e) => {
+    let { error: uploadError } = await supabase.storage
+      .from("thumbnail")
+      .upload("Thumbnail/" + coverphoto, file);
+    if (uploadError) {
+      console.log(uploadError);
+    }
+  };
+
 
   const loadBlogContent = async (e) => {
     let { data, error } = await supabase
       .from("blogs")
       .select("*")
       .eq("id", params.id);
+
     if (error) {
       console.log(error);
     } else {
       setTitle(data[0].title);
       setContent(data[0].content);
+      setCoverPhoto(data[0].thumbnail)
     }
   };
 
@@ -96,57 +111,47 @@ export default function CreateBlog({ session }) {
       });
     }
   };
+    // const updateCurrentCoverImage = async (e) => {
+    //   const { error } = await supabase.storage
+    //     .from("thumbnail")
+    //     .update(`Thumbnail/${coverphoto}`, file, {
+    //       cacheControl: "3600",
+    //       upsert: false,
+    //     });
+    //   if (error) {
+    //     console.log(error);
+    //   }
+    // };
 
   useEffect(() => {
     if (params.id !== undefined) {
       loadBlogContent();
     }
   }, []);
-  // var config = {
-  //   controls: {
-  //     font: {
-  //       list: {
-  //         "Roboto Medium,Arial,sans-serif": "Roboto",
-  //       },
-  //     },
-  //   },
-  // };
-  const handleCoverImage = async (e) => {
-    const file = e.target.files[0];
-    const fileExt = file.name.split(".").pop();
-    const filePath = `${Math.random()}.${fileExt}`;
 
-    let { error: uploadError } = await supabase.storage
-      .from("thumbnail")
-      .upload("Thumbnail/" + filePath, file);
-    if (uploadError) {
-      console.log(uploadError);
-    } else {
-      setCoverPhoto(filePath);
-    }
-  };
   return (
-    <div className="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
+    <div className="relative bg-white px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
       <div className="relative mx-auto max-w-7xl"></div>
       <div>
         <Notification message={message} />
         <div className="">
-          <form onSubmit={(e) => handleSubmit(e)}>
+          <form
+            onSubmit={(e) => {
+              handleSubmit(e);
+            }}
+          >
             <div className="shadow sm:overflow-hidden sm:rounded-md">
-              <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
+              <div className="space-y-6 bg-gray-100 px-4 py-5 sm:p-6">
                 <div>
-                  <label></label>
-                  <input
-                    type="file"
-                    name="image"
-                    accept="image/*"
-                    value={""}
-                    onChange={handleCoverImage}
+                  <UploadCoverImage
+                    setCoverPhoto={setCoverPhoto}
+                    setFile={setFile}
+                    preview={preview}
+                    setPreview={setPreview}
                   />
-
                   <label
                     htmlFor="about"
-                    className="block text-sm font-medium text-gray-700"
+                    className="mt-8 block text-sm font-medium text-blue-500"
                   >
                     Title
                   </label>
@@ -156,23 +161,21 @@ export default function CreateBlog({ session }) {
                       value={title}
                       id="title"
                       name="title"
-                      className="ring-1 mt-1 h-8 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="w-full border border-gray-300 mt-1 h-8 block rounded-md shadow-sm sm:text-sm "
+                      required
                     />
                   </div>
-                  <div className="mt-5">
+                  <div className="mt-8 ">
                     <label
                       htmlFor="comment"
-                      className="mt-5 lock text-sm font-medium text-gray-700"
+                      className="mt-5 lock text-sm font-medium text-blue-500"
                     >
                       Content
                     </label>
-                    {/* <div class="mt-2">
-                                            <textarea onChange={(e) => setContent(e.target.value)} value={content} rows="6" name="comment" id="comment" class="ring-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
-                                        </div> */}
+
                     <JoditEditor
                       ref={editor}
                       value={content}
-                      
                       onChange={(newContent) => setContent(newContent)}
                     />
                   </div>
