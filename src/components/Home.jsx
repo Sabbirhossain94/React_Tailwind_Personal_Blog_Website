@@ -7,7 +7,7 @@ import SignIn from "./pages/SignIn";
 import supabase from "../supabaseClient";
 import Account from "./pages/Profiles/Account";
 import CreateBlog from "./pages/Profiles/CreateBlog";
-
+import Footer from "./Footer";
 export default function () {
   const [session, setSession] = useState(null);
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function () {
       setSession(session);
     });
   }, []);
- 
+
   return (
     <Router>
       <div>

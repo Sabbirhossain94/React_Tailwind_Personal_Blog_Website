@@ -1,7 +1,7 @@
 import React from "react";
 import supabase from "../../../supabaseClient";
 import { useState, useEffect } from "react";
-
+import LoadingScreen from "../../../Sub-components/LoadingScreen";
 const Account = ({ session }) => {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
@@ -104,59 +104,55 @@ const Account = ({ session }) => {
     <div>
       {session ? (
         <div className="mx-auto mt-[50px] w-1/2 flex justify-center flex-col">
-          {loading ? (
-            "Saving ..."
-          ) : (
-            <form onSubmit={updateProfile}>
-              <div className="" style={{ width: 250 }}>
-                <img
-                  src={preview ? preview : `https://i.imgur.com/W2AT377.jpg`}
-                  alt={preview ? "Avatar" : "No image"}
-                  className="avatar image ring-1 rounded-md"
-                  style={{ height: 200, width: 200 }}
-                />
+          <form onSubmit={updateProfile}>
+            <div className="" style={{ width: 250 }}>
+              <img
+                src={preview ? preview : `https://i.imgur.com/W2AT377.jpg`}
+                alt={preview ? "Avatar" : "No image"}
+                className="avatar image ring-1 rounded-md"
+                style={{ height: 200, width: 200 }}
+              />
 
-                <>
-                  <label className="mt-[15px] text-center" htmlFor="single">
-                    Upload an avatar
-                  </label>
-                  <div className="">
-                    <input
-                      type="file"
-                      name="image"
-                      accept="image/*"
-                      value={""}
-                      onChange={uploadAvatar}
-                      className=" text-blue-400"
-                    />
-                  </div>
-                </>
-              </div>
-              <label htmlFor="email">Email</label>
-              <div className='"form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"'>
-                {session.user.email}
-              </div>
-              <div>
-                <label htmlFor="username">Name</label>
-                <input
-                  className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  name="username"
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </div>
+              <>
+                <label className="mt-[15px] text-center" htmlFor="single">
+                  Upload an avatar
+                </label>
+                <div className="">
+                  <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    value={""}
+                    onChange={uploadAvatar}
+                    className=" text-blue-400"
+                  />
+                </div>
+              </>
+            </div>
+            <label htmlFor="email">Email</label>
+            <div className='"form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"'>
+              {session.user.email}
+            </div>
+            <div>
+              <label htmlFor="username">Name</label>
+              <input
+                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                name="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
 
-              <div className="mt-8 flex justify-end">
-                <button
-                  type="submit"
-                  className="inline-flex w-full justify-center rounded-md border border-transparent bg-sky-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                >
-                  Update
-                </button>
-              </div>
-            </form>
-          )}
+            <div className="mt-8 flex justify-end">
+              <button
+                type="submit"
+                className="inline-flex w-full justify-center rounded-md border border-transparent bg-sky-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                Update
+              </button>
+            </div>
+          </form>
         </div>
       ) : (
         ""

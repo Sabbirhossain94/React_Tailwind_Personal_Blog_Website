@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 function UploadCoverImage({ setFile, setCoverPhoto,preview,setPreview }) {
 
@@ -21,6 +21,7 @@ function UploadCoverImage({ setFile, setCoverPhoto,preview,setPreview }) {
             width="200px"
             height="200px"
             className="border border-blue-400"
+            alt="error"
           />
           <button
             onClick={() => setPreview(null)}

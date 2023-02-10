@@ -2,13 +2,11 @@ import "../../src/animation.css";
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import supabase from "../supabaseClient";
-import Modal from "../Sub-components/Modal";
-import Account from "./pages/Profiles/Account";
 import { AiOutlineUser } from "react-icons/ai";
 
 export default function Navigation({ session }) {
   const [showDropDown, setShowDropDown] = useState(false);
-  const [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false);
+  // const [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false);
   const [avatar, setAvatar] = useState(null);
   const [openMenuIcon, setOpenMenuIcon] = useState(false);
   const dropDownOpener = useRef();
@@ -69,20 +67,14 @@ export default function Navigation({ session }) {
   }, [dropDownOpener, setShowDropDown]);
   return (
     <div>
-      {showUpdateProfileModal ? (
-        <Modal header={"Profile"} content={<Account session={session} />} />
-      ) : (
-        ""
-      )}
-
-      <nav className="bg-gray-800 shadow-lg">
+      <nav className="bg-slate-800 shadow-lg">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 justify-between">
             <div className="flex">
               <div className="-ml-2 mr-2 flex items-center md:hidden">
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                  className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:bg-gray-700"
                 >
                   {openMenuIcon ? (
                     <svg
@@ -119,18 +111,15 @@ export default function Navigation({ session }) {
                     </svg>
                   )}
                 </button>
-                <Link to="/">
-                  <h1 className="font-bold text-xl text-sky-600">
-                    &lt; MyBlogs &nbsp;&frasl;&gt;
-                  </h1>
+                <Link to="/" className="ml-[20px] flex flex-row">
+                  <img src="blog.png" width="30px" height="20px" />
+                  <h1 className="ml-2 mt-1 text-gray-200 text-xl">Blog</h1>
                 </Link>
               </div>
-
               <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
-                <Link to="/">
-                  <h1 className="font-bold text-xl text-sky-600">
-                    &lt; MyBlogs &nbsp;&frasl;&gt;
-                  </h1>
+                <Link to="/" className="ml-[20px] flex flex-row">
+                  <img src="blog.png" width="30px" height="20px" />
+                  <h1 className="ml-2 mt-1 text-gray-200 text-xl">Blog</h1>
                 </Link>
               </div>
             </div>
@@ -183,7 +172,6 @@ export default function Navigation({ session }) {
                       </Link>
                       <Link
                         onClick={() => {
-                          setShowUpdateProfileModal(true);
                           setShowDropDown(false);
                         }}
                         to={session ? "/account" : "/signin"}
@@ -195,7 +183,7 @@ export default function Navigation({ session }) {
                         <a
                           href="#"
                           onClick={logOut}
-                          className="block px-4 py-2 text-sm text-gray-700"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-500"
                         >
                           Sign out
                         </a>
