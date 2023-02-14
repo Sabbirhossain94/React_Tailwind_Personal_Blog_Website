@@ -113,13 +113,17 @@ export default function Navigation({ session }) {
                 </button>
                 <Link to="/" className="ml-[20px] flex flex-row">
                   <img src="blog.png" width="30px" height="20px" />
-                  <h1 className="ml-2 mt-1 text-gray-200 text-xl font-semibold">Blog</h1>
+                  <h1 className="ml-2 mt-1 text-gray-200 text-xl font-semibold">
+                    Blog
+                  </h1>
                 </Link>
               </div>
               <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
                 <Link to="/" className="ml-[20px] flex flex-row">
                   <img src="blog.png" width="30px" height="20px" />
-                  <h1 className="ml-2 mt-1 text-gray-200 text-xl font-semibold">Blog</h1>
+                  <h1 className="ml-2 mt-1 text-gray-200 text-xl font-semibold">
+                    Blog
+                  </h1>
                 </Link>
               </div>
             </div>

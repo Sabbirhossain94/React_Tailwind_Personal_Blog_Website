@@ -31,7 +31,7 @@ export default function Content({ session }) {
     if (error) {
       console.log(error);
     } else {
-     navigate("/")
+      navigate("/");
     }
   };
   useEffect(() => {

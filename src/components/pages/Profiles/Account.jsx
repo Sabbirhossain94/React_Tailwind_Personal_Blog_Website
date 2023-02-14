@@ -1,7 +1,7 @@
 import React from "react";
 import supabase from "../../../supabaseClient";
 import { useState, useEffect } from "react";
-import LoadingScreen from "../../../Sub-components/LoadingScreen";
+
 const Account = ({ session }) => {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");

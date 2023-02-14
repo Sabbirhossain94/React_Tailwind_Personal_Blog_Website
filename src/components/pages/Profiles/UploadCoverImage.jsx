@@ -1,7 +1,6 @@
 import React from "react";
 
-function UploadCoverImage({ setFile, setCoverPhoto,preview,setPreview }) {
-
+function UploadCoverImage({ setFile, setCoverPhoto, preview, setPreview }) {
   const handleCoverImage = async (e) => {
     const file = e.target.files[0];
     const fileExt = file.name.split(".").pop();

@@ -113,7 +113,7 @@ export default function CreateBlog({ session }) {
         msg: "Successfully Saved The Blog Post",
         remove: () => setMessage({}),
       });
-      navigate("/")
+      navigate("/");
     }
   };
 
