@@ -11,7 +11,7 @@ export default function Navigation({ session }) {
   const [openMenuIcon, setOpenMenuIcon] = useState(false);
   const dropDownOpener = useRef();
 
-  const avatarFIle = async (e) => {
+  const avatarFIle = async () => {
     try {
       let { data, error, status } = await supabase
         .from("profiles")
@@ -40,7 +40,7 @@ export default function Navigation({ session }) {
     }
   };
 
-  const logOut = async (e) => {
+  const logOut = async () => {
     let { error } = await supabase.auth.signOut();
     if (error) {
       console.log(error);
@@ -49,6 +49,7 @@ export default function Navigation({ session }) {
 
   useEffect(() => {
     avatarFIle();
+    // eslint-disable-next-line
   }, [session]);
 
   useEffect(() => {
@@ -112,7 +113,7 @@ export default function Navigation({ session }) {
                   )}
                 </button>
                 <Link to="/" className="ml-[20px] flex flex-row">
-                  <img src="blog.png" width="30px" height="20px" />
+                  <img src="blog.png" width="40px" height="20px" alt="error" />
                   <h1 className="ml-2 mt-1 text-gray-200 text-xl font-semibold">
                     Blog
                   </h1>
@@ -120,8 +121,8 @@ export default function Navigation({ session }) {
               </div>
               <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
                 <Link to="/" className="ml-[20px] flex flex-row">
-                  <img src="blog.png" width="30px" height="20px" />
-                  <h1 className="ml-2 mt-1 text-gray-200 text-xl font-semibold">
+                  <img src="blog.png" width="40px" height="20px" alt="error"/>
+                  <h1 className="ml-1 mt-1 text-gray-200 text-xl font-semibold">
                     Blog
                   </h1>
                 </Link>
@@ -185,7 +186,7 @@ export default function Navigation({ session }) {
                       </Link>
                       {session ? (
                         <a
-                          href="#"
+                          href="/#"
                           onClick={logOut}
                           className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-500"
                         >
@@ -263,7 +264,7 @@ export default function Navigation({ session }) {
 
                   {session ? (
                     <a
-                      href="#"
+                      href="/#"
                       onClick={logOut}
                       className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                     >
