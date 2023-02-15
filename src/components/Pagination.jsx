@@ -1,86 +1,42 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 
 export default function Pagination({
   currentPage,
-  getblogs,
-  blogLength,
-  perPage,
-  blogsPerPage,
+  itemsPerPage,
+  totalLength,
+  setCurrentPage,
 }) {
-  //const [newPage, setNewPage] = useState(currentPage)
-  const totalPage = Math.ceil(blogLength / perPage);
-  const [newPage, setNewPage] = useState(currentPage);
-
-  function previousPage() {
-    currentPage--;
-    if (newPage !== 1) {
-      setNewPage(currentPage);
-    }
+  let array = [];
+  for (let i = 1; i <= Math.ceil(totalLength / itemsPerPage); i++) {
+    array.push(i);
   }
-
-  function nextPage() {
-    currentPage++;
-    if (newPage !== totalPage) {
-      setNewPage(currentPage);
-    }
-  }
-
-  useEffect(() => {
-    getblogs();
-  }, [currentPage]);
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-  }, []);
-
+  console.log(array);
   return (
     <div>
-      <nav
-        className="mt-[50px] fixed bottom-0 left-0 right-0 flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
-        aria-label="Pagination"
-      >
-        <div className="hidden sm:block">
-          <p className="text-sm text-gray-700">
-            Showing
-            <span className="font-medium text-blue-600">
-              &nbsp;{blogsPerPage.length}
-            </span>
-            <span className="">
-              &nbsp;out of&nbsp;
-              <span className="font-medium text-blue-600">{blogLength} </span>
-            </span>
-            results
-          </p>
-        </div>
-        <div className="flex flex-1 justify-between sm:justify-end">
-          <Link
-            to={`/?page=${newPage}`}
-            onClick={() => {
-              previousPage();
-              window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-            }}
-            className={`relative inline-flex items-center rounded-md border border-gray-300  px-4 py-2 text-sm font-medium  hover:bg-blue-500${
-              currentPage === 1 ? "bg-darkgray cursor-not-allowed" : " bg-white"
-            }`}
+      <nav className="relative bottom-0 left-0 right-0  w-full xs:mx-auto mx-auto h-32 flex flex-row items-center justify-center xs:flex xs:flex-wrap  px-2 sm:px-0  ">
+        {array.map((page, key) => (
+          <li
+            key={key}
+            className="h-32 flex items-center list-none px-2 py-2  "
           >
-            Previous
-          </Link>
-          <Link
-            to={`/?page=${newPage}`}
-            onClick={() => {
-              nextPage();
-              window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-            }}
-            className={`relative ml-3 inline-flex items-center rounded-md border border-gray-300  px-4 py-2 text-sm font-medium hover:bg-blue-500${
-              currentPage === totalPage
-                ? "bg-gray-50 cursor-not-allowed"
-                : " bg-white"
-            }`}
-          >
-            Next
-          </Link>
-        </div>
+            <button
+              className={
+                page === currentPage
+                  ? "border border-blue-500 rounded-md text-blue-500 hover:bg-blue-500"
+                  : "border border-gray-500 rounded-md hover:bg-blue-500"
+              }
+            >
+              <p
+                onClick={() => {
+                  setCurrentPage(page);
+                }}
+                className="cursor-pointer bg-transparent  hover:text-white hover:inline-flex items-center px-4 py-3 text-sm font-medium "
+              >
+                {page}
+              </p>
+            </button>
+          </li>
+        ))}
       </nav>
     </div>
   );
