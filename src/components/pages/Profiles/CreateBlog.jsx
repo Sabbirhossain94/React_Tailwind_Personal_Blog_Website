@@ -8,7 +8,7 @@ import JoditEditor from "jodit-react";
 import Notification from "../../../Sub-components/Notification";
 import UploadCoverImage from "./UploadCoverImage";
 import AnimatedPage from "../../../Sub-components/SlideAnimation";
-
+import Footer from "../../Footer";
 export default function CreateBlog({ session }) {
   const params = useParams();
   const navigate = useNavigate();
@@ -124,81 +124,84 @@ export default function CreateBlog({ session }) {
   }, [params.id]);
 
   return (
-    <AnimatedPage>
-      <div className="relative bg-white px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
-        <div>
-          <Notification message={message} />
-          <div className="">
-            <form
-              onSubmit={(e) => {
-                handleSubmit(e);
-              }}
-            >
-              <div className="shadow sm:overflow-hidden sm:rounded-md">
-                <div className="space-y-6 bg-gray-100 px-4 py-5 sm:p-6">
-                  <div>
-                    <UploadCoverImage
-                      setCoverPhoto={setCoverPhoto}
-                      setFile={setFile}
-                      preview={preview}
-                      setPreview={setPreview}
-                    />
-                    <label
-                      htmlFor="about"
-                      className="mt-8 block text-sm font-medium text-blue-500"
-                    >
-                      Title
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        onChange={(e) => setTitle(e.target.value)}
-                        value={title}
-                        id="title"
-                        name="title"
-                        className="w-full border border-gray-300 mt-1 h-8 block rounded-md shadow-sm sm:text-sm "
-                        required
+    <div>
+      <AnimatedPage>
+        <div className="min-h-screen relative bg-white px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
+          <div>
+            <Notification message={message} />
+            <div className="">
+              <form
+                onSubmit={(e) => {
+                  handleSubmit(e);
+                }}
+              >
+                <div className="shadow sm:overflow-hidden sm:rounded-md">
+                  <div className="space-y-6 bg-gray-100 px-4 py-5 sm:p-6">
+                    <div>
+                      <UploadCoverImage
+                        setCoverPhoto={setCoverPhoto}
+                        setFile={setFile}
+                        preview={preview}
+                        setPreview={setPreview}
                       />
-                    </div>
-                    <div className="mt-8 ">
                       <label
-                        htmlFor="comment"
-                        className="mt-5 lock text-sm font-medium text-blue-500"
+                        htmlFor="about"
+                        className="mt-8 block text-sm font-medium text-blue-500"
                       >
-                        Content
+                        Title
                       </label>
+                      <div className="mt-1">
+                        <input
+                          onChange={(e) => setTitle(e.target.value)}
+                          value={title}
+                          id="title"
+                          name="title"
+                          className="w-full border border-gray-300 mt-1 h-8 block rounded-md shadow-sm sm:text-sm "
+                          required
+                        />
+                      </div>
+                      <div className="mt-8 ">
+                        <label
+                          htmlFor="comment"
+                          className="mt-5 lock text-sm font-medium text-blue-500"
+                        >
+                          Content
+                        </label>
 
-                      <JoditEditor
-                        ref={editor}
-                        value={content}
-                        onChange={(newContent) => setContent(newContent)}
-                      />
+                        <JoditEditor
+                          ref={editor}
+                          value={content}
+                          onChange={(newContent) => setContent(newContent)}
+                        />
+                      </div>
                     </div>
                   </div>
+                  {getString === "/createblog" ? (
+                    <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                      <button
+                        type="submit"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      >
+                        Post
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                      <button
+                        type="submit"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      >
+                        Update
+                      </button>
+                    </div>
+                  )}
                 </div>
-                {getString === "/createblog" ? (
-                  <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                    <button
-                      type="submit"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                      Post
-                    </button>
-                  </div>
-                ) : (
-                  <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                    <button
-                      type="submit"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                      Update
-                    </button>
-                  </div>
-                )}
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </AnimatedPage>
+      </AnimatedPage>
+      <Footer/>
+    </div>
   );
 }
