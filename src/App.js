@@ -75,7 +75,7 @@ function App() {
                 >
                   <div className=" flex-shrink-0">
                     <img
-                      className="h-48 w-full object-cover "
+                      className="h-48 w-full object-cover rounded-t-xl"
                       src={blogCoverUrl + item.thumbnail}
                       alt="error"
                     />

@@ -9,6 +9,8 @@ import Notification from "../../../Sub-components/Notification";
 import UploadCoverImage from "./UploadCoverImage";
 import AnimatedPage from "../../../Sub-components/SlideAnimation";
 import Footer from "../../Footer";
+import moment from "moment";
+
 export default function CreateBlog({ session }) {
   const params = useParams();
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ export default function CreateBlog({ session }) {
   const [preview, setPreview] = useState(null);
   const [coverphoto, setCoverPhoto] = useState(null);
   const [file, setFile] = useState(null);
-  const date = new Date().toLocaleString();
+  const date = moment().format("MMMM D, YYYY");
   // adding records to database here
 
   const handleSubmit = async (e) => {
