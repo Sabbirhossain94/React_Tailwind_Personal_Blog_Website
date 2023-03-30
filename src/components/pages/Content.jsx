@@ -6,37 +6,34 @@ import supabase from "../../supabaseClient";
 import { Link } from "react-router-dom";
 import AnimatedPage from "../../Sub-components/SlideAnimation";
 import Footer from "../Footer";
-import moment from "moment/moment";
 import Modal from "../../Sub-components/Modal";
+import { BsLinkedin } from "react-icons/bs";
+import { AiFillGithub } from "react-icons/ai";
+import { MdWork } from "react-icons/md";
+import { SiGmail } from "react-icons/si";
+
 export default function Content({ session }) {
   const params = useParams();
   const [singleBlog, setSingleBlog] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [avatar, setAvatar] = useState(null);
   const navigate = useNavigate();
   const blogCoverUrl = process.env.REACT_APP_STORAGE_PUBLIC_URL;
-  var months = [
-    "Jan",
-    "Feb",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "Aug",
-    "Sept",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
+  const profilePhotoUrl = process.env.REACT_APP_STORAGE_PROFILE_PHOTO_URL;
+  console.log(profilePhotoUrl);
+
   const showBlog = async () => {
     let { data, error } = await supabase
       .from("blogs")
-      .select("*")
+      .select(`*,profiles(*)`)
       .eq("id", params.id);
     if (error) {
       console.log(error);
     } else {
       setSingleBlog(data);
+      const [photo] = data;
+      setAvatar(photo?.profiles?.avatar_url);
+      // console.log(avatar);
     }
   };
   const deleteBlog = async (id) => {
@@ -63,20 +60,36 @@ export default function Content({ session }) {
           <div>
             {singleBlog.map((item, key) => (
               <li key={key} className="list-none">
-                <div key={item.id} className="overflow-hidden bg-white">
-                  <div className="relative mx-auto max-w-full py-16 px-4 sm:px-6 lg:px-8">
-                    <div className="mx-auto max-w-prose lg:grid lg:max-w-full lg:grid-cols-1 lg:gap-8">
+                <div key={item.id} className="overflow-hidden bg-white ">
+                  <div className="mt-12 relative max-w-full py-16 px-4 sm:px-6 lg:px-8">
+                    <div className=" mx-auto max-w-prose lg:grid lg:max-w-full lg:grid-cols-1 lg:gap-8">
                       <div className="flex mr-4">
                         <div className="flex flex-col justify-center mx-auto">
-                          <div className=" relative flex w-full">
-                            <h3 className="text-xl font-semibold w-full">
-                              <span className="text-gray-500">
-                                Published on
-                              </span>{" "}
-                              <span className="text-blue-600">
-                                {item.inserted_at}
-                              </span>
-                            </h3>
+                          <div className=" relative flex flex-row items-center w-full">
+                            <div className=" flex flex-row items-center w-1/2">
+                              <div className="flex-shrink-0">
+                                <div>
+                                  <img
+                                    className="h-12 w-12 rounded-full object-fit"
+                                    src={profilePhotoUrl + avatar}
+                                    alt="error"
+                                  />
+                                </div>
+                              </div>
+                              <div className="ml-3">
+                                <h3 className="text-md font-medium ">
+                                  <p href="#" className="text-md">
+                                    Sabbir Hossain
+                                  </p>
+                                  <p href="#" className="text-xs ">
+                                    Published on{" "}
+                                    <span className="text-indigo-600">
+                                      {item.inserted_at}
+                                    </span>
+                                  </p>
+                                </h3>
+                              </div>
+                            </div>
                             {session ? (
                               <div className=" w-full flex flex-row justify-end">
                                 <div className=" cursor-pointer ml-2 top-[1.2rem]">
@@ -96,36 +109,63 @@ export default function Content({ session }) {
                                   >
                                     Delete
                                   </button>
-                                  
                                 </div>
                               </div>
                             ) : (
-                              ""
+                              <div className="w-1/2  h-full flex flex-row justify-end items-center">
+                                <a href="mailto:sabbirhossainbd199@gmail.com">
+                                  <SiGmail
+                                    className="text-xl ml-4 text-slate-800 transition ease-in-out scale-90 hover:scale-100"
+                                    title="Gmail"
+                                  />
+                                </a>
+
+                                <a href="https://www.linkedin.com/in/sabbir-hossain-b73726214/">
+                                  <BsLinkedin
+                                    className="text-xl ml-4 text-slate-800 transition ease-in-out scale-90 hover:scale-100"
+                                    title="linkedIn"
+                                  />
+                                </a>
+                                <a href="https://github.com/Sabbirhossain97">
+                                  <AiFillGithub
+                                    className="text-xl ml-4 text-slate-800 transition ease-in-out scale-90 hover:scale-100"
+                                    title="Github"
+                                  />
+                                </a>
+                                <a href="https://sabbirontheweb.com/">
+                                  <MdWork
+                                    className="text-xl ml-4 text-slate-800 transition ease-in-out scale-90 hover:scale-100"
+                                    title="Portfolio"
+                                  />
+                                </a>
+                              </div>
                             )}
                           </div>
                           <img
                             src={blogCoverUrl + item.thumbnail}
-                            className="mt-4"
+                            className="mt-8"
                           />
                           {openModal ? (
                             <div>
                               {" "}
-                              <Modal deleteBlog={deleteBlog} itemId={item.id} openModal={openModal} setOpenModal={setOpenModal}/>{" "}
+                              <Modal
+                                deleteBlog={deleteBlog}
+                                itemId={item.id}
+                                openModal={openModal}
+                                setOpenModal={setOpenModal}
+                              />{" "}
                             </div>
                           ) : (
                             ""
                           )}
-                         
-                          {/* <h3 className="mt-8 text-center text-2xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl">
-                            {item.title}
-                          </h3> */}
                         </div>
                       </div>
                     </div>
-                    <div className="mt-32 lg:grid lg:grid-cols-1 lg:max-w-7xl lg:mx-auto lg:gap-8">
+                    <div className="mt-20 lg:grid lg:grid-cols-1 lg:max-w-7xl lg:mx-auto lg:gap-8">
                       <div className="mt-8 lg:mt-0">
                         <div className="prose prose-indigo mx-auto mt-5 text-center text-gray-500 lg:col-start-1 lg:row-start-1 lg:max-w-none">
                           <div
+                            className=""
                             dangerouslySetInnerHTML={{ __html: item.content }}
                           />
                         </div>

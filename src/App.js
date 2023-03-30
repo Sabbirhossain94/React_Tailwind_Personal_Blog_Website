@@ -14,6 +14,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage] = useState(0);
   const [totalLength, setTotalLength] = useState(null);
+  
   const blogCoverUrl = process.env.REACT_APP_STORAGE_PUBLIC_URL;
 
   const totalBlogs = async () => {
@@ -22,7 +23,7 @@ function App() {
       let { data, count, error, status } = await supabase
         .from("blogs")
         .select(`*,profiles(*)`, { count: "exact" })
-        .range(firstItemIndex, lastItemIndex);
+        .range(firstItemIndex, lastItemIndex - 1);
       if (error && status !== 406) {
         throw error;
       }
@@ -56,10 +57,8 @@ function App() {
     // eslint-disable-next-line
   }, [currentPage]);
 
-  const lastItemIndex = currentPage * itemsPerPage;
-  const firstItemIndex = lastItemIndex - itemsPerPage;
-  const currentItems = allBlog.slice(firstItemIndex, lastItemIndex);
-
+  const lastItemIndex = currentPage * itemsPerPage; //3
+  const firstItemIndex = lastItemIndex - itemsPerPage; //0
   return (
     <div>
       <div className="min-h-screen relative ">
@@ -86,13 +85,7 @@ function App() {
                         <p className="text-xl font-semibold text-gray-700">
                           {item.title}
                         </p>
-                        {/* <div className="mt-3 text-base text-gray-500">
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: item.content.slice(0, 20),
-                            }}
-                          />
-                        </div> */}
+
                         <div className="mt-6 flex items-center">
                           <div className="flex-shrink-0">
                             <div>
