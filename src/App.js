@@ -14,7 +14,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage] = useState(0);
   const [totalLength, setTotalLength] = useState(null);
-  
+
   const blogCoverUrl = process.env.REACT_APP_STORAGE_PUBLIC_URL;
 
   const totalBlogs = async () => {
@@ -61,7 +61,7 @@ function App() {
   const firstItemIndex = lastItemIndex - itemsPerPage; //0
   return (
     <div>
-      <div className="min-h-screen relative ">
+      <div className="min-h-screen relative dark:bg-zinc-900/95 bg-white py-10 ">
         {loading ? (
           <LoadingScreen />
         ) : (
@@ -70,7 +70,7 @@ function App() {
               <div className=" relative mx-auto mt-12 grid max-w-lg gap-5 flex-shrink xs:w-2/3 sm:w-1/2 scale-100 transition duration-300 hover:scale-105">
                 <Link
                   to={`/content/` + item.id}
-                  className="flex flex-col rounded-xl shadow-lg border border-gray-200"
+                  className="flex flex-col rounded-xl shadow-xl border dark:border-gray-100/10"
                 >
                   <div className=" flex-shrink-0">
                     <img
@@ -79,10 +79,10 @@ function App() {
                       alt="error"
                     />
                   </div>
-                  <div className="flex flex-1 flex-col justify-between bg-gray-100/50 p-6 rounded-lg ">
+                  <div className="flex flex-1 flex-col justify-between dark:bg-zinc-900/95  bg-white p-6 rouned-b rounded-lg ">
                     <div className="flex-1">
                       <div className="mt-2 block">
-                        <p className="text-xl font-semibold text-gray-700">
+                        <p className="text-xl font-semibold dark:text-gray-200 text-slate-800">
                           {item.title}
                         </p>
 
@@ -98,10 +98,13 @@ function App() {
                           </div>
                           <div className="ml-3">
                             <h3 className="text-sm font-medium text-gray-700">
-                              <p href="#" className="text-md">
+                              <p
+                                href="#"
+                                className="text-md dark:text-gray-200 text-slate-800"
+                              >
                                 {item.profiles.username}
                               </p>
-                              <p href="#" className="text-xs text-indigo-600">
+                              <p className="text-xs dark:text-teal-600 text-blue-500">
                                 {item.inserted_at}
                               </p>
                             </h3>

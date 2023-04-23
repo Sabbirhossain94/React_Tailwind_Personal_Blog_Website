@@ -57,17 +57,20 @@ export default function Content({ session }) {
     <div>
       <div className="min-h-screen relative">
         <AnimatedPage>
-          <div>
+          <div className="">
             {singleBlog.map((item, key) => (
-              <li key={key} className="list-none">
-                <div key={item.id} className="overflow-hidden bg-white ">
-                  <div className="mt-12 relative max-w-full py-16 px-4 sm:px-6 lg:px-8">
-                    <div className=" mx-auto max-w-prose lg:grid lg:max-w-full lg:grid-cols-1 lg:gap-8">
+              <li key={key} className="list-none ">
+                <div
+                  key={item.id}
+                  className="overflow-hidden dark:bg-zinc-900/90 "
+                >
+                  <div className=" mt-12 relative max-w-full py-16 px-4 sm:px-6 lg:px-8">
+                    <div className=" mx-auto lg:grid lg:max-w-7xl lg:grid-cols-1 lg:gap-8">
                       <div className="flex mr-4">
                         <div className="flex flex-col justify-center mx-auto">
                           <div className=" relative flex flex-row items-center w-full">
                             <div className=" flex flex-row items-center w-1/2">
-                              <div className="flex-shrink-0">
+                              <div className="flex-shrink-0 ">
                                 <div>
                                   <img
                                     className="h-12 w-12 rounded-full object-fit"
@@ -78,12 +81,12 @@ export default function Content({ session }) {
                               </div>
                               <div className="ml-3">
                                 <h3 className="text-md font-medium ">
-                                  <p href="#" className="text-md">
+                                  <p className="text-md dark:text-gray-300">
                                     Sabbir Hossain
                                   </p>
-                                  <p href="#" className="text-xs ">
+                                  <p className="text-xs dark:text-gray-400">
                                     Published on{" "}
-                                    <span className="text-indigo-600">
+                                    <span className="text-indigo-600 dark:text-teal-500">
                                       {item.inserted_at}
                                     </span>
                                   </p>
@@ -112,39 +115,42 @@ export default function Content({ session }) {
                                 </div>
                               </div>
                             ) : (
-                              <div className="w-1/2  h-full flex flex-row justify-end items-center">
+                              <div className="w-1/2 h-full flex flex-row justify-end items-center">
                                 <a href="mailto:sabbirhossainbd199@gmail.com">
                                   <SiGmail
-                                    className="text-xl ml-4 text-slate-800 transition ease-in-out scale-90 hover:scale-100"
+                                    className="text-xl ml-4 text-slate-800 dark:text-gray-500 transition ease-in-out scale-90 hover:scale-100"
                                     title="Gmail"
                                   />
                                 </a>
 
                                 <a href="https://www.linkedin.com/in/sabbir-hossain-b73726214/">
                                   <BsLinkedin
-                                    className="text-xl ml-4 text-slate-800 transition ease-in-out scale-90 hover:scale-100"
+                                    className="text-xl ml-4 text-slate-800 dark:text-gray-500 transition ease-in-out scale-90 hover:scale-100"
                                     title="linkedIn"
                                   />
                                 </a>
                                 <a href="https://github.com/Sabbirhossain97">
                                   <AiFillGithub
-                                    className="text-xl ml-4 text-slate-800 transition ease-in-out scale-90 hover:scale-100"
+                                    className="text-xl ml-4 text-slate-800 dark:text-gray-500 transition ease-in-out scale-90 hover:scale-100"
                                     title="Github"
                                   />
                                 </a>
                                 <a href="https://sabbirontheweb.com/">
                                   <MdWork
-                                    className="text-xl ml-4 text-slate-800 transition ease-in-out scale-90 hover:scale-100"
+                                    className="text-xl ml-4 text-slate-800 dark:text-gray-500 transition ease-in-out scale-90 hover:scale-100"
                                     title="Portfolio"
                                   />
                                 </a>
                               </div>
                             )}
                           </div>
+
                           <img
                             src={blogCoverUrl + item.thumbnail}
                             className="mt-8"
+                            
                           />
+
                           {openModal ? (
                             <div>
                               {" "}
@@ -161,9 +167,9 @@ export default function Content({ session }) {
                         </div>
                       </div>
                     </div>
-                    <div className="mt-20 lg:grid lg:grid-cols-1 lg:max-w-7xl lg:mx-auto lg:gap-8">
+                    <div className="mt-20 lg:grid lg:grid-cols-1 lg:max-w-4xl lg:mx-auto lg:gap-8">
                       <div className="mt-8 lg:mt-0">
-                        <div className="prose prose-indigo mx-auto mt-5 text-center text-gray-500 lg:col-start-1 lg:row-start-1 lg:max-w-none">
+                        <div className="prose prose-indigo mx-auto mt-5 text-center dark:text-gray-400 lg:col-start-1 lg:row-start-1 lg:max-w-none">
                           <div
                             className=""
                             dangerouslySetInnerHTML={{ __html: item.content }}

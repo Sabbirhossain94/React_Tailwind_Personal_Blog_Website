@@ -128,17 +128,17 @@ export default function CreateBlog({ session }) {
   return (
     <div>
       <AnimatedPage>
-        <div className="min-h-screen relative bg-white px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
+        <div className="min-h-screen relative bg-white  px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
           <div>
             <Notification message={message} />
-            <div className="">
+            <div className="mt-12 h-screen py-24">
               <form
                 onSubmit={(e) => {
                   handleSubmit(e);
                 }}
               >
-                <div className="shadow sm:overflow-hidden sm:rounded-md">
-                  <div className="space-y-6 bg-gray-100 px-4 py-5 sm:p-6">
+                <div className="shadow sm:overflow-hidden sm:rounded-md ">
+                  <div className="space-y-6 bg-gray-100 px-4 py-5 sm:p-6 ">
                     <div>
                       <UploadCoverImage
                         setCoverPhoto={setCoverPhoto}
@@ -174,6 +174,7 @@ export default function CreateBlog({ session }) {
                           ref={editor}
                           value={content}
                           onChange={(newContent) => setContent(newContent)}
+                          className="bg-zinc-900"
                         />
                       </div>
                     </div>

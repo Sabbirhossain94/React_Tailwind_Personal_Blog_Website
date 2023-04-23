@@ -22,41 +22,40 @@ export default function Auth() {
 
   return (
     <div className="">
-      <div className="flex min-h-screen flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
-            Sign in to your account
-          </h2>
-        </div>
-
-        <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white py-8 px-4 shadow-lg border border-gray-200 sm:rounded-lg sm:px-10">
-            <form className="space-y-6" onSubmit={handleLogin}>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Email address
-                </label>
-                <div className="mt-1">
-                  <input
-                    id="email"
-                    className="inputField block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                    type="email"
-                    placeholder="Your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+      <div className="flex min-h-screen flex-col justify-center py-12 sm:px-6 lg:px-8 dark:bg-zinc-900/90">
+        <div className="mt-4 mx-auto w-3/4 md:w-full max-w-md rounded-lg ">
+          <div className="bg-white dark:bg-zinc-900 py-8 px-4 shadow-lg border border-gray-200/20 rounded-lg sm:px-10">
+            <h2 className="text-center text-2xl font-bold tracking-tight dark:text-gray-300 text-slate-900">
+              Sign in
+            </h2>
+            <div className="mt-4 px-2">
+              <form className="space-y-6" onSubmit={handleLogin}>
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-md font-medium dark:text-gray-300 text-slate-900"
+                  >
+                    Email address
+                  </label>
+                  <div className="mt-4">
+                    <input
+                      id="email"
+                      className="inputField block w-full appearance-none rounded-md border dark:bg-zinc-900/90 dark:border-gray-200/20 border-gray-300 px-3 py-2 placeholder:text-gray-100 dark:placeholder:text-gray-300 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      type="email"
+                      placeholder="Your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div>
-                <button className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                  {loading ? "processing..." : "Get Magic Link"}
-                </button>
-              </div>
-            </form>
+                <div>
+                  <button className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 dark:bg-zinc-200/20 dark:hover:bg-zinc-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    {loading ? "Processing..." : "Get Magic Link"}
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>

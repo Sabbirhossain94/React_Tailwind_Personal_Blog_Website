@@ -7,8 +7,12 @@ import SignIn from "./pages/SignIn";
 import supabase from "../supabaseClient";
 import Account from "./pages/Profiles/Account";
 import CreateBlog from "./pages/Profiles/CreateBlog";
+import { Context } from "../context";
+
 export default function () {
   const [session, setSession] = useState(null);
+  const [dark, setDark] = useState(true);
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -20,24 +24,29 @@ export default function () {
   }, []);
 
   return (
-    <Router>
-      <div>
-        <Navigation session={session} />
-        <Routes>
-          <Route path="/" element={<App session={session} />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/content/:id" element={<Content session={session} />} />
-          <Route path="/account" element={<Account session={session} />} />
-          <Route
-            path="/createblog"
-            element={<CreateBlog session={session} />}
-          />
-          <Route
-            path="/blog/:id/update"
-            element={<CreateBlog session={session} />}
-          />
-        </Routes>
-      </div>
-    </Router>
+    <Context.Provider value={{ theme: [dark, setDark] }}>
+      <Router>
+        <div>
+          <Navigation session={session} />
+          <Routes>
+            <Route path="/" element={<App session={session} />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route
+              path="/content/:id"
+              element={<Content session={session} />}
+            />
+            <Route path="/account" element={<Account session={session} />} />
+            <Route
+              path="/createblog"
+              element={<CreateBlog session={session} />}
+            />
+            <Route
+              path="/blog/:id/update"
+              element={<CreateBlog session={session} />}
+            />
+          </Routes>
+        </div>
+      </Router>
+    </Context.Provider>
   );
 }
