@@ -78,13 +78,11 @@ export default function Navigation({ session }) {
     }
   }, [dark]);
 
-
-
   return (
     <div>
       <nav
         className={
-          "dark:bg-zinc-900  bg-slate-800 shadow-2xl fixed left-0 right-0 top-0 z-10"
+          "dark:bg-zinc-800/95 bg-slate-800 shadow-2xl fixed left-0 right-0 top-0 z-10 backdrop-blur-md"
         }
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

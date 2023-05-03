@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import LoadingScreen from "./Sub-components/LoadingScreen";
 import Pagination from "./components/Pagination";
 import Footer from "./components/Footer";
+import { AiOutlineDoubleRight } from "react-icons/ai";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -61,7 +62,7 @@ function App() {
   const firstItemIndex = lastItemIndex - itemsPerPage; //0
   return (
     <div>
-      <div className="min-h-screen relative dark:bg-zinc-900/95 bg-white py-10 ">
+      <div className="min-h-screen relative dark:bg-zinc-900 bg-white py-10 ">
         {loading ? (
           <LoadingScreen />
         ) : (
@@ -79,35 +80,24 @@ function App() {
                       alt="error"
                     />
                   </div>
-                  <div className="flex flex-1 flex-col justify-between dark:bg-zinc-900/95  bg-white p-6 rouned-b rounded-lg ">
+                  <div className="flex flex-1 flex-col justify-between dark:bg-zinc-800/95  bg-white p-6 rouned-b rounded-lg ">
                     <div className="flex-1">
                       <div className="mt-2 block">
-                        <p className="text-xl font-semibold dark:text-gray-200 text-slate-800">
+                        <p className="text-md ">
+                          <span className="dark:text-teal-600 text-blue-500">
+                            {item.inserted_at}
+                          </span>
+                        </p>
+                        <p className="mt-4 text-xl font-semibold dark:text-gray-200 text-slate-800">
                           {item.title}
                         </p>
 
                         <div className="mt-6 flex items-center">
-                          <div className="flex-shrink-0">
-                            <div>
-                              <img
-                                className="h-10 w-10 rounded-full"
-                                src={avatar}
-                                alt="error"
-                              />
+                          <div className="">
+                            <div className="text-sm font-medium dark:text-gray-200 text-slate-900 flex flex-row transition ease-in-out duration-300 translate-x-0 hover:translate-x-2">
+                              <span>Read more</span>{" "}
+                              <AiOutlineDoubleRight className="dark:text-teal-500 text-blue-500 mt-1 ml-1 " />
                             </div>
-                          </div>
-                          <div className="ml-3">
-                            <h3 className="text-sm font-medium text-gray-700">
-                              <p
-                                href="#"
-                                className="text-md dark:text-gray-200 text-slate-800"
-                              >
-                                {item.profiles.username}
-                              </p>
-                              <p className="text-xs dark:text-teal-600 text-blue-500">
-                                {item.inserted_at}
-                              </p>
-                            </h3>
                             <div className="flex space-x-1 text-sm text-gray-500"></div>
                           </div>
                         </div>

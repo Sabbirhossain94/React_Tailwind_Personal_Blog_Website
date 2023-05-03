@@ -7,7 +7,7 @@ export default function LoadingScreen() {
         <span className="text-2xl font-bold text-gray-500">Fetching blogs</span>
         <svg
           aria-hidden="true"
-          className="w-8 h-8 mr-2 mt-2 text-slate-800 animate-spin dark:text-gray-500 fill-blue-500"
+          className="w-8 h-8 mr-2 mt-2 text-gray-400 animate-spin dark:text-gray-500 dark:fill-teal-500 fill-blue-500"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

@@ -12,7 +12,7 @@ export default function Pagination({
   }
   return (
     <div>
-      <nav className="dark:bg-zinc-900/95 relative bottom-0 left-0 right-0  w-full xs:mx-auto mx-auto h-32 flex flex-row items-center justify-center xs:flex xs:flex-wrap  px-2 sm:px-0  ">
+      <nav className="dark:bg-zinc-900 relative bottom-0 left-0 right-0  w-full xs:mx-auto mx-auto h-32 flex flex-row items-center justify-center xs:flex xs:flex-wrap  px-2 sm:px-0  ">
         {array.map((page, key) => (
           <li
             key={key}
