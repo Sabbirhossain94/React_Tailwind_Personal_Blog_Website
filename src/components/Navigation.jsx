@@ -5,6 +5,8 @@ import supabase from "../supabaseClient";
 import { AiOutlineUser } from "react-icons/ai";
 import { useContext } from "react";
 import { Context } from "../context";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Navigation({ session }) {
   const [showDropDown, setShowDropDown] = useState(false);
@@ -45,6 +47,9 @@ export default function Navigation({ session }) {
 
   const logOut = async () => {
     let { error } = await supabase.auth.signOut();
+    toast.success("You have been logged out!", {
+      position: "top-left"
+    })
     if (error) {
       console.log(error);
     }

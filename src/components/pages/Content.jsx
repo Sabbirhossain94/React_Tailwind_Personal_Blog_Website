@@ -11,6 +11,7 @@ import { BsLinkedin } from "react-icons/bs";
 import { AiFillGithub } from "react-icons/ai";
 import { MdWork } from "react-icons/md";
 import { SiGmail } from "react-icons/si";
+import ShareButtons from "../../Sub-components/ShareButtons";
 
 export default function Content({ session }) {
   const params = useParams();
@@ -53,8 +54,10 @@ export default function Content({ session }) {
   const handleModal = () => {
     setOpenModal(true);
   };
+
   return (
     <div>
+      <ShareButtons/>
       <div className="min-h-screen relative">
         <AnimatedPage>
           <div className="">
@@ -148,7 +151,6 @@ export default function Content({ session }) {
                           <img
                             src={blogCoverUrl + item.thumbnail}
                             className="mt-8"
-                            
                           />
 
                           {openModal ? (

@@ -1,6 +1,9 @@
 import { useState } from "react";
 import supabase from "../../supabaseClient";
 import Footer from "../Footer";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function Auth() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -12,9 +15,12 @@ export default function Auth() {
       setLoading(true);
       const { error } = await supabase.auth.signInWithOtp({ email });
       if (error) throw error;
-      alert("Check your email for the login link!");
+         toast.warn("Please Check your email for magic link!", {
+           position: "top-right",
+           toastId: "warn1",
+         });
     } catch (error) {
-      alert(error.error_description || error.message);
+      toast.warn(error.error_description || error.message);
     } finally {
       setLoading(false);
     }
