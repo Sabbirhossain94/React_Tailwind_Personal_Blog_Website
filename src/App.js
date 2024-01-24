@@ -10,10 +10,9 @@ import { AiOutlineDoubleRight } from "react-icons/ai";
 function App() {
   const [loading, setLoading] = useState(true);
   const [allBlog, setAllBlog] = useState([]);
-  const [avatar, setAvatar] = useState(null);
+  const [_, setAvatar] = useState(null);
   const [itemsPerPage] = useState(3);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPage] = useState(0);
   const [totalLength, setTotalLength] = useState(null);
 
   const blogCoverUrl = process.env.REACT_APP_STORAGE_PUBLIC_URL;
