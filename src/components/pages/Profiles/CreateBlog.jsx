@@ -4,9 +4,7 @@ import supabase from "../../../supabaseClient";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import Notification from "../../../Sub-components/Notification";
 import UploadCoverImage from "./UploadCoverImage";
-import AnimatedPage from "../../../Sub-components/SlideAnimation";
 import Footer from "../../Footer";
 import moment from "moment";
 import ReactQuill from "react-quill";
@@ -146,110 +144,85 @@ export default function CreateBlog({ session }) {
   }
 
   return (
-    <div>
-      <AnimatedPage>
-        <div className="min-h-screen relative bg-white px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
-          <div>
-            <Notification message={message} />
-            <div className="mt-12 h-screen py-24">
-              <form
-                onSubmit={(e) => {
-                  handleSubmit(e);
-                }}
-              >
-                <div className="shadow sm:overflow-hidden sm:rounded-md ">
-                  <div className="space-y-6 bg-gray-100 px-4 py-5 sm:p-6 ">
-                    <div>
-                      <UploadCoverImage
-                        setCoverPhoto={setCoverPhoto}
-                        setFile={setFile}
-                        preview={preview}
-                        setPreview={setPreview}
-                      />
-                      <label
-                        htmlFor="about"
-                        className="mt-8 block text-sm font-medium text-blue-500"
-                      >
-                        Title
-                      </label>
-                      <div className="mt-1">
-                        <input
-                          onChange={(e) => setTitle(e.target.value)}
-                          value={title}
-                          id="title"
-                          name="title"
-                          className="w-full border border-gray-300 mt-1 h-8 block rounded-md shadow-sm sm:text-sm "
-                          required
-                        />
+    <div className="bg-gray-100 dark:bg-zinc-800">
+      <div className="min-h-screen py-24 max-w-7xl mx-auto px-8 xl:px-0">
+        <form
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+        >
+          <div className="mt-24 bg-white dark:bg-zinc-900/50 sm:overflow-hidden sm:rounded-md border border-zinc-300 dark:border-zinc-700">
+            <div className="space-y-6 px-4 py-5 sm:p-6 ">
+              <div>
+                <UploadCoverImage
+                  setCoverPhoto={setCoverPhoto}
+                  setFile={setFile}
+                  preview={preview}
+                  setPreview={setPreview}
+                />
+                <label
+                  htmlFor="about"
+                  className="mt-8 block text-sm font-medium text-blue-500 dark:text-teal-500"
+                >
+                  Title
+                </label>
+                <div className="mt-1">
+                  <input
+                    onChange={(e) => setTitle(e.target.value)}
+                    value={title}
+                    id="title"
+                    name="title"
+                    className="w-full border bg-gray-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 mt-1 h-8 block shadow-sm sm:text-sm "
+                    required
+                  />
 
-                      </div>
-                      <div className="mt-8">
-                        <label
-                          htmlFor="introduction"
-                          
-                          className="mt-8 block text-sm font-medium text-blue-500"
-                        >
-                          Introduction
-                        </label>
-                        <textarea value={introduction} id="introduction" onChange={(e) => setIntroduction(e.target.value)} className="w-full border border-gray-300 p-2 mt-1 h-8 block rounded-md shadow-sm sm:text-sm " />
-                      </div>
-                      <div className="mt-8 ">
-                        <label
-                          htmlFor="comment"
-                          className="mt-5 lock text-sm font-medium text-blue-500"
-                        >
-                          Content
-                        </label>
-                        <ReactQuill
-                          style={{ marginTop: '10px', background: "#fff" }}
-                          value={content}
-                          onChange={(newContent) => setContent(newContent)}
-                          modules={modules}
-                          theme="snow"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  {getString === "/createblog" ? (
-                    <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                      <button
-                        type="submit"
-                        onClick={() => navigate("/")}
-                        className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 mr-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                      >
-                        Post
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                      <button
-                        type="submit"
-                        onClick={() => navigate("/")}
-                        className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 mr-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                      >
-                        Update
-                      </button>
-                    </div>
-                  )}
                 </div>
-              </form>
+                <div className="mt-8">
+                  <label
+                    htmlFor="introduction"
+
+                    className="mt-8 block text-sm font-medium text-blue-500 dark:text-teal-500"
+                  >
+                    Introduction
+                  </label>
+                  <textarea value={introduction} id="introduction" onChange={(e) => setIntroduction(e.target.value)} className="w-full border bg-gray-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 p-2 mt-1 h-8 block shadow-sm sm:text-sm " />
+                </div>
+                <div className="mt-8 ">
+                  <label
+                    htmlFor="comment"
+                    className="mt-5 lock text-sm font-medium text-blue-500 dark:text-teal-500"
+                  >
+                    Content
+                  </label>
+                  <ReactQuill
+                    className="bg-gray-100 dark:bg-zinc-800 mt-[10px] border-none"
+                    value={content}
+                    onChange={(newContent) => setContent(newContent)}
+                    modules={modules}
+                    theme="snow"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="bg-white dark:bg-zinc-900/10 px-4 pt-8 pb-6 text-right sm:px-6">
+              <button
+                type="submit"
+                onClick={() => navigate("/")}
+                className="inline-flex justify-center border border-zinc-300 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 transition duration-300 dark:border-zinc-700 py-2 px-4 mr-4 text-sm font-medium text-blue-500 dark:text-teal-500"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="inline-flex justify-center border border-zinc-300 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 transition duration-300 dark:border-zinc-700 py-2 px-4 mr-4 text-sm font-medium text-blue-500 dark:text-teal-500"
+              >
+                {getString === "/createblog" ? "Post" : "Update"}
+              </button>
             </div>
           </div>
-        </div>
-      </AnimatedPage>
-      {/* <Footer /> */}
+        </form>
+      </div>
+      <Footer />
     </div>
   );
 }

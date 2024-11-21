@@ -155,36 +155,9 @@ function App() {
                 </li>
               ))}
             </ul>
-            {/* <div className="flex gap-2 pt-4">
-              <a href="mailto:sabbirhossainbd199@gmail.com">
-                <SiGmail
-                  className="text-xl text-slate-800 dark:text-gray-500 transition ease-in-out scale-90 hover:scale-100"
-                  title="Gmail"
-                />
-              </a>
-              <a href="https://www.linkedin.com/in/sabbir-hossain-b73726214/">
-                <BsLinkedin
-                  className="text-xl ml-4 text-slate-800 dark:text-gray-500 transition ease-in-out scale-90 hover:scale-100"
-                  title="linkedIn"
-                />
-              </a>
-              <a href="https://github.com/Sabbirhossain97">
-                <AiFillGithub
-                  className="text-xl ml-4 text-slate-800 dark:text-gray-500 transition ease-in-out scale-90 hover:scale-100"
-                  title="Github"
-                />
-              </a>
-              <a href="https://sabbir-hossain-six.vercel.app/">
-                <MdWork
-                  className="text-xl ml-4 text-slate-800 dark:text-gray-500 transition ease-in-out scale-90 hover:scale-100"
-                  title="Portfolio"
-                />
-              </a>
-            </div> */}
           </div>
         </div>
       </div>
-
       <Footer />
     </div>
   );

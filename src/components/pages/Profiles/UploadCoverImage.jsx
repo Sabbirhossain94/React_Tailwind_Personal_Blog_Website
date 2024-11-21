@@ -24,13 +24,13 @@ function UploadCoverImage({ setFile, setCoverPhoto, preview, setPreview }) {
           />
           <button
             onClick={() => setPreview(null)}
-            className="h-8 mt-4 cursor-pointer overflow-hidden inline-flex items-center justify-center rounded-md border border-transparent border-blue-500 bg-white px-4 py-2 text-sm font-medium text-blue-500 shadow-sm hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+            className="h-8 mt-4 cursor-pointer overflow-hidden inline-flex items-center justify-center border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-blue-500 shadow-sm hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
           >
             Cancel
           </button>
         </div>
       ) : (
-        <label className="h-8 mt-4 cursor-pointer overflow-hidden inline-flex items-center justify-center rounded-md border border-transparent border-blue-500 hover:border-blue-600 bg-white px-4 py-2 text-sm font-medium text-blue-500 shadow-sm hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+        <label className="h-8 mt-4 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 dark:border-zinc-700 hover:border-blue-600 bg-gray-100 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
           <input
             type="file"
             name="image"
