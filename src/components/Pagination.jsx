@@ -6,37 +6,59 @@ export default function Pagination({
   totalLength,
   setCurrentPage,
 }) {
-  let array = [];
+  let pages = [];
   for (let i = 1; i <= Math.ceil(totalLength / itemsPerPage); i++) {
-    array.push(i);
+    pages.push(i);
+  }
+  const handlePagination = (page) => {
+    setCurrentPage(page)
+  }
+  const prevPage = () => {
+    if (currentPage === 1) {
+      return
+    }
+    setCurrentPage(prev => prev - 1)
+  }
+
+  const nextPage = () => {
+    if (currentPage === pages.length) {
+      return
+    }
+    setCurrentPage(prev => prev + 1)
   }
   return (
     <div>
-      <nav className="dark:bg-zinc-900 relative bottom-0 left-0 right-0  w-full xs:mx-auto mx-auto h-32 flex flex-row items-center justify-center xs:flex xs:flex-wrap  px-2 sm:px-0  ">
-        {array.map((page, key) => (
-          <li
+      <nav className="dark:bg-zinc-800 relative w-full space-x-3 xs:mx-auto mx-auto h-32 flex flex-row justify-end xs:flex xs:flex-wrap px-2 mt-10 sm:px-32">
+        <button
+          onClick={prevPage}
+          className={`${currentPage === 1 ? "cursor-not-allowed border-zinc-300 bg-gray-200 dark:bg-zinc-800 hover:border-zinc-300 hover:text-gray-500 flex items-center justify-center px-3 h-10 text-sm font-medium text-gray-500 dark:border-zinc-700 dark:hover:border-zinc-700 dark:hover:text-gray-500 border transition duration-300"
+            : "border-zinc-300 bg-white hover:border-blue-500 hover:text-blue-500 flex items-center justify-center px-3 h-10 text-sm font-medium text-gray-500 dark:bg-zinc-800 dark:border-zinc-700 dark:hover:border-teal-500 dark:hover:text-teal-500 border transition duration-300"}`}>
+          <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
+          </svg>
+        </button>
+        {pages.map((page, key) => (
+          <button
             key={key}
-            className="h-32 flex items-center list-none px-2 py-2  "
+            onClick={() => handlePagination(page)}
+            className={
+              page === currentPage
+                ? "border px-4  border-blue-500 text-blue-500 dark:border-teal-500 bg-white dark:bg-zinc-800 h-10 dark:text-teal-500 hover:border-blue-500 hover:text-blue-500 dark:hover:border-teal-500"
+                : "border px-4  border-gray-300 bg-white dark:bg-zinc-800 dark:border-zinc-700 dark:hover:text-teal-500 h-10 dark:hover:border-teal-500 text-gray-500 hover:text-blue-500 hover:border-blue-500"
+            }
           >
-            <button
-              className={
-                page === currentPage
-                  ? "border border-blue-500 text-blue-500 dark:border-teal-500 rounded-md dark:text-teal-500 hover:border-blue-500 hover:text-blue-500 dark:hover:border-teal-500 px-0.5"
-                  : "border border-gray-300 dark:border-gray-700 dark:hover:text-teal-500 dark:hover:border-teal-500 text-gray-300 rounded-md hover:border-blue-500 px-0.5"
-              }
-            >
-              <p
-                onClick={() => {
-                  setCurrentPage(page);
-                }}
-                className={`cursor-pointer bg-transparent dark:text-gray-500  hover:inline-flex items-center px-4 py-3 text-sm font-medium ${page === currentPage ? "dark:text-teal-500 dark:hover:text-teal-500": ""}`}
-              >
-                {page}
-              </p>
-            </button>
-          </li>
+            {page}
+          </button>
         ))}
+        <button
+          onClick={nextPage}
+          className={`${currentPage === pages.length ? "cursor-not-allowed border-zinc-300 bg-gray-200 dark:bg-zinc-800 hover:border-zinc-300 hover:text-gray-500 flex items-center justify-center px-3 h-10 text-sm font-medium text-gray-500 dark:border-zinc-700 dark:hover:border-zinc-700 dark:hover:text-gray-500 border transition duration-300"
+            : "border-zinc-300 bg-white hover:border-blue-500 hover:text-blue-500 flex items-center justify-center px-3 h-10 text-sm font-medium text-gray-500 dark:bg-zinc-800 dark:border-zinc-700 dark:hover:border-teal-500 dark:hover:text-teal-500 border transition duration-300"}`}>
+          <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+          </svg>
+        </button>
       </nav>
-    </div>
+    </div >
   );
 }

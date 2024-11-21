@@ -87,11 +87,11 @@ export default function Navigation({ session }) {
     <div>
       <nav
         className={
-          "dark:bg-zinc-800/95 bg-slate-800 shadow-2xl fixed left-0 right-0 top-0 z-10 backdrop-blur-md"
+          "dark:bg-zinc-900/50 bg-white border-b border-zinc-300 dark:border-zinc-700 fixed left-0 right-0 top-0 z-10 backdrop-blur-md"
         }
       >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 justify-between">
+        <div className="mx-auto max-w-7xl ">
+          <div className="flex h-[70px] justify-between">
             <div className="flex">
               <div className="-ml-2 mr-2 flex items-center md:hidden">
                 {openMenuIcon ? (
@@ -140,17 +140,17 @@ export default function Navigation({ session }) {
                 )}
                 {/* </button> */}
                 <Link to="/" className="ml-[20px] flex flex-row">
-                  <h1 className="ml-1 mt-1 text-gray-400  text-md font-semibold">
-                    <span className="text-teal-500">&lt;</span> Sabbir's Blog{" "}
-                    <span className="text-teal-500">&nbsp;&#8725; &gt;</span>
+                  <h1 className="ml-1 mt-1 text-md font-semibold">
+                    <span className="text-blue-500 dark:text-teal-500">&lt;</span> Sabbir's Blog{" "}
+                    <span className="text-blue-500 dark:text-teal-500">&nbsp;&#8725; &gt;</span>
                   </h1>
                 </Link>
               </div>
-              <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
-                <Link to="/" className="ml-[20px] flex flex-row">
-                  <h1 className="ml-1 mt-1 text-gray-400  text-md font-semibold">
-                    <span className="text-teal-500">&lt;</span> Sabbir's Blog{" "}
-                    <span className="text-teal-500">&nbsp;&#8725; &gt;</span>
+              <div className="hidden md:flex md:items-center md:space-x-4 ">
+                <Link to="/" className="flex flex-row">
+                  <h1 className="dark:text-gray-400 mt-1 text-xl font-semibold">
+                    <span className="text-blue-500 dark:text-teal-500">&lt;</span> Sabbir's Blog{" "}
+                    <span className="text-blue-500 dark:text-teal-500">&nbsp;&#8725; &gt;</span>
                   </h1>
                 </Link>
               </div>
@@ -262,11 +262,10 @@ export default function Navigation({ session }) {
         {/* mobile menu */}
         <div className="md:hidden relative dark:bg-zinc-900/80 right-0 left-0 z-10 h-auto ">
           <div
-            className={`${
-              openMenuIcon
-                ? "max-h-52 transition-all duration-300 opacity-100 "
-                : "max-h-0 transition duration-300 opacity-0"
-            } `}
+            className={`${openMenuIcon
+              ? "max-h-52 transition-all duration-300 opacity-100 "
+              : "max-h-0 transition duration-300 opacity-0"
+              } `}
           >
             <div className={openMenuIcon ? " " : "hidden "}>
               <div className="border-t border-gray-100/10 pt-4 pb-3">

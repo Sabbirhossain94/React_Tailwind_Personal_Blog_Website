@@ -4,31 +4,31 @@ import supabase from "../../../supabaseClient";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import JoditEditor from "jodit-react";
 import Notification from "../../../Sub-components/Notification";
 import UploadCoverImage from "./UploadCoverImage";
 import AnimatedPage from "../../../Sub-components/SlideAnimation";
 import Footer from "../../Footer";
 import moment from "moment";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
 
 export default function CreateBlog({ session }) {
   const params = useParams();
   const navigate = useNavigate();
   let location = useLocation();
   let getString = location.pathname;
-  const editor = useRef(null);
   const [title, setTitle] = useState(" ");
+  const [introduction, setIntroduction] = useState('')
   const [content, setContent] = useState("");
   const [message, setMessage] = useState({});
   const [preview, setPreview] = useState(null);
   const [coverphoto, setCoverPhoto] = useState(null);
   const [file, setFile] = useState(null);
   const date = moment().format("MMMM D, YYYY");
-  // adding records to database here
 
+  // adding records to database here
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (params.id) {
       updateBlogContent();
       uploadToStorage();
@@ -40,12 +40,12 @@ export default function CreateBlog({ session }) {
 
   const createBlog = async (e) => {
     e.preventDefault();
-
     const { error } = await supabase
       .from("blogs")
       .insert({
         user_id: session.user.id,
         title: title,
+        introduction: introduction,
         content: content,
         inserted_at: date,
         thumbnail: coverphoto,
@@ -87,6 +87,7 @@ export default function CreateBlog({ session }) {
       console.log(error);
     } else {
       setTitle(data[0].title);
+      setIntroduction(data[0].introduction)
       setContent(data[0].content);
       setCoverPhoto(data[0].thumbnail);
     }
@@ -98,6 +99,7 @@ export default function CreateBlog({ session }) {
       .update({
         user_id: session.user.id,
         title: title,
+        introduction: introduction,
         content: content,
         inserted_at: date,
         thumbnail: coverphoto,
@@ -125,10 +127,28 @@ export default function CreateBlog({ session }) {
     }
   }, [params.id]);
 
+  const modules = {
+    toolbar: {
+      container: [
+        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+        [{ size: [] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        [{ 'align': [] }],
+        ['link', 'image'],
+        ['code-block'],
+        ['clean'],
+      ],
+      // handlers: {
+      //   image: handleImageUpload, // Handle custom image upload
+      // },
+    },
+  }
+
   return (
     <div>
       <AnimatedPage>
-        <div className="min-h-screen relative bg-white  px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
+        <div className="min-h-screen relative bg-white px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
           <div>
             <Notification message={message} />
             <div className="mt-12 h-screen py-24">
@@ -161,6 +181,17 @@ export default function CreateBlog({ session }) {
                           className="w-full border border-gray-300 mt-1 h-8 block rounded-md shadow-sm sm:text-sm "
                           required
                         />
+
+                      </div>
+                      <div className="mt-8">
+                        <label
+                          htmlFor="introduction"
+                          
+                          className="mt-8 block text-sm font-medium text-blue-500"
+                        >
+                          Introduction
+                        </label>
+                        <textarea value={introduction} id="introduction" onChange={(e) => setIntroduction(e.target.value)} className="w-full border border-gray-300 p-2 mt-1 h-8 block rounded-md shadow-sm sm:text-sm " />
                       </div>
                       <div className="mt-8 ">
                         <label
@@ -169,12 +200,12 @@ export default function CreateBlog({ session }) {
                         >
                           Content
                         </label>
-
-                        <JoditEditor
-                          ref={editor}
+                        <ReactQuill
+                          style={{ marginTop: '10px', background: "#fff" }}
                           value={content}
                           onChange={(newContent) => setContent(newContent)}
-                          className="bg-zinc-900"
+                          modules={modules}
+                          theme="snow"
                         />
                       </div>
                     </div>
@@ -218,7 +249,7 @@ export default function CreateBlog({ session }) {
           </div>
         </div>
       </AnimatedPage>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

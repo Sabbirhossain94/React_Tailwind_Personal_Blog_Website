@@ -12,6 +12,8 @@ import { AiFillGithub } from "react-icons/ai";
 import { MdWork } from "react-icons/md";
 import { SiGmail } from "react-icons/si";
 import ShareButtons from "../../Sub-components/ShareButtons";
+import 'react-quill/dist/quill.snow.css';
+import DOMPurify from 'dompurify';
 
 export default function Content({ session }) {
   const params = useParams();
@@ -57,22 +59,22 @@ export default function Content({ session }) {
 
   return (
     <div>
-      <ShareButtons/>
-      <div className="min-h-screen relative">
+      <ShareButtons />
+      <div className="min-h-screen relative dark:bg-zinc-900/90">
         <AnimatedPage>
-          <div className="">
+          <div className="flex justify-center">
             {singleBlog.map((item, key) => (
-              <li key={key} className="list-none ">
+              <div className="flex w-4/5 items-center">
                 <div
-                  key={item.id}
-                  className="overflow-hidden dark:bg-zinc-900/90 "
+                  key={key}
+                  className="overflow-hidden mt-32  border border-gray-200 dark:border-zinc-700 shadow"
                 >
-                  <div className=" mt-12 relative max-w-full py-16 px-4 sm:px-6 lg:px-8">
-                    <div className=" mx-auto lg:grid lg:max-w-7xl lg:grid-cols-1 lg:gap-8">
-                      <div className="flex mr-4">
+                  <div className="mt-12 relative max-w-full py-16 px-4 sm:px-6 lg:px-8">
+                    <div className="mx-auto lg:grid lg:max-w-7xl lg:grid-cols-1 lg:gap-8">
+                      <div className="flex">
                         <div className="flex flex-col justify-center mx-auto">
-                          <div className=" relative flex flex-row items-center w-full">
-                            <div className=" flex flex-row items-center w-1/2">
+                          <div className="relative flex flex-row items-center w-full">
+                            {/* <div className=" flex flex-row items-center w-1/2">
                               <div className="flex-shrink-0 ">
                                 <div>
                                   <img
@@ -83,7 +85,7 @@ export default function Content({ session }) {
                                 </div>
                               </div>
                               <div className="ml-3">
-                                <h3 className="text-md font-medium ">
+                                <h3 className="text-md font-medium">
                                   <p className="text-md dark:text-gray-300">
                                     Sabbir Hossain
                                   </p>
@@ -95,7 +97,7 @@ export default function Content({ session }) {
                                   </p>
                                 </h3>
                               </div>
-                            </div>
+                            </div> */}
                             {session ? (
                               <div className=" w-full flex flex-row justify-end">
                                 <div className=" cursor-pointer ml-2 top-[1.2rem]">
@@ -138,7 +140,7 @@ export default function Content({ session }) {
                                     title="Github"
                                   />
                                 </a>
-                                <a href="https://sabbirontheweb.com/">
+                                <a href="https://sabbir-hossain-six.vercel.app/">
                                   <MdWork
                                     className="text-xl ml-4 text-slate-800 dark:text-gray-500 transition ease-in-out scale-90 hover:scale-100"
                                     title="Portfolio"
@@ -147,12 +149,16 @@ export default function Content({ session }) {
                               </div>
                             )}
                           </div>
-
                           <img
                             src={blogCoverUrl + item.thumbnail}
-                            className="mt-8"
+                            className="mt-8 w-full"
                           />
-
+                          <div className="mt-3">
+                            <p className="text-md dark:text-gray-400">
+                              {item.inserted_at} By Sabbir Hossain
+                            </p>
+                          </div>
+                          <div className="mt-4 border border-gray-200 dark:border-zinc-700 "></div>
                           {openModal ? (
                             <div>
                               {" "}
@@ -169,19 +175,22 @@ export default function Content({ session }) {
                         </div>
                       </div>
                     </div>
-                    <div className="mt-20 lg:grid lg:grid-cols-1 lg:max-w-4xl lg:mx-auto lg:gap-8">
+                    <div className="mt-10 px-8 lg:grid lg:grid-cols-1 lg:max-w-4xl lg:mx-auto lg:gap-8">
                       <div className="mt-8 lg:mt-0">
-                        <div className="prose prose-indigo mx-auto mt-5 text-center dark:text-gray-400 lg:col-start-1 lg:row-start-1 lg:max-w-none">
+                        <div className="ql-snow mx-auto mt-5 dark:text-gray-400 lg:col-start-1 lg:row-start-1 lg:max-w-none">
                           <div
-                            className=""
-                            dangerouslySetInnerHTML={{ __html: item.content }}
+                            className='ql-editor'
+                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.content) }}
                           />
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </li>
+                <div className="border border-black w-2/5">
+                  This is second section
+                </div>
+              </div>
             ))}
           </div>
         </AnimatedPage>
