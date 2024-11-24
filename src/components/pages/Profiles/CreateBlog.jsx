@@ -144,14 +144,14 @@ export default function CreateBlog({ session }) {
   }
 
   return (
-    <div className="bg-gray-100 dark:bg-zinc-800">
-      <div className="min-h-screen py-24 max-w-7xl mx-auto px-8 xl:px-0">
+    <div className="bg-gray-100 dark:bg-zinc-800 ">
+      <div className=" mx-auto px-8 xl:px-0">
         <form
           onSubmit={(e) => {
             handleSubmit(e);
           }}
         >
-          <div className="mt-24 bg-white dark:bg-zinc-900/50 sm:overflow-hidden sm:rounded-md border border-zinc-300 dark:border-zinc-700">
+          <div className="bg-white dark:bg-zinc-900/50 sm:rounded-md border border-zinc-300 dark:border-zinc-700">
             <div className="space-y-6 px-4 py-5 sm:p-6 ">
               <div>
                 <UploadCoverImage
@@ -194,13 +194,16 @@ export default function CreateBlog({ session }) {
                   >
                     Content
                   </label>
-                  <ReactQuill
-                    className="bg-gray-100 dark:bg-zinc-800 mt-[10px] border-none"
-                    value={content}
-                    onChange={(newContent) => setContent(newContent)}
-                    modules={modules}
-                    theme="snow"
-                  />
+                  <div className="max-h-[450px] overflow-y-auto">
+                    <ReactQuill
+                      className="bg-gray-100 dark:bg-zinc-800 mt-[10px] border-none"
+                      value={content}
+                      onChange={(newContent) => setContent(newContent)}
+                      modules={modules}
+                      theme="snow"
+                    />
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -222,7 +225,6 @@ export default function CreateBlog({ session }) {
           </div>
         </form>
       </div>
-      <Footer />
     </div>
   );
 }

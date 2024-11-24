@@ -18,17 +18,15 @@ export default function Content({ session }) {
   const params = useParams();
   const [singleBlog, setSingleBlog] = useState([]);
   const [openModal, setOpenModal] = useState(false);
-  const [avatar, setAvatar] = useState(null);
+  const [_, setAvatar] = useState(null);
   const navigate = useNavigate();
   const blogCoverUrl = process.env.REACT_APP_STORAGE_PUBLIC_URL;
-  const profilePhotoUrl = process.env.REACT_APP_STORAGE_PROFILE_PHOTO_URL;
-  console.log(profilePhotoUrl);
 
   const showBlog = async () => {
     let { data, error } = await supabase
       .from("blogs")
       .select(`*,profiles(*)`)
-      .eq("id", params.id);
+      .eq("slug", params.id);
     if (error) {
       console.log(error);
     } else {
@@ -52,6 +50,7 @@ export default function Content({ session }) {
   useEffect(() => {
     showBlog();
   }, []);
+
   const handleModal = () => {
     setOpenModal(true);
   };
@@ -131,7 +130,7 @@ export default function Content({ session }) {
 
                   <div className="mt-3 px-8">
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      {item.inserted_at} By Sabbir Hossain
+                      {item.inserted_at} By <span className='text-blue-500 dark:text-teal-500'>Sabbir Hossain</span>
                     </p>
                   </div>
                   <div className="mt-8 w-[93%] mx-auto border-t-[0.5px] border-zinc-300 dark:border-zinc-700 "></div>
@@ -173,7 +172,6 @@ export default function Content({ session }) {
           </div>
         </div>
       </AnimatedPage>
-      <Footer />
     </div>
   );
 }

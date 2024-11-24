@@ -86,7 +86,7 @@ export default function Navigation({ session }) {
   return (
     <nav
       className={
-        "dark:bg-zinc-900/50 bg-white border-b border-zinc-300 dark:border-zinc-700 fixed left-0 right-0 top-0 z-10 backdrop-blur-md"
+        "dark:bg-zinc-900 z-50 bg-white border-b border-zinc-300 dark:border-zinc-700 fixed left-0 right-0 top-0 backdrop-blur-md"
       }
     >
       <div className="mx-auto max-w-7xl ">
@@ -223,6 +223,12 @@ export default function Navigation({ session }) {
                       </Link>
                     )}
                     <Link
+                      to={session && "/dashboard"}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-500"
+                    >
+                      Dashboard
+                    </Link>
+                    <Link
                       to={session ? "/createblog" : "/signin"}
                       className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-500"
                     >
@@ -301,6 +307,12 @@ export default function Navigation({ session }) {
                     Sign In
                   </Link>
                 )}
+                <Link
+                  to={session && "/dashboard"}
+                  className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-500"
+                >
+                  Dashboard
+                </Link>
 
                 <Link
                   to={session ? "/createblog" : "/signin"}

@@ -6,10 +6,7 @@ import LoadingScreen from "./Sub-components/LoadingScreen";
 import Pagination from "./components/Pagination";
 import Footer from "./components/Footer";
 import { AiOutlineDoubleRight } from "react-icons/ai";
-import { BsLinkedin } from "react-icons/bs";
-import { AiFillGithub } from "react-icons/ai";
-import { MdWork } from "react-icons/md";
-import { SiGmail } from "react-icons/si";
+import { fetchBlogs } from "./helpers/fetchBlogs";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -21,38 +18,6 @@ function App() {
   const [totalLength, setTotalLength] = useState(null);
 
   const blogCoverUrl = process.env.REACT_APP_STORAGE_PUBLIC_URL;
-
-  const totalBlogs = async () => {
-    try {
-      setLoading(true);
-
-      let { data: allData, error: recentError } = await supabase
-        .from("blogs")
-        .select(`*,profiles(*)`);
-
-      if (recentError) throw recentError;
-
-      setRecentBlogs(allData || []);
-
-      const firstItemIndex = (currentPage - 1) * itemsPerPage;
-      const lastItemIndex = firstItemIndex + itemsPerPage;
-
-      let { data, count, error, status } = await supabase
-        .from("blogs")
-        .select(`*,profiles(*)`, { count: "exact" })
-        .range(firstItemIndex, lastItemIndex - 1);
-
-      if (error && status !== 406) throw error;
-
-      setAllBlog(data || []);
-      setTotalLength(count);
-
-    } catch (error) {
-      console.log(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const getAvatarFromStorage = async (file) => {
     let { data, error } = await supabase.storage
@@ -67,9 +32,17 @@ function App() {
   };
 
   useEffect(() => {
-    totalBlogs();
+    fetchBlogs({
+      supabase,
+      setLoading,
+      setRecentBlogs,
+      setAllBlog,
+      setTotalLength,
+      currentPage,
+      itemsPerPage,
+    })
     // eslint-disable-next-line
-  }, [currentPage]);
+  }, [currentPage, itemsPerPage]);
 
   return (
     <div className="bg-gray-100 dark:bg-zinc-800">
@@ -82,7 +55,7 @@ function App() {
               allBlog.map((blog, key) => (
                 <div key={key} className="relative w-[400px] rounded-md scale-100 transition duration-300 hover:scale-105">
                   <Link
-                    to={`/content/` + blog.id}
+                    to={`/blog/` + blog.slug}
                     className="flex flex-col border border-zinc-300 dark:border-gray-100/10"
                   >
                     <div className="flex-shrink-0">
@@ -158,7 +131,6 @@ function App() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
