@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import App from "../App";
+import { Context } from "../context";
 import Navigation from "./Navigation";
 import Content from "./pages/Content";
 import SignIn from "./pages/SignIn";
@@ -10,7 +11,9 @@ import Account from "./pages/Profiles/Account";
 import CreateBlog from "./pages/Profiles/CreateBlog";
 import Footer from "./Footer";
 import Posts from "./pages/Dashboard/Posts";
-import { Context } from "../context";
+import Users from "./pages/Dashboard/Users";
+import Profile from "./pages/Dashboard/Profile";
+import { Navigate } from "react-router-dom";
 
 export default function () {
   const [session, setSession] = useState(null);
@@ -39,15 +42,15 @@ export default function () {
           />
           <Route path="/account" element={<Account session={session} />} />
           <Route path="/dashboard" element={<Dashboard session={session} />}>
-            <Route index element={<Posts session={session} />} />
+            <Route index element={<Navigate to="posts" />} />
+            <Route path="posts" element={<Posts session={session} />} />
             <Route path="createblog" element={<CreateBlog session={session} />} />
+            <Route path="profile" element={<Profile session={session} />} />
+            <Route path="users" element={<Users session={session} />} />
+            <Route path="blog/:id/update" element={<CreateBlog session={session} />} />
           </Route>
-          <Route
-            path="/blog/:id/update"
-            element={<CreateBlog session={session} />}
-          />
         </Routes>
-        <Footer/>
+        <Footer />
       </Router>
     </Context.Provider>
   );

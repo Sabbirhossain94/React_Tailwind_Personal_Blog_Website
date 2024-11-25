@@ -79,7 +79,7 @@ export default function CreateBlog({ session }) {
     let { data, error } = await supabase
       .from("blogs")
       .select("*")
-      .eq("id", params.id);
+      .eq("slug", params.id);
 
     if (error) {
       console.log(error);
@@ -102,7 +102,7 @@ export default function CreateBlog({ session }) {
         inserted_at: date,
         thumbnail: coverphoto,
       })
-      .match({ id: params.id });
+      .match({ slug: params.id });
     if (error) {
       setMessage({
         type: "Error",
@@ -172,7 +172,7 @@ export default function CreateBlog({ session }) {
                     value={title}
                     id="title"
                     name="title"
-                    className="w-full border bg-gray-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 mt-1 h-8 block shadow-sm sm:text-sm "
+                    className="w-full border p-2 dark:text-white bg-gray-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 mt-1 h-8 block shadow-sm sm:text-sm "
                     required
                   />
 
@@ -185,7 +185,7 @@ export default function CreateBlog({ session }) {
                   >
                     Introduction
                   </label>
-                  <textarea value={introduction} id="introduction" onChange={(e) => setIntroduction(e.target.value)} className="w-full border bg-gray-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 p-2 mt-1 h-8 block shadow-sm sm:text-sm " />
+                  <textarea value={introduction} id="introduction" onChange={(e) => setIntroduction(e.target.value)} className="w-full border dark:text-white bg-gray-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 p-2 mt-1 h-8 block shadow-sm sm:text-sm " />
                 </div>
                 <div className="mt-8 ">
                   <label
@@ -194,9 +194,9 @@ export default function CreateBlog({ session }) {
                   >
                     Content
                   </label>
-                  <div className="max-h-[450px] overflow-y-auto">
+                  <div className="max-h-[400px] overflow-y-auto">
                     <ReactQuill
-                      className="bg-gray-100 dark:bg-zinc-800 mt-[10px] border-none"
+                      className="bg-gray-100 dark:bg-zinc-800 mt-[10px] border-none dark:text-white"
                       value={content}
                       onChange={(newContent) => setContent(newContent)}
                       modules={modules}
