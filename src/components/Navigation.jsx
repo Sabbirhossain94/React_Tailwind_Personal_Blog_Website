@@ -1,21 +1,17 @@
 import "../../src/animation.css";
-import React, { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import supabase from "../supabaseClient";
 import { AiOutlineUser } from "react-icons/ai";
-import { useContext } from "react";
-import { Context } from "../context";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import useOutsideClick from "../hooks/useOutsideClick";
+import useDarkMode from "../hooks/useDarkMode";
 
 export default function Navigation({ session }) {
-  const [showDropDown, setShowDropDown] = useState(false);
   const [avatar, setAvatar] = useState(null);
   const [openMenuIcon, setOpenMenuIcon] = useState(false);
-  const dropDownOpener = useRef();
-  const getContext = useContext(Context);
-  const [dark, setDark] = getContext.theme;
-  const location = useLocation();
+  const { ref, showDropDown, setShowDropDown } = useOutsideClick();
+  const { dark, toggleDarkMode } = useDarkMode(true);
+
   const avatarFIle = async () => {
     try {
       let { data, error, status } = await supabase
@@ -47,9 +43,6 @@ export default function Navigation({ session }) {
 
   const logOut = async () => {
     let { error } = await supabase.auth.signOut();
-    toast.success("You have been logged out!", {
-      position: "top-left"
-    })
     if (error) {
       console.log(error);
     }
@@ -59,29 +52,6 @@ export default function Navigation({ session }) {
     avatarFIle();
     // eslint-disable-next-line
   }, [session]);
-
-  useEffect(() => {
-    const closeDropDown = (e) => {
-      if (
-        dropDownOpener.current &&
-        !dropDownOpener.current.contains(e.target)
-      ) {
-        setShowDropDown(false);
-      }
-    };
-    document.body.addEventListener("click", closeDropDown);
-    return () => {
-      document.body.removeEventListener("click", closeDropDown);
-    };
-  }, [dropDownOpener, setShowDropDown]);
-
-  useEffect(() => {
-    if (dark) {
-      document.body.classList.add("dark");
-    } else {
-      document.body.classList.remove("dark");
-    }
-  }, [dark]);
 
   return (
     <nav
@@ -154,29 +124,30 @@ export default function Navigation({ session }) {
               </Link>
             </div>
           </div>
+
           {/*usermenu */}
-          <div className="flex items-center">
-            <div className=" md:ml-4 md:flex md:flex-shrink-0 md:items-center">
-              <div className="relative ml-3  ">
+          <div ref={ref} className="flex items-center">
+            <div className="md:ml-4 md:flex md:flex-shrink-0 md:items-center">
+              <div className="relative ml-3">
                 <div className="flex flex-row">
-                  <button
-                    type="button"
-                    ref={dropDownOpener}
-                    onClick={() => setShowDropDown(!showDropDown)}
-                    className="hidden md:flex rounded-full dark:bg-zinc-800 dark:border-gray-100/20 border border-gray-500/80  text-sm mt-0.5"
-                  >
-                    {session ? (
-                      <img
-                        className="h-7 w-7 rounded-full "
-                        src={session ? avatar : ""}
-                        alt="error"
-                      />
-                    ) : (
-                      <AiOutlineUser className=" h-6 w-6 rounded-full dark:text-gray-500 text-gray-500/80 dark:border dark:border-gray-700" />
-                    )}
-                  </button>
+                  {session ? (
+                    <img
+                      onClick={() => setShowDropDown(!showDropDown)}
+                      className="cursor-pointer h-8 w-8 rounded-full object-cover"
+                      src={session ? avatar : ""}
+                      alt="error"
+                    />
+                  ) : (
+                    <Link
+                      to="/signin"
+                    >
+                      <button className="h-8 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                        Sign In
+                      </button>
+                    </Link>
+                  )}
                   {/* dark mode */}
-                  <button onClick={() => setDark(!dark)} className="ml-10">
+                  <button onClick={toggleDarkMode} className="ml-10">
                     {dark ? (
                       <svg
                         viewBox="0 0 24 24"
@@ -210,44 +181,24 @@ export default function Navigation({ session }) {
                 {showDropDown ? (
                   <div
                     onClick={(e) => e.stopPropagation()}
-                    className={`transition-opacity duration-300 ease-in-out absolute right-20 z-10 mt-2 w-48 h-30 overflow-hidden origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
+                    className={`transition-opacity duration-300 ease-in-out absolute right-20 z-10 mt-2 w-60 h-30 overflow-hidden origin-top-right rounded-md bg-white dark:bg-zinc-700 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
                   >
-                    {session ? (
-                      " "
-                    ) : (
-                      <Link
-                        to="/signin"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-500"
-                      >
-                        Sign In
-                      </Link>
-                    )}
+                    <p
+                      className="border-b border-gray-300 dark:border-zinc-500 block px-4 py-2 text-sm text-gray-700 dark:text-gray-400"
+                    >
+                      Signed in as <span className="italic">{session?.user?.email}</span>
+                    </p>
                     <Link
                       to={session && "/dashboard"}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-500"
+                      className="block px-4 py-2 mt-2 text-sm text-gray-700 hover:text-blue-500 dark:text-gray-400 dark:hover:text-teal-500"
                     >
                       Dashboard
-                    </Link>
-                    <Link
-                      to={session ? "/createblog" : "/signin"}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-500"
-                    >
-                      Create Blog
-                    </Link>
-                    <Link
-                      onClick={() => {
-                        setShowDropDown(false);
-                      }}
-                      to={session ? "/account" : "/signin"}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-500"
-                    >
-                      Update Profile
                     </Link>
                     {session ? (
                       <a
                         href="/#"
                         onClick={logOut}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-500"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-500 dark:text-gray-400 dark:hover:text-teal-500"
                       >
                         Sign out
                       </a>

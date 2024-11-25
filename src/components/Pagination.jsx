@@ -28,7 +28,7 @@ export default function Pagination({
   }
   return (
     <div>
-      <nav className="dark:bg-zinc-800 relative w-full space-x-3 xs:mx-auto mx-auto h-32 flex flex-row justify-end xs:flex xs:flex-wrap px-2 mt-10 sm:px-32">
+      <nav className="dark:bg-zinc-800 relative w-full space-x-3 flex flex-row justify-end xs:flex xs:flex-wrap px-2 mt-10 sm:px-32">
         <button
           onClick={prevPage}
           className={`${currentPage === 1 ? "cursor-not-allowed border-zinc-300 bg-gray-200 dark:bg-zinc-800 hover:border-zinc-300 hover:text-gray-500 flex items-center justify-center px-3 h-10 text-sm font-medium text-gray-500 dark:border-zinc-700 dark:hover:border-zinc-700 dark:hover:text-gray-500 border transition duration-300"

@@ -1,11 +1,12 @@
 import React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import supabase from "../../../supabaseClient";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import UploadCoverImage from "./UploadCoverImage";
-import Footer from "../../Footer";
+import { MdKeyboardBackspace } from "react-icons/md";
 import moment from "moment";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
@@ -14,11 +15,10 @@ export default function CreateBlog({ session }) {
   const params = useParams();
   const navigate = useNavigate();
   let location = useLocation();
-  let getString = location.pathname;
+  let currentPath = location.pathname.split("/");
   const [title, setTitle] = useState(" ");
   const [introduction, setIntroduction] = useState('')
   const [content, setContent] = useState("");
-  const [message, setMessage] = useState({});
   const [preview, setPreview] = useState(null);
   const [coverphoto, setCoverPhoto] = useState(null);
   const [file, setFile] = useState(null);
@@ -51,17 +51,8 @@ export default function CreateBlog({ session }) {
       .single();
 
     if (error) {
-      setMessage({
-        type: "Error",
-        msg: "Error creating blog! please try again!",
-        remove: () => setMessage({}),
-      });
+      console.error(error)
     } else {
-      setMessage({
-        type: "Success",
-        msg: "Successfully Saved The Blog Post",
-        remove: () => setMessage({}),
-      });
       navigate("/");
     }
   };
@@ -104,17 +95,8 @@ export default function CreateBlog({ session }) {
       })
       .match({ slug: params.id });
     if (error) {
-      setMessage({
-        type: "Error",
-        msg: error.message,
-        remove: () => setMessage({}),
-      });
+      console.error(error)
     } else {
-      setMessage({
-        type: "Success",
-        msg: "Successfully Saved The Blog Post",
-        remove: () => setMessage({}),
-      });
       navigate("/");
     }
   };
@@ -144,8 +126,14 @@ export default function CreateBlog({ session }) {
   }
 
   return (
-    <div className="bg-gray-100 dark:bg-zinc-800 ">
-      <div className=" mx-auto px-8 xl:px-0">
+    <div className="bg-gray-100 dark:bg-zinc-800 min-h-screen">
+      <Link to="/dashboard/posts">
+        <button className="h-10 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+          <span className="text-lg"> <MdKeyboardBackspace /></span>
+          <span className="ml-2">Blogs</span>
+        </button>
+      </Link>
+      <div className="mt-4 mx-auto px-8 xl:px-0">
         <form
           onSubmit={(e) => {
             handleSubmit(e);
@@ -194,7 +182,7 @@ export default function CreateBlog({ session }) {
                   >
                     Content
                   </label>
-                  <div className="max-h-[400px] overflow-y-auto">
+                  <div className="max-h-[350px] overflow-y-auto">
                     <ReactQuill
                       className="bg-gray-100 dark:bg-zinc-800 mt-[10px] border-none dark:text-white"
                       value={content}
@@ -219,7 +207,7 @@ export default function CreateBlog({ session }) {
                 type="submit"
                 className="inline-flex justify-center border border-zinc-300 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 transition duration-300 dark:border-zinc-700 py-2 px-4 mr-4 text-sm font-medium text-blue-500 dark:text-teal-500"
               >
-                {getString === "/createblog" ? "Post" : "Update"}
+                {currentPath.includes("createblog") ? "Post" : "Update"}
               </button>
             </div>
           </div>

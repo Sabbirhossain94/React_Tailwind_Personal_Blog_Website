@@ -1,8 +1,5 @@
 import { useState } from "react";
 import supabase from "../../supabaseClient";
-import Footer from "../Footer";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -15,12 +12,9 @@ export default function Auth() {
       setLoading(true);
       const { error } = await supabase.auth.signInWithOtp({ email });
       if (error) throw error;
-         toast.warn("Please Check your email for magic link!", {
-           position: "top-right",
-           toastId: "warn1",
-         });
+
     } catch (error) {
-      toast.warn(error.error_description || error.message);
+      console.error(error)
     } finally {
       setLoading(false);
     }
@@ -46,7 +40,7 @@ export default function Auth() {
                   <div className="mt-4">
                     <input
                       id="email"
-                      className="inputField block w-full appearance-none rounded-md border dark:bg-zinc-900/90 dark:border-gray-200/20 border-gray-300 px-3 py-2 placeholder:text-gray-100 dark:placeholder:text-gray-300 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      className="inputField block w-full dark:text-gray-400 appearance-none rounded-md border dark:bg-zinc-900/90 dark:border-gray-200/20 border-gray-300 px-3 py-2 placeholder:text-gray-100 dark:placeholder:text-gray-400 shadow-sm sm:text-sm"
                       type="email"
                       placeholder="Your email"
                       value={email}
@@ -65,7 +59,6 @@ export default function Auth() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

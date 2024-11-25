@@ -6,6 +6,8 @@ export const fetchBlogs = async ({
     setTotalLength,
     currentPage,
     itemsPerPage,
+    firstItemIndex,
+    lastItemIndex
 }) => {
     try {
         setLoading(true);
@@ -13,14 +15,14 @@ export const fetchBlogs = async ({
         let { data: allData, error: recentError } = await supabase
             .from("blogs")
             .select(`*,profiles(*)`)
-            .range(0,4)
+            .range(0, 4)
 
         if (recentError) throw recentError;
 
         setRecentBlogs(allData || []);
 
-        const firstItemIndex = (currentPage - 1) * itemsPerPage;
-        const lastItemIndex = firstItemIndex + itemsPerPage;
+        firstItemIndex = (currentPage - 1) * itemsPerPage;
+        lastItemIndex = firstItemIndex + itemsPerPage;
 
         let { data, count, error, status } = await supabase
             .from("blogs")
