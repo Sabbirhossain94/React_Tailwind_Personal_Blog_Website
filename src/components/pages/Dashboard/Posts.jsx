@@ -6,10 +6,9 @@ import { deleteBlogs } from "../../../services/deleteBlogs";
 import Modal from "../../layout/modal/Modal";
 
 function Posts() {
-  const { loading, blogs } = useFetchBlogs();
+  const { loading, blogs, totalBlogs } = useFetchBlogs();
   const [selectedBlogId, setSelectedBlogId] = useState(null)
   let [isOpen, setIsOpen] = useState(false);
-
   return (
     <div >
       <div className='flex justify-end'>
@@ -27,7 +26,7 @@ function Posts() {
       />
       <div className="relative overflow-x-auto border border-zinc-300 dark:border-zinc-700 mt-4">
         <table className="w-full text-sm text-left rtl:text-right dark:text-gray-200">
-          <thead className="text-xs uppercase bg-gray-100 dark:bg-zinc-900/50 dark:text-gray-200">
+          <thead className="text-xs border-b border-zinc-300 dark:border-zinc-700 h-[20px] uppercase bg-white dark:bg-zinc-900/50 dark:text-gray-200">
             <tr>
               <th scope="col" className="px-6 py-3">
                 {loading ? <div className="h-4 animate-pulse bg-gray-300 rounded-full dark:bg-gray-700 w-44"></div> : 'Blog title'}
@@ -47,12 +46,12 @@ function Posts() {
             </tr>
           </thead>
           <tbody>
-            {loading ? Array(blogs?.length || 4)
+            {loading ? Array(totalBlogs)
               .fill(null)
               .map((_, index) => <TableSkeleton key={index} />)
               :
               blogs.map((blog, key) => (
-                <tr key={key} className="odd:bg-white dark:text-gray-400 odd:dark:bg-zinc-800 even:bg-gray-100 even:dark:bg-zinc-900/50 border-b dark:border-zinc-700">
+                <tr key={key} className="odd:bg-gray-100 dark:text-gray-400 odd:dark:bg-zinc-800 even:bg-white even:dark:bg-zinc-900/50 border-b dark:border-zinc-700">
                   <td className="px-6 py-4 font-medium whitespace-nowrap ">
                     {blog.title}
                   </td>

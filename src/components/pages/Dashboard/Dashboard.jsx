@@ -2,10 +2,21 @@ import React from 'react'
 import { Outlet, useLocation } from "react-router-dom";
 import { dashboardItems } from '../../../helpers/dashboard';
 import { Link } from 'react-router-dom';
+import { signOut } from '../../../services/signOut';
+import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {
     const location = useLocation();
-    let currentPath = location.pathname.split("/")
+    const redirect = useNavigate();
+    let currentPath = location.pathname.split("/");
+
+    const handleSignOut = async () => {
+        await signOut();
+        setTimeout(() => {
+            redirect("/")
+        }, 1000)
+    };
+
     return (
         <div className='bg-gray-100 dark:bg-zinc-800 min-h-screen'>
             {/* <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
@@ -19,17 +30,32 @@ function Dashboard() {
                     <div className="h-full px-3 py-4 overflow-y-auto ">
                         <ul className="space-y-2 font-medium flex flex-col gap-1">
                             {dashboardItems.map((nav, key) => (
-                                <Link
-                                    key={key}
-                                    to={nav.path}
-                                >
-                                    <li key={key} className='flex items-center justify-between '>
-                                        <p className={`${currentPath[2] === nav.path ? "bg-gray-100 text-blue-500 dark:text-teal-500 dark:bg-zinc-700/50" : ""} w-full space-y-2 items-center flex text-[16px] gap-2 p-2 rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-800 group`}>
-                                            <span className='text-2xl'>{nav.icon}</span>
-                                            {nav.label}
-                                        </p>
-                                    </li>
-                                </Link>
+                                (
+                                    nav.label === "Sign out" ?
+                                        <button
+                                            onClick={handleSignOut}
+                                            key={key}
+
+                                        >
+                                            <li key={key} className='flex items-center justify-between '>
+                                                <p className={`${currentPath[2] === nav.path ? "bg-gray-100 text-blue-500 dark:text-teal-500 dark:bg-zinc-700/50" : ""} w-full space-y-2 items-center flex text-[16px] gap-2 p-2 rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-800 group`}>
+                                                    <span className='text-2xl'>{nav.icon}</span>
+                                                    {nav.label}
+                                                </p>
+                                            </li>
+                                        </button> :
+                                        <Link
+                                            key={key}
+                                            to={nav.path}
+                                        >
+                                            <li key={key} className='flex items-center justify-between '>
+                                                <p className={`${currentPath[2] === nav.path ? "bg-gray-100 text-blue-500 dark:text-teal-500 dark:bg-zinc-700/50" : ""} w-full space-y-2 items-center flex text-[16px] gap-2 p-2 rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-800 group`}>
+                                                    <span className='text-2xl'>{nav.icon}</span>
+                                                    {nav.label}
+                                                </p>
+                                            </li>
+                                        </Link>
+                                )
                             ))}
                         </ul>
                     </div>

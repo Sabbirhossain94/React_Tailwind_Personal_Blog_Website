@@ -4,6 +4,7 @@ import supabase from "../services/supabaseClient";
 const useFetchBlogs = () => {
     const [loading, setLoading] = useState(false);
     const [blogs, setBlogs] = useState([]);
+    const [totalBlogs, setTotalBlogs] = useState(4);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -17,8 +18,8 @@ const useFetchBlogs = () => {
                     .select(`*, profiles(*)`);
 
                 if (error) throw error;
-
                 setBlogs(data || []);
+                setTotalBlogs(data?.length)
             } catch (err) {
                 setError(err.message);
                 console.error(err.message);
@@ -30,7 +31,7 @@ const useFetchBlogs = () => {
         fetchBlogs();
     }, [supabase]);
 
-    return { loading, blogs, error };
+    return { loading, blogs, totalBlogs, error };
 };
 
 export default useFetchBlogs;

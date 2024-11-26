@@ -82,7 +82,7 @@ export default function Navigation({ session }) {
                     <Link
                       to="/signin"
                     >
-                      <button className="h-8 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                      <button className="h-8 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-zinc-300 dark:focus:ring-zinc-700 sm:w-auto">
                         Sign In
                       </button>
                     </Link>
@@ -100,7 +100,7 @@ export default function Navigation({ session }) {
                 {showDropDown ? (
                   <div
                     onClick={(e) => e.stopPropagation()}
-                    className={`transition-opacity duration-300 ease-in-out absolute right-20 z-10 mt-2 w-60 h-30 overflow-hidden origin-top-right rounded-md bg-white dark:bg-zinc-700 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
+                    className={`absolute right-20 z-10 mt-2 w-60 h-30 overflow-hidden border dark:border-zinc-700 origin-top-right bg-white border-zinc-300 dark:bg-zinc-800 py-1 shadow-lg`}
                   >
                     <p
                       className="border-b border-gray-300 dark:border-zinc-500 block px-4 py-2 text-sm text-gray-700 dark:text-gray-400"

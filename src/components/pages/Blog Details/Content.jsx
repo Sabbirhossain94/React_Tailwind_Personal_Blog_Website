@@ -2,6 +2,8 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import supabase from "../../../services/supabaseClient";
+import RecentBlogs from "../../layout/common/RecentBlogs";
+import AboutMe from "../../layout/static/AboutMe";
 import { SingleBlogSkeleton } from "../../layout/skeleton/Skeleton";
 import DOMPurify from 'dompurify';
 
@@ -25,18 +27,6 @@ export default function Content() {
     setLoading(false);
   };
 
-  // const deleteBlog = async (id) => {
-  //   const { data, error } = await supabase
-  //     .from("blogs")
-  //     .delete()
-  //     .match({ id: id });
-  //   if (error) {
-  //     console.log(error);
-  //   } else {
-  //     navigate("/");
-  //   }
-  // };
-
   useEffect(() => {
     showBlog();
   }, []);
@@ -44,7 +34,7 @@ export default function Content() {
 
   return (
     <div className="min-h-screen relative bg-gray-100 dark:bg-zinc-800">
-      <div className="flex max-w-7xl mx-auto gap-8 items-start py-20">
+      <div className="flex max-w-7xl mx-auto gap-16 items-start py-20">
         {loading ? <SingleBlogSkeleton /> : singleBlog.map((item, key) => (
           <div
             key={key}
@@ -80,16 +70,9 @@ export default function Content() {
             </div>
           </div>
         ))}
-        <div className="w-1/4 border border-zinc-300 dark:border-zinc-700 mt-20">
-          <div className=" dark:border-zinc-300 p-4 bg-white dark:bg-zinc-900/50">
-            <h2 className="text-2xl dark:text-gray-200 font-semibold">About Me</h2>
-            <div className="pt-6">
-              <img className="rounded-md border dark:border-none" src='/me.jpg' />
-            </div>
-            <div className="pt-6">
-              <p className="text-[#666] dark:text-gray-400">I am a Web Application Developer with professional experience in building responsive, scalable, and efficient web applications. My passion lies in crafting intuitive user interfaces that enhance user experiences while ensuring high performance and maintainability. I am continually learning new technologies and improving my skills in web development, with a focus on delivering high-quality user experiences. I thrive in collaborative environments and am excited about contributing to innovative projects.</p>
-            </div>
-          </div>
+        <div className="w-1/4 mt-20 flex flex-col gap-10">
+          <AboutMe />
+          <RecentBlogs />
         </div>
       </div>
     </div>

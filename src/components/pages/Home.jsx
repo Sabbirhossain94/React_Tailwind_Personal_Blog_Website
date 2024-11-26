@@ -29,10 +29,11 @@ import { useLocation } from "react-router-dom";
           path="/blog/:id"
           element={<Content session={session} />}
         />
-        <Route path="/account" element={<Account session={session} />} />
+        
         <Route path="/dashboard" element={<Dashboard session={session} />}>
           <Route index element={<Navigate to="posts" />} />
           <Route path="posts" element={<Posts session={session} />} />
+          <Route path="profile" element={<Account session={session} />} />
           <Route path="createblog" element={<CreateBlog session={session} />} />
           <Route path="profile" element={<Profile session={session} />} />
           <Route path="users" element={<Users session={session} />} />

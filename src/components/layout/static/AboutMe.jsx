@@ -1,14 +1,37 @@
 import React from 'react'
+import { contactItems } from '../../../helpers/contact'
 
 function AboutMe() {
     return (
         <div className="border border-zinc-300 dark:border-zinc-700 p-4 bg-white dark:bg-zinc-900/50">
-            <h2 className="text-2xl dark:text-gray-200 font-semibold">About Me</h2>
-            <div className="pt-6">
-                <img className="rounded-md border dark:border-none" src='/me.jpg' />
+            <div className="pt-6 flex justify-center">
+                <img className="border dark:border-none h-44 w-44 rounded-full" src='/me.jpg' />
             </div>
             <div className="pt-6">
-                <p className="text-[#666] dark:text-gray-400">I am a Web Application Developer with professional experience in building responsive, scalable, and efficient web applications. My passion lies in crafting intuitive user interfaces that enhance user experiences while ensuring high performance and maintainability. I am continually learning new technologies and improving my skills in web development, with a focus on delivering high-quality user experiences. I thrive in collaborative environments and am excited about contributing to innovative projects.</p>
+                <p className='text-2xl font-bold text-center text-[#666] dark:text-gray-400'>Sabbir Hossain</p>
+                <p className="text-sm font-semibold text-center text-blue-500 dark:text-teal-500">Frontend Developer</p>
+            </div>
+            <div className='flex flex-col justify-center'>
+                <div className='flex justify-center py-4'>
+                    <a href="mailto:sabbirhossainbd199@gmail.com" className="h-10 whitespace-nowrap w-full border border-zinc-300 bg-gray-100 dark:bg-zinc-800 dark:border-zinc-700 px-24 py-2 text-sm font-medium text-gray-700 dark:text-gray-400 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700  sm:w-auto">
+                        Contact Me
+                    </a>
+                </div>
+                <div className='flex justify-center'>
+                    <span className="flex gap-1">
+                        {contactItems.map((item, key) => (
+                            <a
+                                key={key}
+                                href={item.link}
+                                target='_blank'
+                                className={`${key === 0 && "text-md"} cursor-pointer text-gray-500 text-lg rounded-md p-1`}
+                            >
+                                {item.icon}
+                            </a>
+                        ))}
+                    </span>
+                </div>
+
             </div>
         </div>
     )
