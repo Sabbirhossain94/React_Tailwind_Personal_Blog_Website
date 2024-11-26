@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import supabase from "../../../supabaseClient";
+import supabase from "../../../services/supabaseClient";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -182,7 +182,7 @@ export default function CreateBlog({ session }) {
                   >
                     Content
                   </label>
-                  <div className="max-h-[350px] overflow-y-auto">
+                  <div>
                     <ReactQuill
                       className="bg-gray-100 dark:bg-zinc-800 mt-[10px] border-none dark:text-white"
                       value={content}

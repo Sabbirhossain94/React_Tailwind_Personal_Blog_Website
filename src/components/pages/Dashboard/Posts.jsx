@@ -1,14 +1,14 @@
-import React from 'react'
-import useFetchBlogs from '../../../hooks/useFetchBlogs'
-import { Modal, Button } from 'flowbite-react';
 import { useState } from "react";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { TableSkeleton } from '../../layout/Skeleton/Skeleton';
+import useFetchBlogs from '../../../hooks/useFetchBlogs'
+import { TableSkeleton } from '../../layout/skeleton/Skeleton';
 import { Link } from 'react-router-dom';
+import { deleteBlogs } from "../../../services/deleteBlogs";
+import Modal from "../../layout/modal/Modal";
 
 function Posts() {
   const { loading, blogs } = useFetchBlogs();
-  const [openModal, setOpenModal] = useState(false);
+  const [selectedBlogId, setSelectedBlogId] = useState(null)
+  let [isOpen, setIsOpen] = useState(false);
 
   return (
     <div >
@@ -19,6 +19,12 @@ function Posts() {
           </button>
         </Link>
       </div>
+      <Modal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        deleteBlogs={deleteBlogs}
+        selectedBlogId={selectedBlogId}
+      />
       <div className="relative overflow-x-auto border border-zinc-300 dark:border-zinc-700 mt-4">
         <table className="w-full text-sm text-left rtl:text-right dark:text-gray-200">
           <thead className="text-xs uppercase bg-gray-100 dark:bg-zinc-900/50 dark:text-gray-200">
@@ -41,7 +47,7 @@ function Posts() {
             </tr>
           </thead>
           <tbody>
-            {loading ? Array(4)
+            {loading ? Array(blogs?.length || 4)
               .fill(null)
               .map((_, index) => <TableSkeleton key={index} />)
               :
@@ -60,30 +66,15 @@ function Posts() {
                     coming soon!
                   </td>
                   <td className="px-6 py-4 ">
-                    <Modal dismissible show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
-                      <Modal.Header />
-                      <Modal.Body>
-                        <div className="text-center">
-                          <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-                          <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                            Are you sure you want to delete this product?
-                          </h3>
-                          <div className="flex justify-center gap-4">
-                            <Button color="failure" onClick={() => setOpenModal(false)}>
-                              {"Yes, I'm sure"}
-                            </Button>
-                            <Button color="gray" onClick={() => setOpenModal(false)}>
-                              No, cancel
-                            </Button>
-                          </div>
-                        </div>
-                      </Modal.Body>
-                    </Modal>
-                    <button onClick={() => setOpenModal(true)} className="h-8 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 sm:w-auto">
+                    <button onClick={() => {
+                      setIsOpen(true);
+                      setSelectedBlogId(blog.id)
+                    }
+                    } className="h-8 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 sm:w-auto">
                       Delete
                     </button>
                     <Link
-                      to={`/dashboard/blog/` + blog.slug + `/update`}
+                      to={`/dashboard/blog/${blog.slug}/update`}
                     >
                       <button className="h-8 ml-4 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 sm:w-auto">
                         Edit

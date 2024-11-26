@@ -1,5 +1,5 @@
 import React from "react";
-import supabase from "../../../supabaseClient";
+import supabase from "../../../services/supabaseClient";
 import { useState, useEffect } from "react";
 
 const Account = ({ session }) => {

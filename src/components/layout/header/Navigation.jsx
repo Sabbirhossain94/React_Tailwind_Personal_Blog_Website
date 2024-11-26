@@ -1,10 +1,11 @@
-import "../../src/animation.css";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { signOut } from "../../../services/signOut";
+import { avatarFIle } from "../../../services/getAvatar";
 import { Link } from "react-router-dom";
-import supabase from "../supabaseClient";
 import { AiOutlineUser } from "react-icons/ai";
-import useOutsideClick from "../hooks/useOutsideClick";
-import useDarkMode from "../hooks/useDarkMode";
+import useOutsideClick from "../../../hooks/useOutsideClick";
+import useDarkMode from "../../../hooks/useDarkMode";
+import { DarkIcon, LightIcon, MenuIcon, CloseIcon } from "../../svg/Svg";
 
 export default function Navigation({ session }) {
   const [avatar, setAvatar] = useState(null);
@@ -12,45 +13,14 @@ export default function Navigation({ session }) {
   const { ref, showDropDown, setShowDropDown } = useOutsideClick();
   const { dark, toggleDarkMode } = useDarkMode(true);
 
-  const avatarFIle = async () => {
-    try {
-      let { data, error, status } = await supabase
-        .from("profiles")
-        .select("avatar_url");
-
-      if (error && status !== 406) {
-        throw error;
-      }
-      if (data) {
-        const [file] = data;
-        getAvatarFromStorage(file);
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-  const getAvatarFromStorage = async (file) => {
-    let { data, error } = await supabase.storage
-      .from("avatars")
-      .download(`Profile Photo/${file.avatar_url}`);
-    if (data) {
-      const url = URL.createObjectURL(data);
-      setAvatar(url);
-    } else {
-      console.log(error);
-    }
-  };
-
-  const logOut = async () => {
-    let { error } = await supabase.auth.signOut();
-    if (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    avatarFIle();
-    // eslint-disable-next-line
+    const getAvatarUrl = async () => {
+      const url = await avatarFIle();
+      if (url) {
+        setAvatar(url);
+      }
+    }
+    getAvatarUrl()
   }, [session]);
 
   return (
@@ -68,43 +38,14 @@ export default function Navigation({ session }) {
                   type="button"
                   className="inline-flex items-center justify-center rounded-md p-1 text-gray-400 hover:bg-gray-700 hover:text-white focus:bg-gray-700"
                 >
-                  <svg
-                    onClick={() => setOpenMenuIcon(false)}
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
+                  <CloseIcon setOpenMenuIcon={setOpenMenuIcon} />
                 </button>
               ) : (
                 <button
                   type="button"
                   className="inline-flex items-center justify-center rounded-md p-1 text-gray-400 hover:bg-gray-700 hover:text-white focus:bg-gray-700"
                 >
-                  <svg
-                    onClick={() => setOpenMenuIcon(true)}
-                    className=" block h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                    />
-                  </svg>
+                  <MenuIcon setOpenMenuIcon={setOpenMenuIcon} />
                 </button>
               )}
               {/* </button> */}
@@ -149,31 +90,9 @@ export default function Navigation({ session }) {
                   {/* dark mode */}
                   <button onClick={toggleDarkMode} className="ml-10">
                     {dark ? (
-                      <svg
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                        className=" stroke-gray-500  h-7 w-7"
-                        fill="none"
-                      >
-                        <path
-                          d="M17.25 16.22a6.937 6.937 0 0 1-9.47-9.47 7.451 7.451 0 1 0 9.47 9.47ZM12.75 7C17 7 17 2.75 17 2.75S17 7 21.25 7C17 7 17 11.25 17 11.25S17 7 12.75 7Z"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        ></path>
-                      </svg>
+                      <DarkIcon />
                     ) : (
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="stroke-gray-500/80  h-7 w-7"
-                      >
-                        <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
-                        <path d="M12 4v1M17.66 6.344l-.828.828M20.005 12.004h-1M17.66 17.664l-.828-.828M12 20.01V19M6.34 17.664l.835-.836M3.995 12.004h1.01M6 6l.835.836"></path>
-                      </svg>
+                      <LightIcon />
                     )}
                   </button>
                 </div>
@@ -195,13 +114,12 @@ export default function Navigation({ session }) {
                       Dashboard
                     </Link>
                     {session ? (
-                      <a
-                        href="/#"
-                        onClick={logOut}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-500 dark:text-gray-400 dark:hover:text-teal-500"
+                      <p
+                        onClick={signOut}
+                        className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:text-blue-500 dark:text-gray-400 dark:hover:text-teal-500"
                       >
                         Sign out
-                      </a>
+                      </p>
                     ) : (
                       ""
                     )}
@@ -216,7 +134,7 @@ export default function Navigation({ session }) {
       </div>
 
       {/* mobile menu */}
-      <div className="md:hidden relative dark:bg-zinc-900/80 right-0 left-0 z-10 h-auto ">
+      {/* <div className="md:hidden relative dark:bg-zinc-900/80 right-0 left-0 z-10 h-auto ">
         <div
           className={`${openMenuIcon
             ? "max-h-52 transition-all duration-300 opacity-100 "
@@ -282,7 +200,7 @@ export default function Navigation({ session }) {
                 {session ? (
                   <a
                     href="/#"
-                    onClick={logOut}
+                    onClick={signOut}
                     className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                   >
                     Sign out
@@ -294,7 +212,7 @@ export default function Navigation({ session }) {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </nav>
   );
 }

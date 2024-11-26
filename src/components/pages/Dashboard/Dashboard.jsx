@@ -14,8 +14,8 @@ function Dashboard() {
                     <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
                 </svg>
             </button> */}
-            <div className='flex mt-[70px]'>
-                <aside className=" bg-white dark:bg-zinc-900 border-r border-zinc-300 dark:border-zinc-700 left-0 bottom-4 top-10 z-40 w-72 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+            <div className='flex pt-[70px]'>
+                <aside className=" bg-white dark:bg-zinc-900 border-r border-zinc-300 dark:border-zinc-700 left-0 z-40 w-72 min-h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
                     <div className="h-full px-3 py-4 overflow-y-auto ">
                         <ul className="space-y-2 font-medium flex flex-col gap-1">
                             {dashboardItems.map((nav, key) => (
@@ -34,7 +34,7 @@ function Dashboard() {
                         </ul>
                     </div>
                 </aside>
-                <div className="h-screen w-full px-10 py-10">
+                <div className="min-h-screen w-full px-10 py-10">
                     <div className="border-gray-200 rounded-lg dark:border-gray-700">
                         <Outlet />
                     </div>

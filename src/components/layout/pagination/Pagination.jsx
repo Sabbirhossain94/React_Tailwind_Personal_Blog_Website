@@ -1,4 +1,5 @@
 import React from "react";
+import { PreviousIcon, NextIcon } from "../../svg/Svg";
 
 export default function Pagination({
   currentPage,
@@ -33,9 +34,7 @@ export default function Pagination({
           onClick={prevPage}
           className={`${currentPage === 1 ? "cursor-not-allowed border-zinc-300 bg-gray-200 dark:bg-zinc-800 hover:border-zinc-300 hover:text-gray-500 flex items-center justify-center px-3 h-10 text-sm font-medium text-gray-500 dark:border-zinc-700 dark:hover:border-zinc-700 dark:hover:text-gray-500 border transition duration-300"
             : "border-zinc-300 bg-white hover:border-blue-500 hover:text-blue-500 flex items-center justify-center px-3 h-10 text-sm font-medium text-gray-500 dark:bg-zinc-800 dark:border-zinc-700 dark:hover:border-teal-500 dark:hover:text-teal-500 border transition duration-300"}`}>
-          <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
-          </svg>
+          <PreviousIcon />
         </button>
         {pages.map((page, key) => (
           <button
@@ -54,9 +53,7 @@ export default function Pagination({
           onClick={nextPage}
           className={`${currentPage === pages.length ? "cursor-not-allowed border-zinc-300 bg-gray-200 dark:bg-zinc-800 hover:border-zinc-300 hover:text-gray-500 flex items-center justify-center px-3 h-10 text-sm font-medium text-gray-500 dark:border-zinc-700 dark:hover:border-zinc-700 dark:hover:text-gray-500 border transition duration-300"
             : "border-zinc-300 bg-white hover:border-blue-500 hover:text-blue-500 flex items-center justify-center px-3 h-10 text-sm font-medium text-gray-500 dark:bg-zinc-800 dark:border-zinc-700 dark:hover:border-teal-500 dark:hover:text-teal-500 border transition duration-300"}`}>
-          <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-          </svg>
+          <NextIcon />
         </button>
       </nav>
     </div >

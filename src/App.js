@@ -1,18 +1,18 @@
 import "./index.css";
-import supabase from "./supabaseClient";
+import supabase from "./services/supabaseClient";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Pagination from "./components/Pagination";
+import Pagination from "./components/layout/pagination/Pagination";
 import { AiOutlineDoubleRight } from "react-icons/ai";
-import { fetchBlogs } from "./helpers/fetchBlogs";
-import { CardSkeleton } from "./components/layout/Skeleton/Skeleton";
+import { fetchBlogs } from "./services/fetchBlogs";
+import { CardSkeleton } from "./components/layout/skeleton/Skeleton";
 import AboutMe from "./components/layout/static/AboutMe";
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [allBlog, setAllBlog] = useState([]);
   const [recentBlogs, setRecentBlogs] = useState([])
-  const itemsPerPage = 4;
+  const [itemsPerPage, setItemsPerPage] = useState(4);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalLength, setTotalLength] = useState(null);
   let firstItemIndex = (currentPage - 1) * itemsPerPage;
@@ -20,7 +20,6 @@ function App() {
   const blogCoverUrl = process.env.REACT_APP_STORAGE_PUBLIC_URL;
 
   useEffect(() => {
-    alert()
     fetchBlogs({
       supabase,
       setLoading,
@@ -29,6 +28,7 @@ function App() {
       setTotalLength,
       currentPage,
       itemsPerPage,
+      setItemsPerPage,
       firstItemIndex,
       lastItemIndex
     })
@@ -41,10 +41,9 @@ function App() {
         <div className="min-h-screen flex flex-col justify-start w-3/4 relative dark:bg-zinc-800 mt-20">
           <div className="flex flex-wrap gap-8">
             {loading ? (
-              Array(Math.min(itemsPerPage, lastItemIndex - firstItemIndex))
+              Array(itemsPerPage)
                 .fill(null)
                 .map((_, index) => <CardSkeleton key={index} />)
-
             ) : (
               allBlog.map((blog, key) => (
                 <div key={key} className="relative w-[400px] rounded-md scale-100 transition duration-300 hover:scale-105">

@@ -1,27 +1,30 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import App from "../App";
-import useSession from "../hooks/useSession";
-import Navigation from "./Navigation";
-import Content from "./pages/Content";
-import SignIn from "./pages/SignIn";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import Account from "./pages/Profiles/Account";
-import CreateBlog from "./pages/Profiles/CreateBlog";
-import Footer from "./Footer";
-import Posts from "./pages/Dashboard/Posts";
-import Users from "./pages/Dashboard/Users";
-import Profile from "./pages/Dashboard/Profile";
+import App from "../../App";
+import useSession from "../../hooks/useSession";
+import Navigation from "../layout/header/Navigation";
+import Content from "./Blog Details/Content";
+import Auth from "./Auth/SignIn";
+import Dashboard from "./Dashboard/Dashboard";
+import Account from "./Profiles/Account";
+import CreateBlog from "./Profiles/CreateBlog";
+import Footer from "../layout/static/Footer";
+import Posts from "./Dashboard/Posts";
+import Users from "./Dashboard/Users";
+import Profile from "./Dashboard/Profile";
 import { Navigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-export default function () {
+ function AppRouter () {
   const { session } = useSession()
+  const location = useLocation();
+  const isDashboard = location.pathname.startsWith("/dashboard");
 
   return (
-    <Router>
+    <>
       <Navigation session={session} />
       <Routes>
         <Route path="/" element={<App session={session} />} />
-        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signin" element={<Auth />} />
         <Route
           path="/blog/:id"
           element={<Content session={session} />}
@@ -36,7 +39,15 @@ export default function () {
           <Route path="blog/:id/update" element={<CreateBlog session={session} />} />
         </Route>
       </Routes>
-      <Footer />
+      {!isDashboard && <Footer />}
+    </>
+  );
+}
+
+export default function Root({ session }) {
+  return (
+    <Router>
+      <AppRouter session={session} />
     </Router>
   );
 }

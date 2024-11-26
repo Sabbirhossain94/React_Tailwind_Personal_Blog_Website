@@ -6,6 +6,7 @@ export const fetchBlogs = async ({
     setTotalLength,
     currentPage,
     itemsPerPage,
+    setItemsPerPage,
     firstItemIndex,
     lastItemIndex
 }) => {
@@ -30,7 +31,7 @@ export const fetchBlogs = async ({
             .range(firstItemIndex, lastItemIndex - 1);
 
         if (error && status !== 406) throw error;
-
+        setItemsPerPage(data.length)
         setAllBlog(data || []);
         setTotalLength(count);
     } catch (error) {

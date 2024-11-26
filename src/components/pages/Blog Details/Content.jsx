@@ -1,8 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import supabase from "../../supabaseClient";
-import { SingleBlogSkeleton } from "../layout/Skeleton/Skeleton";
+import supabase from "../../../services/supabaseClient";
+import { SingleBlogSkeleton } from "../../layout/skeleton/Skeleton";
 import DOMPurify from 'dompurify';
 
 export default function Content() {
