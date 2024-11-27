@@ -10,11 +10,10 @@ import CreateBlog from "./Profiles/CreateBlog";
 import Footer from "../layout/static/Footer";
 import Posts from "./Dashboard/Posts";
 import Users from "./Dashboard/Users";
-import Profile from "./Dashboard/Profile";
 import { Navigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
- function AppRouter () {
+function AppRouter() {
   const { session } = useSession()
   const location = useLocation();
   const isDashboard = location.pathname.startsWith("/dashboard");
@@ -29,13 +28,12 @@ import { useLocation } from "react-router-dom";
           path="/blog/:id"
           element={<Content session={session} />}
         />
-        
+
         <Route path="/dashboard" element={<Dashboard session={session} />}>
           <Route index element={<Navigate to="posts" />} />
           <Route path="posts" element={<Posts session={session} />} />
           <Route path="profile" element={<Account session={session} />} />
           <Route path="createblog" element={<CreateBlog session={session} />} />
-          <Route path="profile" element={<Profile session={session} />} />
           <Route path="users" element={<Users session={session} />} />
           <Route path="blog/:id/update" element={<CreateBlog session={session} />} />
         </Route>
