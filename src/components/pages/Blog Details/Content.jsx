@@ -1,24 +1,26 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import supabase from "../../../services/supabaseClient";
+import supabase from "../../../services/global/supabaseClient";
 import RecentBlogs from "../../layout/common/RecentBlogs";
 import AboutMe from "../../layout/static/AboutMe";
+import { blogCoverUrl } from "../../../helpers/storage";
 import { SingleBlogSkeleton } from "../../layout/skeleton/Skeleton";
 import DOMPurify from 'dompurify';
 
 export default function Content() {
-  const params = useParams();
+  const location = useLocation();
+  const { pathname } = location;
+  const slug = pathname.split("/")[2]
   const [singleBlog, setSingleBlog] = useState([]);
   const [loading, setLoading] = useState(false);
-  const blogCoverUrl = process.env.REACT_APP_STORAGE_PUBLIC_URL;
 
   const showBlog = async () => {
     setLoading(true)
     let { data, error } = await supabase
       .from("blogs")
       .select(`*,profiles(*)`)
-      .eq("slug", params.id);
+      .eq("slug", slug);
     if (error) {
       console.log(error);
     } else {
@@ -29,7 +31,7 @@ export default function Content() {
 
   useEffect(() => {
     showBlog();
-  }, []);
+  }, [slug]);
 
 
   return (
@@ -72,7 +74,7 @@ export default function Content() {
         ))}
         <div className="w-1/4 mt-20 flex flex-col gap-10">
           <AboutMe />
-          <RecentBlogs />
+          <RecentBlogs loading={loading} setLoading={setLoading} />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
-import supabase from "./supabaseClient";
+import supabase from "../global/supabaseClient";
 
-export const fetchBlogs = async ({
+export const fetchPaginatedBlogs = async ({
     setLoading,
     setAllBlog,
     setTotalLength,

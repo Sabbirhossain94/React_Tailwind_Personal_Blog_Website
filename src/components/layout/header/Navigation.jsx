@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { signOut } from "../../../services/signOut";
-import { avatarFIle } from "../../../services/getAvatar";
+import { signOut } from "../../../services/auth/signOut";
+import { avatarFIle } from "../../../services/global/getAvatar";
 import { Link } from "react-router-dom";
-import { AiOutlineUser } from "react-icons/ai";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 import useDarkMode from "../../../hooks/useDarkMode";
 import { DarkIcon, LightIcon, MenuIcon, CloseIcon } from "../../svg/Svg";
@@ -11,7 +10,7 @@ export default function Navigation({ session }) {
   const [avatar, setAvatar] = useState(null);
   const [openMenuIcon, setOpenMenuIcon] = useState(false);
   const { ref, showDropDown, setShowDropDown } = useOutsideClick();
-  const { dark, toggleDarkMode } = useDarkMode(true);
+  const { dark, toggleDarkMode } = useDarkMode(false);
 
   useEffect(() => {
     const getAvatarUrl = async () => {

@@ -1,7 +1,7 @@
 import React from "react";
-import supabase from "../../../services/supabaseClient";
+import supabase from "../../../services/global/supabaseClient";
 import { useState, useEffect } from "react";
-import { avatarFIle } from "../../../services/getAvatar";
+import { avatarFIle } from "../../../services/global/getAvatar";
 
 const Account = ({ session }) => {
   const [loading, setLoading] = useState(true);
@@ -124,13 +124,13 @@ const Account = ({ session }) => {
               <div className="w-1/2">
                 <img
                   src={avatar}
-                  alt={"No image"}
+                  alt="avatar"
                   className="focus:ring-offset-2 ring-2 dark:ring-teal-500 rounded-full object-cover"
                   style={{ height: 150, width: 150 }}
                 />
               </div>
               <div className="w-1/2 h-full">
-                <label for="uploadPic"
+                <label htmlFor="uploadPic"
                   className="h-10 cursor-pointer border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 px-10 whitespace-nowrap w-full py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                   Change Picture
                   <input type="file" id='uploadPic' className="hidden" />

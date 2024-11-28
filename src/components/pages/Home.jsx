@@ -28,7 +28,6 @@ function AppRouter() {
           path="/blog/:id"
           element={<Content session={session} />}
         />
-
         <Route path="/dashboard" element={<Dashboard session={session} />}>
           <Route index element={<Navigate to="posts" />} />
           <Route path="posts" element={<Posts session={session} />} />

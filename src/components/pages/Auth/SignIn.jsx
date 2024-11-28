@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { signIn } from "../../../services/signIn";
+import { signIn } from "../../../services/auth/signIn";
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);

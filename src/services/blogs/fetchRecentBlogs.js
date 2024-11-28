@@ -1,4 +1,4 @@
-import supabase from "./supabaseClient";
+import supabase from "../global/supabaseClient";
 
 export const fetchRecentBlogs = async ({
     setLoading,

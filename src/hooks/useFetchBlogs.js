@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import supabase from "../services/supabaseClient";
+import supabase from "../services/global/supabaseClient";
 
 const useFetchBlogs = () => {
     const [loading, setLoading] = useState(false);

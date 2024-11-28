@@ -1,4 +1,4 @@
-import supabase from "./supabaseClient";
+import supabase from "../global/supabaseClient";
 
 export const signOut = async () => {
     let { error } = await supabase.auth.signOut();

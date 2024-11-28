@@ -1,11 +1,12 @@
 import React from 'react'
 import { contactItems } from '../../../helpers/contact'
+import { AboutMeSkeleton } from '../skeleton/Skeleton'
 
-function AboutMe() {
-    return (
+function AboutMe({ loading }) {
+    return loading ? <AboutMeSkeleton /> :
         <div className="border border-zinc-300 dark:border-zinc-700 p-4 bg-white dark:bg-zinc-900/50">
             <div className="pt-6 flex justify-center">
-                <img className="border dark:border-none h-44 w-44 rounded-full" src='/me.jpg' />
+                <img className="border-2 border-blue-500 dark:border-teal-500 h-44 w-44 rounded-full" src='/me.jpg' />
             </div>
             <div className="pt-6">
                 <p className='text-2xl font-bold text-center text-[#666] dark:text-gray-400'>Sabbir Hossain</p>
@@ -34,7 +35,8 @@ function AboutMe() {
 
             </div>
         </div>
-    )
 }
+
+
 
 export default AboutMe

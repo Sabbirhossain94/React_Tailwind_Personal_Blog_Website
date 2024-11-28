@@ -2,7 +2,7 @@ import React from 'react'
 import { Outlet, useLocation } from "react-router-dom";
 import { dashboardItems } from '../../../helpers/dashboard';
 import { Link } from 'react-router-dom';
-import { signOut } from '../../../services/signOut';
+import { signOut } from '../../../services/auth/signOut';
 import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {

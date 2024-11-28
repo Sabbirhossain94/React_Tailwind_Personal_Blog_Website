@@ -3,13 +3,13 @@ import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "./components/layout/pagination/Pagination";
 import RecentBlogs from "./components/layout/common/RecentBlogs";
+import { blogCoverUrl } from "./helpers/storage";
 import { AiOutlineDoubleRight } from "react-icons/ai";
-import { fetchBlogs } from "./services/fetchBlogs";
+import { fetchPaginatedBlogs } from "./services/blogs/fetchPaginatedBlogs";
 import { CardSkeleton } from "./components/layout/skeleton/Skeleton";
 import AboutMe from "./components/layout/static/AboutMe";
 
-
-function BlogsCard({ loading, itemsPerPage, allBlog, blogCoverUrl }) {
+function BlogsCard({ loading, itemsPerPage, allBlog }) {
   return (<div className="flex flex-wrap gap-8">
     {loading ? (
       Array(itemsPerPage)
@@ -74,10 +74,9 @@ function App() {
   const [itemsPerPage, setItemsPerPage] = useState(4);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalLength, setTotalLength] = useState(null);
-  const blogCoverUrl = process.env.REACT_APP_STORAGE_PUBLIC_URL;
 
   const fetchBlogsCallback = useCallback(() => {
-    fetchBlogs({
+    fetchPaginatedBlogs({
       setLoading,
       setAllBlog,
       setTotalLength,
@@ -100,7 +99,6 @@ function App() {
             loading={loading}
             itemsPerPage={itemsPerPage}
             allBlog={allBlog}
-            blogCoverUrl={blogCoverUrl}
           />
           <Pagination
             itemsPerPage={itemsPerPage}
@@ -110,7 +108,7 @@ function App() {
           />
         </div>
         <div className="mt-20 flex flex-col gap-10 w-1/4 ">
-          <AboutMe />
+          <AboutMe loading={loading} />
           <RecentBlogs />
         </div>
       </div>
