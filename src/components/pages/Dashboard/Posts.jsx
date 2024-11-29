@@ -62,7 +62,7 @@ function Posts() {
                     {blog.inserted_at}
                   </td>
                   <td className="px-6 py-4">
-                    coming soon!
+                    {blog.updated_at}
                   </td>
                   <td className="px-6 py-4 ">
                     <button onClick={() => {

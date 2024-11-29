@@ -1,7 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import supabase from "../../../services/global/supabaseClient";
-import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import UploadCoverImage from "./UploadCoverImage";
@@ -10,58 +8,38 @@ import ReactQuill from "react-quill";
 import { modules } from "../../../helpers/textEditor";
 import { createBlog } from "../../../services/blogs/createBlog";
 import { loadBlogContent } from "../../../services/blogs/loadBlogContent";
+import { updateBlog } from "../../../services/blogs/updateBlog";
 import 'react-quill/dist/quill.snow.css';
 
 export default function CreateBlog({ session }) {
-  // const navigate = useNavigate();
   let location = useLocation();
   let currentPath = location.pathname.split("/");
   const isCreate = currentPath.includes("createblog")
   const [file, setFile] = useState(null)
   const [blog, setBlog] = useState({
+    id: null,
     title: "",
     introduction: "",
     slug: "",
     content: "",
     coverphoto: null
   })
+  const [loading, setLoading] = useState(false)
 
   // adding blogs to database here
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isCreate) {
       createBlog(session, blog, file)
+    } else {
+      updateBlog(session, blog, file)
     }
   };
-
-  // const updateBlogContent = async () => {
-  //   try {
-  //     let { error } = await supabase
-  //       .from("blogs")
-  //       .update({
-  //         user_id: session.user.id,
-  //         title: title,
-  //         introduction: introduction,
-  //         content: content,
-  //         inserted_at: date,
-  //         thumbnail: coverphoto,
-  //       })
-  //       .match({ slug: slug });
-  //     if (error) {
-  //       console.error(error)
-  //     } else {
-  //       navigate("/");
-  //     }
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // };
-
 
   useEffect(() => {
     if (!isCreate) {
       let slug = currentPath[3];
-      loadBlogContent(slug, setBlog);
+      loadBlogContent(slug, setBlog, setLoading);
     }
   }, [isCreate]);
 
@@ -115,6 +93,7 @@ export default function CreateBlog({ session }) {
                   blog={blog}
                   setBlog={setBlog}
                   setFile={setFile}
+                  loading={loading}
                 />
                 <label
                   htmlFor="title"
@@ -179,6 +158,7 @@ export default function CreateBlog({ session }) {
                   </label>
                   <div>
                     <ReactQuill
+                      id="content"
                       className="bg-gray-100 dark:bg-zinc-800 mt-[10px] border-none dark:text-white"
                       value={blog.content}
                       onChange={handleEditorChange}
@@ -190,13 +170,13 @@ export default function CreateBlog({ session }) {
               </div>
             </div>
             <div className="bg-white dark:bg-zinc-900/10 px-4 pt-8 pb-6 text-right sm:px-6">
-              <button
+              {isCreate && <button
                 onClick={resetForm}
                 type="button"
                 className="inline-flex justify-center border border-zinc-300 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 transition duration-300 dark:border-zinc-700 py-2 px-4 mr-4 text-sm font-medium text-blue-500 dark:text-teal-500"
               >
                 Cancel
-              </button>
+              </button>}
               <button
                 type="submit"
                 className="inline-flex justify-center border border-zinc-300 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 transition duration-300 dark:border-zinc-700 py-2 px-4 mr-4 text-sm font-medium text-blue-500 dark:text-teal-500"

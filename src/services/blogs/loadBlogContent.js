@@ -1,6 +1,7 @@
 import supabase from "../global/supabaseClient";
 
-export const loadBlogContent = async (slug, setBlog) => {
+export const loadBlogContent = async (slug, setBlog, setLoading) => {
+    setLoading(true)
     try {
         let { data, error } = await supabase
             .from("blogs")
@@ -16,6 +17,7 @@ export const loadBlogContent = async (slug, setBlog) => {
 
             setBlog((prevData) => ({
                 ...prevData,
+                id: blog.id,
                 title: blog.title,
                 introduction: blog.introduction,
                 slug: blog.slug,
@@ -27,5 +29,7 @@ export const loadBlogContent = async (slug, setBlog) => {
         }
     } catch (error) {
         return null;
+    } finally {
+        setLoading(false)
     }
 };

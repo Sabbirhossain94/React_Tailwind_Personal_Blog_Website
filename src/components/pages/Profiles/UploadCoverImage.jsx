@@ -1,22 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { filePathCreator } from "../../../helpers/filePathCreator";
+import { ImagePlaceholder } from "../../layout/skeleton/Skeleton";
 
-function UploadCoverImage({ isCreate, blog, setBlog, setFile }) {
+function UploadCoverImage({ isCreate, blog, setBlog, setFile, loading }) {
   const [preview, setPreview] = useState(null);
+  const [showCancel, setShowCancel] = useState(false);
 
   const handleFileChange = (e) => {
+    if (!isCreate) {
+      setShowCancel(true);
+    }
     const file = e.target.files[0];
     const viewImage = URL.createObjectURL(file);
-    const fileExt = file.name.split(".").pop();
-    const filePath = `${Math.random()}.${fileExt}`;
+    filePathCreator(file);
     setFile(file)
     setPreview(viewImage)
-    setBlog((prevData) => ({
-      ...prevData,
-      coverphoto: filePath,
-    }));
+
+
   };
 
-  console.log(preview)
+  useEffect(() => {
+    if (showCancel === false) {
+      setPreview(blog?.coverphoto?.publicUrl);
+    }
+  }, [showCancel])
 
   return (
     <div>
@@ -50,21 +57,25 @@ function UploadCoverImage({ isCreate, blog, setBlog, setFile }) {
         </label>
       ) :
         <div>
-          <img
-            src={preview ? preview : blog?.coverphoto?.publicUrl}
-            width="300px"
-            height="300px"
-            className="border border-blue-400"
-            alt="error"
-          />
+          {loading ? <ImagePlaceholder /> :
+            <img
+              src={preview ? preview : blog?.coverphoto?.publicUrl}
+              width="300px"
+              height="300px"
+              className="border border-blue-400"
+              alt="error"
+            />}
           <div className="space-x-4">
-            <button
+            {showCancel && <button
               type="button"
-              onClick={() => setPreview(null)}
+              onClick={() => {
+                setShowCancel(false);
+              }}
               className="h-8 mt-4 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 dark:border-zinc-700 bg-gray-100 hover:bg-gray-200 dark:hover:bg-zinc-700 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
             >
-              Cancel
+              Reset
             </button>
+            }
             <label htmlFor="file" className="h-8 mt-4 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 dark:border-zinc-700 bg-gray-100 hover:bg-gray-200 dark:hover:bg-zinc-700 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
               <input
                 type="file"

@@ -1,9 +1,11 @@
 import supabase from "../global/supabaseClient";
 import moment from "moment";
+import { filePathCreator } from "../../helpers/filePathCreator";
 
 export const createBlog = async (session, blog, file) => {
     const date = moment().format("MMMM D, YYYY");
-    const { title, introduction, slug, content, coverphoto } = blog;
+    const { title, introduction, slug, content } = blog;
+    const filePath = filePathCreator(file);
     try {
         let { data, error } = await supabase
             .from("blogs")
@@ -14,7 +16,7 @@ export const createBlog = async (session, blog, file) => {
                 introduction: introduction,
                 content: content,
                 inserted_at: date,
-                thumbnail: coverphoto,
+                thumbnail: filePath,
             })
             .single();
         if (error) {
@@ -25,7 +27,7 @@ export const createBlog = async (session, blog, file) => {
 
         let { data: uploaded, error: uploadError } = await supabase.storage
             .from("thumbnail")
-            .upload(`Thumbnail/${coverphoto}`, file);
+            .upload(`Thumbnail/${filePath}`, file);
         if (uploadError) {
             console.log(uploadError);
         } else {
