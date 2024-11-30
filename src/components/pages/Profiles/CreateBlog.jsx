@@ -1,7 +1,5 @@
-import React from "react";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useLocation, Link,useNavigate } from "react-router-dom";
 import UploadCoverImage from "./UploadCoverImage";
 import { MdKeyboardBackspace } from "react-icons/md";
 import ReactQuill from "react-quill";
@@ -12,8 +10,10 @@ import { updateBlog } from "../../../services/blogs/updateBlog";
 import 'react-quill/dist/quill.snow.css';
 
 export default function CreateBlog({ session }) {
+  const navigate = useNavigate()
   let location = useLocation();
   let currentPath = location.pathname.split("/");
+  let slug = currentPath[3];
   const isCreate = currentPath.includes("createblog")
   const [file, setFile] = useState(null)
   const [blog, setBlog] = useState({
@@ -30,15 +30,14 @@ export default function CreateBlog({ session }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isCreate) {
-      createBlog(session, blog, file)
+      createBlog(session, blog, file, navigate)
     } else {
-      updateBlog(session, blog, file)
+      updateBlog(session, blog, file, navigate)
     }
   };
 
   useEffect(() => {
     if (!isCreate) {
-      let slug = currentPath[3];
       loadBlogContent(slug, setBlog, setLoading);
     }
   }, [isCreate]);
@@ -91,7 +90,6 @@ export default function CreateBlog({ session }) {
                 <UploadCoverImage
                   isCreate={isCreate}
                   blog={blog}
-                  setBlog={setBlog}
                   setFile={setFile}
                   loading={loading}
                 />

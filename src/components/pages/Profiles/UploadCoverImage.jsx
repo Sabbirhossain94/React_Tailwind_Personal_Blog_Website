@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { filePathCreator } from "../../../helpers/filePathCreator";
 import { ImagePlaceholder } from "../../layout/skeleton/Skeleton";
 
-function UploadCoverImage({ isCreate, blog, setBlog, setFile, loading }) {
+function UploadCoverImage({ isCreate, blog, setFile, loading }) {
   const [preview, setPreview] = useState(null);
   const [showCancel, setShowCancel] = useState(false);
 
@@ -12,18 +11,15 @@ function UploadCoverImage({ isCreate, blog, setBlog, setFile, loading }) {
     }
     const file = e.target.files[0];
     const viewImage = URL.createObjectURL(file);
-    filePathCreator(file);
     setFile(file)
     setPreview(viewImage)
-
-
   };
 
   useEffect(() => {
     if (showCancel === false) {
-      setPreview(blog?.coverphoto?.publicUrl);
-    }
-  }, [showCancel])
+      setPreview(blog && blog.coverphoto && blog.coverphoto.publicUrl);
+    } 
+  }, [showCancel]);
 
   return (
     <div>
@@ -59,7 +55,7 @@ function UploadCoverImage({ isCreate, blog, setBlog, setFile, loading }) {
         <div>
           {loading ? <ImagePlaceholder /> :
             <img
-              src={preview ? preview : blog?.coverphoto?.publicUrl}
+              src={preview ? preview :  blog?.coverphoto?.publicUrl }
               width="300px"
               height="300px"
               className="border border-blue-400"

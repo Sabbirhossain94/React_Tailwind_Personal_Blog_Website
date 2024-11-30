@@ -1,13 +1,12 @@
 import supabase from "../global/supabaseClient";
 import moment from "moment";
-import { filePathCreator } from "../../helpers/filePathCreator";
+import toast from "react-hot-toast";
 
-export const createBlog = async (session, blog, file) => {
+export const createBlog = async (session, blog, file, navigate) => {
     const date = moment().format("MMMM D, YYYY");
     const { title, introduction, slug, content } = blog;
-    const filePath = filePathCreator(file);
     try {
-        let { data, error } = await supabase
+        let { error: blogError } = await supabase
             .from("blogs")
             .insert({
                 user_id: session.user.id,
@@ -16,22 +15,21 @@ export const createBlog = async (session, blog, file) => {
                 introduction: introduction,
                 content: content,
                 inserted_at: date,
-                thumbnail: filePath,
+                thumbnail: file.name,
             })
             .single();
-        if (error) {
-            console.error(error)
-        } else {
-            console.log(data)
+        if (blogError) {
+            console.log(blogError)
         }
 
-        let { data: uploaded, error: uploadError } = await supabase.storage
+        toast.success("Blog created successfully");
+        navigate("/dashboard/posts");
+        
+        let { error: uploadError } = await supabase.storage
             .from("thumbnail")
-            .upload(`Thumbnail/${filePath}`, file);
+            .upload(`Thumbnail/${file.name}`, file);
         if (uploadError) {
             console.log(uploadError);
-        } else {
-            console.log("successfully uploaded cover photo!", uploaded)
         }
 
     } catch (error) {

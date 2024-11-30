@@ -30,13 +30,13 @@ const Account = ({ session }) => {
       setLoading(true);
       const { user } = session;
 
-      let { data, error, status } = await supabase
+      let { data, error } = await supabase
         .from("profiles")
         .select(`username, avatar_url`)
         .eq("id", user.id)
         .single();
 
-      if (error && status !== 406) {
+      if (error) {
         throw error;
       }
 

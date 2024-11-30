@@ -3,7 +3,8 @@ import App from "../../App";
 import useSession from "../../hooks/useSession";
 import Navigation from "../layout/header/Navigation";
 import Content from "./Blog Details/Content";
-import Auth from "./Auth/SignIn";
+import SignIn from "./Auth/SignIn";
+import ProtectedRoute from "./Auth/ProtectedRoute"
 import Dashboard from "./Dashboard/Dashboard";
 import Account from "./Profiles/Account";
 import CreateBlog from "./Profiles/CreateBlog";
@@ -12,6 +13,7 @@ import Posts from "./Dashboard/Posts";
 import Users from "./Dashboard/Users";
 import { Navigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 function AppRouter() {
   const { session } = useSession()
@@ -20,15 +22,20 @@ function AppRouter() {
 
   return (
     <>
+      <Toaster />
       <Navigation session={session} />
       <Routes>
         <Route path="/" element={<App session={session} />} />
-        <Route path="/signin" element={<Auth />} />
+        <Route path="/signin" element={<SignIn />} />
         <Route
           path="/blog/:id"
           element={<Content session={session} />}
         />
-        <Route path="/dashboard" element={<Dashboard session={session} />}>
+        <Route path="/dashboard" element={
+          <ProtectedRoute session={session}>
+            <Dashboard session={session} />
+          </ProtectedRoute>
+        }>
           <Route index element={<Navigate to="posts" />} />
           <Route path="posts" element={<Posts session={session} />} />
           <Route path="profile" element={<Account session={session} />} />

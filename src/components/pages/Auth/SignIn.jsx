@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { signIn } from "../../../services/auth/signIn";
+import Spinner from "../../animation/Spinner";
 
-export default function Auth() {
+export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
 
@@ -38,8 +39,8 @@ export default function Auth() {
                 </div>
               </div>
               <div>
-                <button className="flex w-full justify-center border border-zinc-300 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 py-2 px-4 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-zinc-200 dark:hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-300 dark:focus:ring-teal-500">
-                  {loading ? "Processing..." : "Get Magic Link"}
+                <button className="flex items-center gap-2 w-full justify-center border border-zinc-300 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 py-2 px-4 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-zinc-200 dark:hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-300 dark:focus:ring-teal-500">
+                  {loading ? <><Spinner/>Processing...</> : "Get Magic Link"}
                 </button>
               </div>
             </form>

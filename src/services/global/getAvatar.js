@@ -2,11 +2,11 @@ import supabase from "./supabaseClient";
 
 export const avatarFIle = async () => {
     try {
-        let { data, error, status } = await supabase
+        let { data, error } = await supabase
             .from("profiles")
             .select("avatar_url");
 
-        if (error && status !== 406) {
+        if (error) {
             throw error;
         }
         if (data) {

@@ -1,44 +1,52 @@
 import supabase from "../global/supabaseClient";
-import { filePathCreator } from "../../helpers/filePathCreator";
 import moment from "moment";
+import toast from "react-hot-toast";
 
-export const updateBlog = async (session, blog, file) => {
+export const updateBlog = async (session, blog, file, navigate) => {
     const date = moment().format("MMMM D, YYYY");
-    const { id, title, introduction, slug, content } = blog;
-    const filePath = filePathCreator(file);
-    try {
-        let { data, error } = await supabase
-            .from("blogs")
-            .update({
-                user_id: session.user.id,
-                title: title,
-                slug: slug,
-                introduction: introduction,
-                content: content,
-                updated_at: date,
-                thumbnail: filePath,
-            })
-            .match({ id: id })
-            .select("*")
+    const { id, title, introduction, slug, content, thumbnail: existingThumbnail } = blog;
 
-        if (data) {
-            console.log("successfully updated the blog", data)
-        } else {
-            console.log(error)
-        }
+    try {
+        const updateData = {
+            user_id: session.user.id,
+            title,
+            slug,
+            introduction,
+            content,
+            updated_at: date,
+        };
 
         if (file) {
-            const { data: uploadedFile, error: uploadError } = await supabase.storage
+            updateData.thumbnail = `${file.name}`;
+        }
+
+        let { error: updateError } = await supabase
+            .from("blogs")
+            .update(updateData)
+            .match({ id });
+
+        if (updateError) {
+            console.error("Error updating blog:", updateError);
+            return;
+        }
+
+        toast.success("Blog updated successfully");
+        navigate("/dashboard/posts");
+
+        if (file) {
+            const targetPath = existingThumbnail || `${file.name}`;
+            const { error: uploadError } = await supabase.storage
                 .from("thumbnail")
-                .upload(`Thumbnail/${filePath}`, file, { upsert: true });
+                .upload(`Thumbnail/${targetPath}`, file, {
+                    cacheControl: "3600",
+                    upsert: true,
+                });
 
             if (uploadError) {
                 console.error("Error uploading new thumbnail:", uploadError);
-            } else {
-                console.log("Thumbnail successfully updated:", uploadedFile);
             }
         }
     } catch (error) {
-        console.error(error)
+        console.error("Unexpected error:", error);
     }
 };
