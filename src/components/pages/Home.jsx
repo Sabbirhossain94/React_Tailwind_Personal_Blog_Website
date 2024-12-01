@@ -12,7 +12,7 @@ import Footer from "../layout/static/Footer";
 import Posts from "./Dashboard/Posts";
 import Users from "./Dashboard/Users";
 import { Toaster } from "react-hot-toast";
-import { SessionProvider } from "../../context/SessionContext";
+import { ProfileProvider } from "../../context/ProfileContext";
 
 function AppRouter() {
   const location = useLocation();
@@ -48,18 +48,14 @@ function AppRouter() {
 }
 
 export default function Root() {
-  const { session } = useSession();
+  const { loading, session } = useSession();
 
-  return session ? (
-    <SessionProvider session={session}>
+  return loading ? (
+    <div></div>
+  ) :
+    <ProfileProvider session={session}>
       <Router>
         <AppRouter />
       </Router>
-    </SessionProvider>
-  ) : 
-    <SessionProvider>
-      <Router>
-        <AppRouter />
-      </Router>
-    </SessionProvider>
+    </ProfileProvider>
 }

@@ -3,16 +3,19 @@ import { signOut } from "../../../services/auth/signOut";
 import { Link } from "react-router-dom";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 import useDarkMode from "../../../hooks/useDarkMode";
-import useProfile from "../../../hooks/useProfile";
+import { useProfile } from "../../../context/ProfileContext";
 import { DarkIcon, LightIcon, MenuIcon, CloseIcon } from "../../svg/Svg";
-import { useSessionContext } from "../../../context/SessionContext";
 
 export default function Navigation() {
-  const session = useSessionContext();
+  const { session, profile } = useProfile();
   const [openMenuIcon, setOpenMenuIcon] = useState(false);
   const { ref, showDropDown, setShowDropDown } = useOutsideClick();
   const { dark, toggleDarkMode } = useDarkMode(false);
-  const { profile } = useProfile(session);
+
+  const handleSignOut = () => {
+    signOut();
+    setShowDropDown(!showDropDown)
+  }
 
   return (
     <nav
@@ -66,19 +69,19 @@ export default function Navigation() {
                     <img
                       onClick={() => setShowDropDown(!showDropDown)}
                       className="cursor-pointer h-8 w-8 rounded-full border-2 object-cover"
-                      src={session ? profile?.avatarUrl : ""}
+                      src={profile && profile.avatarUrl}
                       alt="error"
                     />
                   ) : (
                     <Link
                       to="/signin"
                     >
-                      <button className="h-8 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-zinc-300 dark:focus:ring-zinc-700 sm:w-auto">
+                      <button className="h-8 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 bg-gray-100 dark:border-zinc-700 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-zinc-300 dark:focus:ring-zinc-700 sm:w-auto">
                         Sign In
                       </button>
                     </Link>
                   )}
-                  {/* dark mode */}
+
                   <button onClick={toggleDarkMode} className="ml-10">
                     {dark ? (
                       <DarkIcon />
@@ -106,7 +109,7 @@ export default function Navigation() {
                     </Link>
                     {session ? (
                       <p
-                        onClick={signOut}
+                        onClick={handleSignOut}
                         className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:text-blue-500 dark:text-gray-400 dark:hover:text-teal-500"
                       >
                         Sign out

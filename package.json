@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "@headlessui/react": "^2.2.0",
-    "@supabase/supabase-js": "^2.0.0-rc.10",
+    "@supabase/supabase-js": "^2.46.2",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

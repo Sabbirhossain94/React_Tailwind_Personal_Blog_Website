@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { ProfileImagePlaceholder } from "../../layout/skeleton/Skeleton";
-import useProfile from "../../../hooks/useProfile";
+import { useProfile } from "../../../context/ProfileContext";
 import { updateProfile } from "../../../services/profile/updateProfile";
-import { useSessionContext } from "../../../context/SessionContext";
+import Spinner from "../../animation/Spinner"
 
 const Account = () => {
-  const session = useSessionContext();
-  const { loading, profile, setProfile } = useProfile(session)
+  const { session, profile, setProfile, loading } = useProfile()
   const [preview, setPreview] = useState(null);
   const [file, setFile] = useState(null)
+  const [updateLoading, setUpdateLoading] = useState(false);
 
   const uploadAvatar = (e) => {
     const file = e.target.files[0];
@@ -19,8 +19,10 @@ const Account = () => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    updateProfile(session, profile, file)
+    setUpdateLoading(true)
+    updateProfile(session, profile, file, setUpdateLoading);
   }
+
 
   return (
     <div>
@@ -71,9 +73,9 @@ const Account = () => {
               <div className="mt-8 flex justify-end">
                 <button
                   type="submit"
-                  className="h-10 cursor-pointer border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 px-10 whitespace-nowrap w-full py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                  className="h-10 flex gap-2 items-center cursor-pointer border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 px-10 whitespace-nowrap w-full py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-teal-500 sm:w-auto"
                 >
-                  Update
+                  {updateLoading ? <><Spinner />Processing...</> : "Update"}
                 </button>
               </div>
             </div>

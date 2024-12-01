@@ -2,23 +2,31 @@ import supabase from "../global/supabaseClient";
 import moment from "moment";
 import toast from "react-hot-toast";
 
-export const updateProfile = async (session, profile, file) => {
-    const date = moment().format("MMMM D, YYYY");
+export const updateProfile = async (session, profile, file, setUpdateLoading) => {
+    const date = moment().format("MMMM D, YYYY,h:mm:ss a");
     try {
+
         if (!session?.user?.id) {
             console.error("User ID is undefined");
             return;
         }
 
         const { user } = session;
+
+        const updateData = {
+            username: profile.username,
+            updated_at: date,
+        };
+
+        if (file) {
+            updateData.avatar_url = `${file.name}`;
+        }
+
         let { error: updateProfileError } = await supabase
             .from("profiles")
-            .update({
-                username: profile.username,
-                avatar_url: file.name,
-                updated_at: date,
-            })
+            .update(updateData)
             .match({ id: user.id });
+
         if (updateProfileError) {
             console.error(updateProfileError)
         }
@@ -46,11 +54,12 @@ export const updateProfile = async (session, profile, file) => {
                 console.error("Error uploading new Profile photo:", uploadError);
             }
         }
-
         window.location.reload()
-        toast.success("Profile updated successfully!")
 
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
+    } finally {
+        toast.success("Profile updated successfully!")
+        setUpdateLoading(false);
     }
 }
