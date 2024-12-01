@@ -1,26 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { signOut } from "../../../services/auth/signOut";
-import { avatarFIle } from "../../../services/global/getAvatar";
 import { Link } from "react-router-dom";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 import useDarkMode from "../../../hooks/useDarkMode";
+import useProfile from "../../../hooks/useProfile";
 import { DarkIcon, LightIcon, MenuIcon, CloseIcon } from "../../svg/Svg";
+import { useSessionContext } from "../../../context/SessionContext";
 
-export default function Navigation({ session }) {
-  const [avatar, setAvatar] = useState(null);
+export default function Navigation() {
+  const session = useSessionContext();
   const [openMenuIcon, setOpenMenuIcon] = useState(false);
   const { ref, showDropDown, setShowDropDown } = useOutsideClick();
   const { dark, toggleDarkMode } = useDarkMode(false);
-
-  useEffect(() => {
-    const getAvatarUrl = async () => {
-      const url = await avatarFIle();
-      if (url) {
-        setAvatar(url);
-      }
-    }
-    getAvatarUrl()
-  }, [session]);
+  const { profile } = useProfile(session);
 
   return (
     <nav
@@ -73,8 +65,8 @@ export default function Navigation({ session }) {
                   {session ? (
                     <img
                       onClick={() => setShowDropDown(!showDropDown)}
-                      className="cursor-pointer h-8 w-8 rounded-full object-cover"
-                      src={session ? avatar : ""}
+                      className="cursor-pointer h-8 w-8 rounded-full border-2 object-cover"
+                      src={session ? profile?.avatarUrl : ""}
                       alt="error"
                     />
                   ) : (

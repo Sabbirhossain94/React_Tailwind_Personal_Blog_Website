@@ -1,7 +1,10 @@
 import { Navigate } from "react-router-dom";
+import { useSessionContext } from "../../../context/SessionContext";
 
-const ProtectedRoute = ({ session, children }) => {
+const ProtectedRoute = ({ children }) => {
+    const session = useSessionContext();
     if (!session) {
+        alert()
         return <Navigate to="/signin" replace />
     }
     return children;

@@ -7,11 +7,13 @@ import { modules } from "../../../helpers/textEditor";
 import { createBlog } from "../../../services/blogs/createBlog";
 import { loadBlogContent } from "../../../services/blogs/loadBlogContent";
 import { updateBlog } from "../../../services/blogs/updateBlog";
+import { useSessionContext } from "../../../context/SessionContext";
 import 'react-quill/dist/quill.snow.css';
 
-export default function CreateBlog({ session }) {
+export default function CreateBlog() {
   const navigate = useNavigate()
   let location = useLocation();
+  const session = useSessionContext();
   let currentPath = location.pathname.split("/");
   let slug = currentPath[3];
   const isCreate = currentPath.includes("createblog")

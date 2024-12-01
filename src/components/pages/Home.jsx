@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import App from "../../App";
 import useSession from "../../hooks/useSession";
 import Navigation from "../layout/header/Navigation";
@@ -11,37 +11,35 @@ import CreateBlog from "./Profiles/CreateBlog";
 import Footer from "../layout/static/Footer";
 import Posts from "./Dashboard/Posts";
 import Users from "./Dashboard/Users";
-import { Navigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import { SessionProvider } from "../../context/SessionContext";
 
 function AppRouter() {
-  const { session } = useSession()
   const location = useLocation();
   const isDashboard = location.pathname.startsWith("/dashboard");
 
   return (
     <>
       <Toaster />
-      <Navigation session={session} />
+      <Navigation />
       <Routes>
-        <Route path="/" element={<App session={session} />} />
+        <Route path="/" element={<App />} />
         <Route path="/signin" element={<SignIn />} />
         <Route
           path="/blog/:id"
-          element={<Content session={session} />}
+          element={<Content />}
         />
         <Route path="/dashboard" element={
-          <ProtectedRoute session={session}>
-            <Dashboard session={session} />
+          <ProtectedRoute >
+            <Dashboard />
           </ProtectedRoute>
         }>
           <Route index element={<Navigate to="posts" />} />
-          <Route path="posts" element={<Posts session={session} />} />
-          <Route path="profile" element={<Account session={session} />} />
-          <Route path="createblog" element={<CreateBlog session={session} />} />
-          <Route path="users" element={<Users session={session} />} />
-          <Route path="blog/:id/update" element={<CreateBlog session={session} />} />
+          <Route path="posts" element={<Posts />} />
+          <Route path="profile" element={<Account />} />
+          <Route path="createblog" element={<CreateBlog />} />
+          <Route path="users" element={<Users />} />
+          <Route path="blog/:id/update" element={<CreateBlog />} />
         </Route>
       </Routes>
       {!isDashboard && <Footer />}
@@ -49,10 +47,19 @@ function AppRouter() {
   );
 }
 
-export default function Root({ session }) {
-  return (
-    <Router>
-      <AppRouter session={session} />
-    </Router>
-  );
+export default function Root() {
+  const { session } = useSession();
+
+  return session ? (
+    <SessionProvider session={session}>
+      <Router>
+        <AppRouter />
+      </Router>
+    </SessionProvider>
+  ) : 
+    <SessionProvider>
+      <Router>
+        <AppRouter />
+      </Router>
+    </SessionProvider>
 }

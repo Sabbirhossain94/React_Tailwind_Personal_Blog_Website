@@ -1,6 +1,5 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import supabase from "../../../services/global/supabaseClient";
 import RecentBlogs from "../../layout/common/RecentBlogs";
 import AboutMe from "../../layout/static/AboutMe";

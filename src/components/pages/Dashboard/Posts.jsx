@@ -3,7 +3,7 @@ import useFetchBlogs from '../../../hooks/useFetchBlogs'
 import { TableSkeleton } from '../../layout/skeleton/Skeleton';
 import { Link } from 'react-router-dom';
 import { deleteBlogs } from "../../../services/blogs/deleteBlogs";
-import Modal from "../../layout/modal/Modal";
+import DeleteModal from "../../layout/modal/DeleteModal";
 
 function Posts() {
   const { loading, blogs, totalBlogs } = useFetchBlogs();
@@ -19,7 +19,7 @@ function Posts() {
           </button>
         </Link>
       </div>
-      <Modal
+      <DeleteModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         deleteBlogs={deleteBlogs}

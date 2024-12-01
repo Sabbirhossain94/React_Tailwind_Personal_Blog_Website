@@ -1,21 +1,12 @@
-import React from 'react'
-import { Outlet, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link,Outlet, useLocation } from "react-router-dom";
 import { dashboardItems } from '../../../helpers/dashboard';
-import { Link } from 'react-router-dom';
-import { signOut } from '../../../services/auth/signOut';
-import { useNavigate } from 'react-router-dom';
+import SignOutModal from "../../layout/modal/SignOutModal";
 
 function Dashboard() {
     const location = useLocation();
-    const redirect = useNavigate();
     let currentPath = location.pathname.split("/");
-
-    const handleSignOut = async () => {
-        await signOut();
-        setTimeout(() => {
-            redirect("/")
-        }, 1000)
-    };
+    let [isOpen, setIsOpen] = useState(false);
 
     return (
         <div className='bg-gray-100 dark:bg-zinc-800 min-h-screen'>
@@ -25,6 +16,10 @@ function Dashboard() {
                     <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
                 </svg>
             </button> */}
+            <SignOutModal
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+            />
             <div className='flex pt-[70px]'>
                 <aside className=" bg-white dark:bg-zinc-900 border-r border-zinc-300 dark:border-zinc-700 left-0 z-40 w-72 min-h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
                     <div className="h-full px-3 py-4 overflow-y-auto ">
@@ -33,7 +28,7 @@ function Dashboard() {
                                 (
                                     nav.label === "Sign out" ?
                                         <button
-                                            onClick={handleSignOut}
+                                            onClick={()=> setIsOpen(true)}
                                             key={key}
 
                                         >

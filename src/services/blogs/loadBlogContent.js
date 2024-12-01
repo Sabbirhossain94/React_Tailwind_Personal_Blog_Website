@@ -3,15 +3,15 @@ import supabase from "../global/supabaseClient";
 export const loadBlogContent = async (slug, setBlog, setLoading) => {
     setLoading(true)
     try {
-        let { data, error } = await supabase
+        let { data: blog, error } = await supabase
             .from("blogs")
             .select("*")
-            .eq("slug", slug);
+            .eq("slug", slug)
+            .single()
 
         if (error) {
             console.error(error)
         }
-        const [blog] = data
 
         let { data: downloadCoverUrl } = supabase.storage
             .from("thumbnail")

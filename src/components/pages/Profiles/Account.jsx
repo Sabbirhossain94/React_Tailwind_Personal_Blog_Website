@@ -1,150 +1,55 @@
-import React from "react";
-import supabase from "../../../services/global/supabaseClient";
-import { useState, useEffect } from "react";
-import { avatarFIle } from "../../../services/global/getAvatar";
+import { useState } from "react";
+import { ProfileImagePlaceholder } from "../../layout/skeleton/Skeleton";
+import useProfile from "../../../hooks/useProfile";
+import { updateProfile } from "../../../services/profile/updateProfile";
+import { useSessionContext } from "../../../context/SessionContext";
 
-const Account = ({ session }) => {
-  const [loading, setLoading] = useState(true);
-  const [username, setUsername] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
-  const [avatar, setAvatar] = useState(null);
-  // const [preview, setPreview] = useState(null);
-  const date = new Date().toLocaleString();
+const Account = () => {
+  const session = useSessionContext();
+  const { loading, profile, setProfile } = useProfile(session)
+  const [preview, setPreview] = useState(null);
+  const [file, setFile] = useState(null)
 
-  useEffect(() => {
-    getProfile();
-  }, []);
+  const uploadAvatar = (e) => {
+    const file = e.target.files[0];
+    const viewImage = URL.createObjectURL(file);
+    setPreview(viewImage)
+    setFile(file)
+  }
 
-  useEffect(() => {
-    const getAvatarUrl = async () => {
-      const url = await avatarFIle();
-      if (url) {
-        setAvatar(url);
-      }
-    }
-    getAvatarUrl()
-  }, [session]);
-
-  const getProfile = async () => {
-    try {
-      setLoading(true);
-      const { user } = session;
-
-      let { data, error } = await supabase
-        .from("profiles")
-        .select(`username, avatar_url`)
-        .eq("id", user.id)
-        .single();
-
-      if (error) {
-        throw error;
-      }
-
-      if (data) {
-        setUsername(data.username);
-        setAvatarUrl(data.avatar_url);
-      }
-    } catch (error) {
-      console.log(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const updateProfile = async (e) => {
+  const handleUpdate = (e) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      const userId = session.user.id;
-
-      let { error } = await supabase
-        .from("profiles")
-        .update({
-          username: username,
-          avatar_url: avatarUrl,
-          updated_at: date,
-        })
-        .match({ id: userId });
-      if (error) {
-        throw error;
-      }
-    } catch (error) {
-      console.log(error.message);
-    } finally {
-      alert();
-      setLoading(false);
-    }
-  };
-
-  const uploadAvatar = async (event) => {
-    try {
-      if (!event.target.files || event.target.files.length === 0) {
-        throw new Error("You must select an image to upload.");
-      }
-
-      const file = event.target.files[0];
-      const fileExt = file.name.split(".").pop();
-      const filePath = `${Math.random()}.${fileExt}`;
-
-      let { error: uploadError } = await supabase.storage
-        .from("avatars")
-        .upload("Profile Photo/" + filePath, file);
-
-      if (uploadError) {
-        throw uploadError;
-      }
-      setAvatarUrl(filePath);
-      // downloadImage(filePath);
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
-  // const downloadImage = async (path) => {
-  //   try {
-  //     const { data, error } = await supabase.storage
-  //       .from("avatars")
-  //       .download(`Profile Photo/${path}`);
-  //     if (error) {
-  //       throw error;
-  //     }
-  //     const url = URL.createObjectURL(data);
-  //     setPreview(url);
-  //   } catch (error) {
-  //     console.log("Error downloading image: ", error.message);
-  //   }
-  // };
+    updateProfile(session, profile, file)
+  }
 
   return (
     <div>
       {session ? (
         <div className="mx-auto mt-[50px] max-w-md flex justify-center flex-col border p-8 border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900">
-          <form onSubmit={updateProfile}>
+          <form
+            onSubmit={handleUpdate}
+          >
             <div className="flex items-center gap-8">
               <div className="w-1/2">
-                <img
-                  src={avatar}
+                {loading ? <ProfileImagePlaceholder /> : <img
+                  src={preview ? preview : profile.avatarUrl}
                   alt="avatar"
-                  className="focus:ring-offset-2 ring-2 dark:ring-teal-500 rounded-full object-cover"
+                  className="focus:ring-offset-2 ring-2 dark:ring-teal-500 rounded-full object-fit"
                   style={{ height: 150, width: 150 }}
-                />
+                />}
               </div>
               <div className="w-1/2 h-full">
                 <label htmlFor="uploadPic"
                   className="h-10 cursor-pointer border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 px-10 whitespace-nowrap w-full py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                   Change Picture
-                  <input type="file" id='uploadPic' className="hidden" />
-                </label>
-                {/* <div className="">
                   <input
+                    id='uploadPic'
                     type="file"
-                    name="image"
                     accept="image/*"
-                    value={""}
                     onChange={uploadAvatar}
-                    className=" text-blue-400"
+                    className="hidden"
                   />
-                </div> */}
+                </label>
               </div>
             </div>
             <div className="mt-8">
@@ -158,8 +63,8 @@ const Account = ({ session }) => {
                   className="form-control mt-2 block w-full px-3 py-1.5 text-base font-normal dark:text-gray-400 bg-gray-100 dark:bg-zinc-800 bg-clip-padding border border-solid border-zinc-300 dark:border-zinc-700 rounded transition ease-in-out m-0 focus:border focus:border-zinc-700"
                   name="username"
                   type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={profile.username}
+                  onChange={(e) => setProfile({ ...profile, username: e.target.value })}
                 />
               </div>
 
