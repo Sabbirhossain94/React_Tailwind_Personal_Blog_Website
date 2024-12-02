@@ -2,16 +2,17 @@ import supabase from "../global/supabaseClient";
 import moment from "moment";
 import toast from "react-hot-toast";
 
-export const updateBlog = async (session, blog, file, navigate) => {
+export const updateBlog = async (session, blog, file, navigate, setLoading) => {
     const date = moment().format("MMMM D, YYYY");
-    const { id, title, introduction, slug, content, thumbnail: existingThumbnail } = blog;
-
+    const { id, title, introduction, slug, topic, content, thumbnail: existingThumbnail } = blog;
+    setLoading(true)
     try {
         const updateData = {
             user_id: session.user.id,
             title,
-            slug,
             introduction,
+            slug,
+            topic,
             content,
             updated_at: date,
         };
@@ -30,9 +31,6 @@ export const updateBlog = async (session, blog, file, navigate) => {
             return;
         }
 
-        toast.success("Blog updated successfully");
-        navigate("/dashboard/posts");
-
         if (file) {
             const targetPath = existingThumbnail || `${file.name}`;
             const { error: uploadError } = await supabase.storage
@@ -46,6 +44,13 @@ export const updateBlog = async (session, blog, file, navigate) => {
                 console.error("Error uploading new thumbnail:", uploadError);
             }
         }
+        toast.success("Blog updated successfully", {
+            duration: 4000
+        });
+        setTimeout(() => {
+            navigate("/dashboard/posts");
+            setLoading(false);
+        }, 1000)
     } catch (error) {
         console.error("Unexpected error:", error);
     }

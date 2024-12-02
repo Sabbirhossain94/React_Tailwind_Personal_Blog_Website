@@ -27,6 +27,7 @@ export default function Pagination({
     }
     setCurrentPage(prev => prev + 1)
   }
+
   return (
     <div>
       <nav className="dark:bg-zinc-800 relative w-full space-x-3 flex flex-row justify-end xs:flex xs:flex-wrap px-2 mt-10 sm:px-32">

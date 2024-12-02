@@ -23,6 +23,7 @@ export const loadBlogContent = async (slug, setBlog, setLoading) => {
             title: blog.title,
             introduction: blog.introduction,
             slug: blog.slug,
+            topic: blog.topic,
             content: blog.content,
             coverphoto: downloadCoverUrl
         }));

@@ -54,12 +54,16 @@ export const updateProfile = async (session, profile, file, setUpdateLoading) =>
                 console.error("Error uploading new Profile photo:", uploadError);
             }
         }
+
+        setTimeout(() => {
+            setUpdateLoading(false);
+        }, 1500)
         window.location.reload()
+        toast.success("Profile updated successfully!", {
+            duration: 1500
+        })
 
     } catch (error) {
         console.log(error);
-    } finally {
-        toast.success("Profile updated successfully!")
-        setUpdateLoading(false);
     }
 }

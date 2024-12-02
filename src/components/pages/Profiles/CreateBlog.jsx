@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
-import { useLocation, Link,useNavigate } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import UploadCoverImage from "./UploadCoverImage";
 import { MdKeyboardBackspace } from "react-icons/md";
 import ReactQuill from "react-quill";
 import { modules } from "../../../helpers/textEditor";
+import { topics } from "../../../helpers/topics";
 import { createBlog } from "../../../services/blogs/createBlog";
 import { loadBlogContent } from "../../../services/blogs/loadBlogContent";
 import { updateBlog } from "../../../services/blogs/updateBlog";
 import { useProfile } from "../../../context/ProfileContext";
+import Spinner from "../../animation/Spinner";
 import 'react-quill/dist/quill.snow.css';
 
 export default function CreateBlog() {
@@ -23,6 +25,7 @@ export default function CreateBlog() {
     title: "",
     introduction: "",
     slug: "",
+    topic: "",
     content: "",
     coverphoto: null
   })
@@ -32,9 +35,9 @@ export default function CreateBlog() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isCreate) {
-      createBlog(session, blog, file, navigate)
+      createBlog(session, blog, file, navigate, setLoading)
     } else {
-      updateBlog(session, blog, file, navigate)
+      updateBlog(session, blog, file, navigate, setLoading)
     }
   };
 
@@ -49,6 +52,7 @@ export default function CreateBlog() {
       title: "",
       introduction: "",
       content: "",
+      topic: "",
       coverphoto: null
     })
   }
@@ -147,7 +151,16 @@ export default function CreateBlog() {
                     id="introduction"
                     onChange={handleChange}
                     required
-                    className="w-full border dark:text-white bg-gray-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 p-2 mt-1 h-8 block shadow-sm sm:text-sm " />
+                    className="w-full border dark:text-white bg-gray-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 p-2 mt-1 h-8 block shadow-sm sm:text-sm" />
+                </div>
+                <div className="mt-8">
+                  <label htmlFor="topic" className="mt-1 block text-sm font-medium text-blue-500 dark:text-teal-500">Topic</label>
+                  <select id="topic" name="topic" value={blog.topic} onChange={handleChange} className="bg-gray-50 mt-1 border border-zinc-300 text-sm block w-[300px] px-2 py-2 dark:bg-zinc-800 dark:border-zinc-700 dark:placeholder-teal-500 dark:text-white">
+                    <option value="" disabled>Choose a topic</option>
+                    {topics.map((topic, index) => (
+                      <option key={index} value={topic}>{topic}</option>
+                    ))}
+                  </select>
                 </div>
                 <div className="mt-8 ">
                   <label
@@ -177,12 +190,18 @@ export default function CreateBlog() {
               >
                 Cancel
               </button>}
-              <button
+              {isCreate && <button
                 type="submit"
-                className="inline-flex justify-center border border-zinc-300 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 transition duration-300 dark:border-zinc-700 py-2 px-4 mr-4 text-sm font-medium text-blue-500 dark:text-teal-500"
+                className="inline-flex gap-2 items-center justify-center border border-zinc-300 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 transition duration-300 dark:border-zinc-700 py-2 px-4 mr-4 text-sm font-medium text-blue-500 dark:text-teal-500"
               >
-                {isCreate ? "Create" : "Update"}
-              </button>
+                {loading ? <><Spinner /> Processing...</> : "Create"}
+              </button>}
+              {!isCreate && <button
+                type="submit"
+                className="inline-flex gap-2 items-center justify-center border border-zinc-300 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 transition duration-300 dark:border-zinc-700 py-2 px-4 mr-4 text-sm font-medium text-blue-500 dark:text-teal-500"
+              >
+                {loading ? <><Spinner /> Processing...</> : "Update"}
+              </button>}
             </div>
           </div>
         </form>

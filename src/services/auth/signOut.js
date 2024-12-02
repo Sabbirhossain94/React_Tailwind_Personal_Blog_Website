@@ -7,7 +7,9 @@ export const signOut = async () => {
         if (error) {
             console.log(error);
         }
-        toast.success("Logged out successfully!")
+        toast.success("Logged out successfully!", {
+            duration: 3000
+        })
     } catch (error) {
         console.error(error)
     }

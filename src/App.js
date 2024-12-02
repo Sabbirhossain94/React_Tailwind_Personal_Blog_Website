@@ -6,13 +6,15 @@ import RecentBlogs from "./components/layout/common/RecentBlogs";
 import { blogCoverUrl } from "./helpers/storage";
 import { AiOutlineDoubleRight } from "react-icons/ai";
 import { fetchPaginatedBlogs } from "./services/blogs/fetchPaginatedBlogs";
+import { fetchBlogsByTopic } from "./services/blogs/fetchByTopic";
 import { CardSkeleton } from "./components/layout/skeleton/Skeleton";
 import AboutMe from "./components/layout/static/AboutMe";
+import Topics from "./components/layout/common/Topics";
 
-function BlogsCard({ loading, itemsPerPage, allBlog }) {
+function BlogsCard({ loading, allBlog }) {
   return (<div className="flex flex-wrap gap-8">
     {loading ? (
-      Array(itemsPerPage)
+      Array(4)
         .fill(null)
         .map((_, index) => <CardSkeleton key={index} />)
     ) : (
@@ -31,14 +33,17 @@ function BlogsCard({ loading, itemsPerPage, allBlog }) {
             </div>
             <div className="flex flex-1 flex-col justify-between dark:bg-zinc-900/50 bg-white p-6 ">
               <div className="flex-1">
-                <div className="mt-2 block">
-                  <p className="text-md ">
+                <div className="block">
+                  <p className="text-xl font-semibold dark:text-gray-200">
+                    {blog.title}
+                  </p>
+                  <p className="mt-2 text-md flex items-center gap-4">
                     <span className="dark:text-teal-600 text-blue-500">
                       {blog.inserted_at}
                     </span>
-                  </p>
-                  <p className="mt-2 text-xl font-semibold dark:text-gray-200">
-                    {blog.title}
+                    <span className="text-[10px] font-semibold bg-blue-50 dark:bg-teal-900/30 rounded-xl border border-blue-500 dark:border-teal-500 px-2 py-[2px] dark:text-teal-600 text-blue-500">
+                      {blog.topic}
+                    </span>
                   </p>
                   <div className="text-md mt-2 w-full h-[100px] overflow-hidden">
                     <p
@@ -67,13 +72,12 @@ function BlogsCard({ loading, itemsPerPage, allBlog }) {
   )
 }
 
-
-function App() {
+function Home() {
   const [loading, setLoading] = useState(false);
   const [allBlog, setAllBlog] = useState([]);
-  const [itemsPerPage, setItemsPerPage] = useState(4);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalLength, setTotalLength] = useState(null);
+  const itemsPerPage = 4;
 
   const fetchBlogsCallback = useCallback(() => {
     fetchPaginatedBlogs({
@@ -82,7 +86,6 @@ function App() {
       setTotalLength,
       itemsPerPage,
       currentPage,
-      setItemsPerPage
     });
   }, [currentPage, itemsPerPage]);
 
@@ -90,6 +93,10 @@ function App() {
     fetchBlogsCallback();
   }, [fetchBlogsCallback]);
 
+  const blogsByTopic = async (topic) => {
+    const fetchedBlogs = await fetchBlogsByTopic(topic);
+    setAllBlog(fetchedBlogs)
+  }
 
   return (
     <div className="bg-gray-100 dark:bg-zinc-800">
@@ -110,10 +117,11 @@ function App() {
         <div className="mt-20 flex flex-col gap-10 w-1/4 ">
           <AboutMe loading={loading} />
           <RecentBlogs />
+          <Topics blogsByTopic={blogsByTopic} />
         </div>
       </div>
     </div>
   );
 }
 
-export default App;
+export default Home;

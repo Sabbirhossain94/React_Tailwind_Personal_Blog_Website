@@ -8,7 +8,7 @@ export const fetchRecentBlogs = async ({
         setLoading(true);
         let { data: allData, error: recentError } = await supabase
             .from("blogs")
-            .select(`*,profiles(*)`)
+            .select(`*`)
             .range(0, 4)
 
         if (recentError) throw recentError;

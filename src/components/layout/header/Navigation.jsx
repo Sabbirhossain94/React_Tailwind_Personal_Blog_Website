@@ -68,7 +68,7 @@ export default function Navigation() {
                   {session ? (
                     <img
                       onClick={() => setShowDropDown(!showDropDown)}
-                      className="cursor-pointer h-8 w-8 rounded-full border-2 object-cover"
+                      className="cursor-pointer h-8 w-8 rounded-full ring-2 ring-blue-500 dark:ring-teal-500 object-cover"
                       src={profile && profile.avatarUrl}
                       alt="error"
                     />

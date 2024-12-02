@@ -1,7 +1,7 @@
 import supabase from "../global/supabaseClient";
 import toast from "react-hot-toast";
 
-export const deleteBlogs = async (blogId) => {
+export const deleteBlogs = async (blogId, setIsOpen, setDeleteLoading) => {
     try {
         const { data: blogCoverPhoto, error: fetchError } = await supabase
             .from("blogs")
@@ -35,7 +35,8 @@ export const deleteBlogs = async (blogId) => {
                 return;
             }
         }
-
+        setDeleteLoading(false)
+        setIsOpen(false)
     } catch (error) {
         console.error("error", error)
     } finally {

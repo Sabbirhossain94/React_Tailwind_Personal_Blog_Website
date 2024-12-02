@@ -6,7 +6,6 @@ export const fetchPaginatedBlogs = async ({
     setTotalLength,
     currentPage,
     itemsPerPage,
-    setItemsPerPage,
 }) => {
     try {
         setLoading(true);
@@ -14,13 +13,12 @@ export const fetchPaginatedBlogs = async ({
         let firstItemIndex = (currentPage - 1) * itemsPerPage;
         let lastItemIndex = firstItemIndex + itemsPerPage;
 
-        let { data, count, error, status } = await supabase
+        let { data, count, error } = await supabase
             .from("blogs")
             .select(`*,profiles(*)`, { count: "exact" })
             .range(firstItemIndex, lastItemIndex - 1);
 
-        if (error && status !== 406) throw error;
-        setItemsPerPage(data.length)
+        if (error) throw error;
         setAllBlog(data || []);
         setTotalLength(count);
     } catch (error) {
