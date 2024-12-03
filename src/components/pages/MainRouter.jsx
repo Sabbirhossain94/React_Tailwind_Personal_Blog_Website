@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import App from "../../App";
+// import App from "../../App";
+import Home from "./Home/Home";
 import useSession from "../../hooks/useSession";
 import Navigation from "../layout/header/Navigation";
 import Content from "./Blog Details/Content";
@@ -23,7 +24,7 @@ function AppRouter() {
       <Toaster />
       <Navigation />
       <Routes>
-        <Route path="/" element={<App />} />
+        <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
         <Route
           path="/blog/:id"

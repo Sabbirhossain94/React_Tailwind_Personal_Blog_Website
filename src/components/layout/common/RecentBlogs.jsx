@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { fetchRecentBlogs } from '../../../services/blogs/fetchRecentBlogs';
 import { Link } from 'react-router-dom';
 import { RecentBlogsSkeleton } from '../skeleton/Skeleton';
+import { blogCoverUrl } from '../../../helpers/storage';
 
 function RecentBlogs() {
     const [recentBlogs, setRecentBlogs] = useState([]);
@@ -17,13 +18,23 @@ function RecentBlogs() {
     return loading ? <RecentBlogsSkeleton /> : (
         <div className="border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900/50 p-4 flex flex-col justify-start">
             <div className="text-2xl dark:text-gray-200 font-semibold">Recent Blogs</div>
-            <ul className="mt-4 space-y-3">
+            <ul className="mt-4 flex flex-col gap-4">
                 {recentBlogs && recentBlogs.map((blog, key) => (
-                    <li key={key} className="hover:text-blue-500 dark:hover:text-teal-500 transition duration-300 text-[#666] dark:text-gray-400">
-                        <Link to={`/blog/${blog.slug}`}>
-                            {blog.title}
-                        </Link>
-                    </li>
+                    <Link to={`/blog/${blog.slug}`}>
+                        <li key={key} className="text-gray-800 hover:text-blue-500 flex gap-2 dark:hover:text-teal-500 transition duration-300 dark:text-gray-400">
+                            <img src={`${blogCoverUrl}/${blog.thumbnail}`} className='h-16 w-16 object-center object-fit' />
+                            <div className='flex flex-col justify-center'>
+                                <p className='text-[14px]'>
+                                    {blog.title}
+                                </p>
+                                <p>
+                                    <span className="text-[12px] dark:text-teal-600 text-blue-500">
+                                        {blog.inserted_at}
+                                    </span>
+                                </p>
+                            </div>
+                        </li>
+                    </Link>
                 ))}
             </ul>
         </div>
