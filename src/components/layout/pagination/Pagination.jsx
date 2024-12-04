@@ -1,14 +1,14 @@
-import React from "react";
+import { useEffect } from "react";
 import { PreviousIcon, NextIcon } from "../../svg/Svg";
 
 export default function Pagination({
+  blogs,
   currentPage,
-  itemsPerPage,
   totalLength,
   setCurrentPage,
 }) {
   let pages = [];
-  for (let i = 1; i <= Math.ceil(totalLength / itemsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(totalLength / 4); i++) {
     pages.push(i);
   }
   const handlePagination = (page) => {
@@ -28,7 +28,11 @@ export default function Pagination({
     setCurrentPage(prev => prev + 1)
   }
 
-  return (
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
+
+  return (blogs.main.length > 0 || blogs.topics.length > 0) && (
     <div>
       <nav className="dark:bg-zinc-800 relative w-full space-x-3 flex flex-row justify-end xs:flex xs:flex-wrap px-2 mt-10 sm:px-32">
         <button

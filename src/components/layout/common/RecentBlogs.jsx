@@ -20,8 +20,8 @@ function RecentBlogs() {
             <div className="text-2xl dark:text-gray-200 font-semibold">Recent Blogs</div>
             <ul className="mt-4 flex flex-col gap-4">
                 {recentBlogs && recentBlogs.map((blog, key) => (
-                    <Link to={`/blog/${blog.slug}`}>
-                        <li key={key} className="text-gray-800 hover:text-blue-500 flex gap-2 dark:hover:text-teal-500 transition duration-300 dark:text-gray-400">
+                    <Link key={key} to={`/blog/${blog.slug}`}>
+                        <li className="text-gray-800 hover:text-blue-500 flex gap-2 dark:hover:text-teal-500 transition duration-300 dark:text-gray-400">
                             <img src={`${blogCoverUrl}/${blog.thumbnail}`} className='h-16 w-16 object-center object-fit' />
                             <div className='flex flex-col justify-center'>
                                 <p className='text-[14px]'>

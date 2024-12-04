@@ -15,7 +15,8 @@ const useFetchBlogs = () => {
 
                 const { data, error } = await supabase
                     .from("blogs")
-                    .select(`*, profiles(*)`);
+                    .select(`*`)
+                    .order('id', { ascending: true });
 
                 if (error) throw error;
                 setBlogs(data || []);

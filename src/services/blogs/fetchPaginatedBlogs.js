@@ -1,25 +1,27 @@
 import supabase from "../global/supabaseClient";
 
 export const fetchPaginatedBlogs = async ({
+    setBlogs,
     setLoading,
-    setAllBlog,
     setTotalLength,
     currentPage,
-    itemsPerPage,
 }) => {
     try {
         setLoading(true);
 
-        let firstItemIndex = (currentPage - 1) * itemsPerPage;
-        let lastItemIndex = firstItemIndex + itemsPerPage;
+        let firstItemIndex = (currentPage - 1) * 4;
+        let lastItemIndex = firstItemIndex + 4;
 
         let { data, count, error } = await supabase
             .from("blogs")
-            .select(`*,profiles(*)`, { count: "exact" })
-            .range(firstItemIndex, lastItemIndex - 1);
+            .select(`*`, { count: "exact" })
+            .range(firstItemIndex, lastItemIndex - 1)
+            .order('id', { ascending: true });
 
         if (error) throw error;
-        setAllBlog(data || []);
+        setBlogs((prevBlogs) => ({
+            ...prevBlogs, main: data, topics: []
+        }))
         setTotalLength(count);
     } catch (error) {
         console.log(error.message);
