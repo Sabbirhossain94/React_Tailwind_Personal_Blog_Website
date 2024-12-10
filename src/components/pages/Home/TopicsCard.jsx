@@ -1,14 +1,26 @@
-import React from 'react'
 import { CardSkeleton } from '../../layout/skeleton/Skeleton'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { blogCoverUrl } from '../../../helpers/storage'
 import { BsArrowRight } from "react-icons/bs";
+import { MdKeyboardBackspace } from "react-icons/md";
+import { NoBlogs } from '../../svg/Svg';
 
-function TopicsCard({ loading, blogs, topics }) {
+function TopicsCard({ loading, blogs, setTopics, resetPagination }) {
+    const navigate = useNavigate();
+
+    const handleRoute = () => {
+        setTopics("");
+        resetPagination();
+        navigate("/");
+    }
+
     return (
         <div>
-            <div className='py-5 flex justify-center border border-zinc-300 bg-white w-10/12'>
-                <p className='text-xl'>{topics}</p>
+            <div className='flex'>
+                <button onClick={handleRoute} className="h-10 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-900/50 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-teal-500 sm:w-auto">
+                    <span className="text-lg"> <MdKeyboardBackspace /></span>
+                    <span className="ml-2">All Blogs</span>
+                </button>
             </div>
             <div className="flex flex-wrap gap-8 mt-6">
 
@@ -17,9 +29,17 @@ function TopicsCard({ loading, blogs, topics }) {
                         .fill(null)
                         .map((_, index) => <CardSkeleton key={index} />)
                 ) : (
-                    blogs.topics.length === 0 ?
-                        <div className="min-h-screen text-4xl font-semibold flex justify-center items-center w-full"> No Blogs Found!</div> :
-                        blogs.topics.map((blog, index) => (
+                    blogs?.topics?.length === 0 ?
+                        <div className="min-h-[500px] text-4xl font-semibold flex justify-center items-center w-full">
+                            <div className="gap-10 w-60">
+                                <NoBlogs />
+                                <div className='mt-4'>
+                                    <h2 className="text-center text-gray-800 dark:text-gray-400 text-3xl font-semibold leading-loose pb-2">No Blogs found!</h2>
+                                </div>
+                            </div>
+                        </div>
+                        :
+                        blogs?.topics?.map((blog, index) => (
                             <div key={index} className="relative w-[400px] rounded-md">
                                 <div
                                     className="flex flex-col border border-zinc-300 dark:border-gray-100/10"

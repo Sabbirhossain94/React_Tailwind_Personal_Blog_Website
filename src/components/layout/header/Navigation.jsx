@@ -1,20 +1,28 @@
 import { useState } from "react";
 import { signOut } from "../../../services/auth/signOut";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 import useDarkMode from "../../../hooks/useDarkMode";
 import { useProfile } from "../../../context/ProfileContext";
 import { DarkIcon, LightIcon, MenuIcon, CloseIcon } from "../../svg/Svg";
+import { BiMessage } from "react-icons/bi";
 
 export default function Navigation() {
   const { session, profile } = useProfile();
   const [openMenuIcon, setOpenMenuIcon] = useState(false);
   const { ref, showDropDown, setShowDropDown } = useOutsideClick();
   const { dark, toggleDarkMode } = useDarkMode(false);
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     signOut();
     setShowDropDown(!showDropDown)
+  }
+
+  const handleRoute = () => {
+    navigate("/dashboard")
+    setShowDropDown(!showDropDown)
+
   }
 
   return (
@@ -24,7 +32,7 @@ export default function Navigation() {
       }
     >
       <div className="mx-auto max-w-7xl ">
-        <div className="flex h-[70px] justify-between">
+        <div className="flex h-[80px] justify-between">
           <div className="flex">
             <div className="-ml-2 mr-2 flex items-center md:hidden">
               {openMenuIcon ? (
@@ -45,7 +53,7 @@ export default function Navigation() {
               {/* </button> */}
               <Link to="/" className="ml-[20px] flex flex-row">
                 <h1 className="dark:text-gray-200 mt-1 text-md font-semibold">
-                  <span className="text-blue-500 dark:text-teal-500">&lt;</span> Sabbir's Blog{" "}
+                  <span className="text-blue-500 dark:text-teal-500">&lt;</span> Sabbir's
                   <span className="text-blue-500 dark:text-teal-500">&nbsp;&#8725; &gt;</span>
                 </h1>
               </Link>
@@ -53,8 +61,8 @@ export default function Navigation() {
             <div className="hidden md:flex md:items-center md:space-x-4 ">
               <Link to="/" className="flex flex-row">
                 <h1 className="dark:text-gray-200 mt-1 text-xl font-semibold">
-                  <span className="text-blue-500 dark:text-teal-500">&lt;</span> Sabbir's Blog{" "}
-                  <span className="text-blue-500 dark:text-teal-500">&nbsp;&#8725; &gt;</span>
+                  <span className="text-zinc-600 font-semibold dark:text-gray-400">Sabbir's</span>
+                  <span className="text-blue-500 dark:text-teal-500 ml-2">{`{ Blogs }`}</span>
                 </h1>
               </Link>
             </div>
@@ -101,19 +109,20 @@ export default function Navigation() {
                     >
                       Signed in as <span className="italic">{session?.user?.email}</span>
                     </p>
-                    <Link
-                      to={session && "/dashboard"}
+
+                    <button
+                      onClick={handleRoute}
                       className="block px-4 py-2 mt-2 text-sm text-gray-700 hover:text-blue-500 dark:text-gray-400 dark:hover:text-teal-500"
                     >
                       Dashboard
-                    </Link>
+                    </button>
                     {session ? (
-                      <p
+                      <button
                         onClick={handleSignOut}
                         className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:text-blue-500 dark:text-gray-400 dark:hover:text-teal-500"
                       >
                         Sign out
-                      </p>
+                      </button>
                     ) : (
                       ""
                     )}

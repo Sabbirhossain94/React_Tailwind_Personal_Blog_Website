@@ -1,9 +1,8 @@
 import React from 'react'
 import { contactItems } from '../../../helpers/contact'
-import { AboutMeSkeleton } from '../skeleton/Skeleton'
 
-function AboutMe({ loading }) {
-    return loading ? <AboutMeSkeleton /> :
+function AboutMe() {
+    return (
         <div className="border border-zinc-300 dark:border-zinc-700 p-4 bg-white dark:bg-zinc-900/50">
             <div className="pt-6 flex justify-center">
                 <img className="border-2 border-blue-500 dark:border-teal-500 h-44 w-44 rounded-full" src='/me.jpg' />
@@ -32,9 +31,9 @@ function AboutMe({ loading }) {
                         ))}
                     </span>
                 </div>
-
             </div>
         </div>
+    )
 }
 
 

@@ -81,7 +81,7 @@ export default function CreateBlog() {
   return (
     <div className="bg-gray-100 dark:bg-zinc-800 min-h-screen">
       <Link to="/dashboard/posts">
-        <button className="h-10 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-teal-500 sm:w-auto">
+        <button className="h-10 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-900/50 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-teal-500 sm:w-auto">
           <span className="text-lg"> <MdKeyboardBackspace /></span>
           <span className="ml-2">Blogs</span>
         </button>
@@ -151,7 +151,8 @@ export default function CreateBlog() {
                     id="introduction"
                     onChange={handleChange}
                     required
-                    className="w-full border dark:text-white bg-gray-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 p-2 mt-1 h-8 block shadow-sm sm:text-sm" />
+                    rows="2"
+                    className="w-full border dark:text-white bg-gray-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 p-2.5 mt-1 block sm:text-sm" />
                 </div>
                 <div className="mt-8">
                   <label htmlFor="topic" className="mt-1 block text-sm font-medium text-blue-500 dark:text-teal-500">Topic</label>

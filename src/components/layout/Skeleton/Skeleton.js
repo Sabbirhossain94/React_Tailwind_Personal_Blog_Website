@@ -59,6 +59,13 @@ export function TableSkeleton() {
                 <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
                 <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
             </td>
+            
+            <td className="px-6 py-4">
+                <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
+            </td>
+            <td className="px-6 py-4">
+                <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
+            </td>
             <td className="px-6 py-4">
                 <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
             </td>

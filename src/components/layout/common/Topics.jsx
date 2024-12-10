@@ -2,11 +2,12 @@ import React from 'react'
 import { topics } from "../../../helpers/topics"
 import { useNavigate } from 'react-router-dom'
 
-function Topics({ setTopics }) {
+function Topics({ setTopics, resetPagination }) {
     const navigate = useNavigate();
 
     const handleTopic = (topic) => {
-        setTopics(topic)
+        setTopics(topic);
+        resetPagination()
         navigate(`/topics/${topic}`)
     }
 

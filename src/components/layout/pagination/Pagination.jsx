@@ -4,10 +4,11 @@ import { PreviousIcon, NextIcon } from "../../svg/Svg";
 export default function Pagination({
   blogs,
   currentPage,
-  totalLength,
   setCurrentPage,
+  totalLength
 }) {
   let pages = [];
+
   for (let i = 1; i <= Math.ceil(totalLength / 4); i++) {
     pages.push(i);
   }
@@ -18,14 +19,14 @@ export default function Pagination({
     if (currentPage === 1) {
       return
     }
-    setCurrentPage(prev => prev - 1)
+    setCurrentPage(prev => prev - 1);
   }
 
   const nextPage = () => {
     if (currentPage === pages.length) {
       return
     }
-    setCurrentPage(prev => prev + 1)
+    setCurrentPage(prev => prev + 1);
   }
 
   useEffect(() => {

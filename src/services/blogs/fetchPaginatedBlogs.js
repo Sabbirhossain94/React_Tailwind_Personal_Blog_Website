@@ -3,8 +3,8 @@ import supabase from "../global/supabaseClient";
 export const fetchPaginatedBlogs = async ({
     setBlogs,
     setLoading,
-    setTotalLength,
     currentPage,
+    setTotalLength
 }) => {
     try {
         setLoading(true);
@@ -22,7 +22,7 @@ export const fetchPaginatedBlogs = async ({
         setBlogs((prevBlogs) => ({
             ...prevBlogs, main: data, topics: []
         }))
-        setTotalLength(count);
+        setTotalLength(count)
     } catch (error) {
         console.log(error.message);
     } finally {
