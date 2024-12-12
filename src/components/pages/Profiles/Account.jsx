@@ -27,22 +27,21 @@ const Account = () => {
   return (
     <div>
       {session ? (
-        <div className="mx-auto mt-[50px] max-w-md flex justify-center flex-col border p-8 border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900">
+        <div className="mx-auto mt-[50px] w-full md:max-w-md flex justify-center flex-col border p-8 border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900">
           <form
             onSubmit={handleUpdate}
           >
-            <div className="flex items-center gap-8">
-              <div className="w-1/2">
+            <div className="flex flex-col sm:flex-row items-center">
+              <div className="sm:w-1/2">
                 {loading ? <ProfileImagePlaceholder /> : <img
                   src={preview ? preview : profile.avatarUrl}
                   alt="avatar"
-                  className="focus:ring-offset-2 ring-2 dark:ring-teal-500 rounded-full object-fit"
-                  style={{ height: 150, width: 150 }}
+                  className="focus:ring-offset-2 w-[200px] h-[200px] md:w-[150px] md:h-[150px] ring-2 dark:ring-teal-500 rounded-full object-fit"
                 />}
               </div>
-              <div className="w-1/2 h-full">
+              <div className="w-full sm:w-1/2 h-full flex justify-center">
                 <label htmlFor="uploadPic"
-                  className="h-10 cursor-pointer border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 px-10 whitespace-nowrap w-full py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                  className="h-10 cursor-pointer border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 text-center whitespace-nowrap w-full py-2 text-sm font-medium text-blue-500 dark:text-teal-500 hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-teal-500">
                   Change Picture
                   <input
                     id='uploadPic'

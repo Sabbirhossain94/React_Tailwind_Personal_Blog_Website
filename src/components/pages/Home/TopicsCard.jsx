@@ -22,7 +22,7 @@ function TopicsCard({ loading, blogs, setTopics, resetPagination }) {
                     <span className="ml-2">All Blogs</span>
                 </button>
             </div>
-            <div className="flex flex-wrap gap-8 mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
 
                 {loading ? (
                     Array(4)
@@ -30,7 +30,7 @@ function TopicsCard({ loading, blogs, setTopics, resetPagination }) {
                         .map((_, index) => <CardSkeleton key={index} />)
                 ) : (
                     blogs?.topics?.length === 0 ?
-                        <div className="min-h-[500px] text-4xl font-semibold flex justify-center items-center w-full">
+                        <div className="col-span-2 h-[500px] text-4xl font-semibold flex justify-center items-center">
                             <div className="gap-10 w-60">
                                 <NoBlogs />
                                 <div className='mt-4'>
@@ -40,7 +40,7 @@ function TopicsCard({ loading, blogs, setTopics, resetPagination }) {
                         </div>
                         :
                         blogs?.topics?.map((blog, index) => (
-                            <div key={index} className="relative w-[400px] rounded-md">
+                            <div key={index} className="relative col-span-1 rounded-md">
                                 <div
                                     className="flex flex-col border border-zinc-300 dark:border-gray-100/10"
                                 >

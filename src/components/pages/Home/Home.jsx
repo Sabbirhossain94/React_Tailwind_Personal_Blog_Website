@@ -43,8 +43,8 @@ function Home() {
 
     return (
         <div className="bg-gray-100 dark:bg-zinc-800">
-            <div className="flex justify-center max-w-7xl mx-auto py-20">
-                <div className="min-h-screen flex flex-col justify-start w-3/4 relative dark:bg-zinc-800 mt-20">
+            <div className="flex flex-col xl:flex-row xl:gap-10 justify-center max-w-7xl mx-auto py-20 px-6 sm:px-10 lg:px-6 xl:px-0">
+                <div className="min-h-screen flex flex-col w-full xl:w-3/4 relative dark:bg-zinc-800 mt-20">
                     {topics ?
                         <TopicsCard
                             loading={loading}
@@ -64,7 +64,7 @@ function Home() {
                         totalLength={totalLength}
                     />
                 </div>
-                <div className="mt-20 flex flex-col gap-10 w-1/4">
+                <div className="mt-10 xl:mt-20 grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1 gap-10 w-full xl:w-1/4">
                     <AboutMe />
                     <Topics
                         setTopics={setTopics}

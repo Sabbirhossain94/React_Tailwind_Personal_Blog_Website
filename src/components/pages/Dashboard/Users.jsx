@@ -2,7 +2,7 @@ import React from 'react'
 
 function Users() {
   return (
-    <div>This is Users section</div>
+    <div className='h-screen flex justify-center items-center text-4xl dark:text-white font-semibold'>Coming soon!</div>
   )
 }
 

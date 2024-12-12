@@ -3,19 +3,27 @@ import { CardSkeleton } from '../../layout/skeleton/Skeleton'
 import { Link } from 'react-router-dom'
 import { blogCoverUrl } from '../../../helpers/storage';
 import { BsArrowRight } from "react-icons/bs";
+import { NoBlogs } from '../../svg/Svg';
 
 function BlogsCard({ loading, blogs }) {
     return (
-        <div className="flex flex-wrap gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {loading ? (
                 Array(4)
                     .fill(null)
                     .map((_, index) => <CardSkeleton key={index} />)
             ) : (
                 blogs.main.length === 0 ?
-                    <div className="min-h-screen text-4xl font-semibold flex justify-center items-center w-full"> No Blogs Found!</div> :
+                        <div className="col-span-2 h-[500px] text-4xl font-semibold flex justify-center items-center">
+                        <div className="gap-10 w-60">
+                            <NoBlogs />
+                            <div className='mt-4'>
+                                <h2 className="text-center text-gray-800 dark:text-gray-400 text-3xl font-semibold leading-loose pb-2">No Blogs found!</h2>
+                            </div>
+                        </div>
+                    </div> :
                     blogs.main.map((blog, index) => (
-                        <div key={index} className="relative w-[400px] rounded-md">
+                        <div key={index} className="relative col-span-1 rounded-md">
                             <div
 
                                 className="flex flex-col border border-zinc-300 dark:border-gray-100/10"

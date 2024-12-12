@@ -18,7 +18,7 @@ function UploadCoverImage({ isCreate, blog, setFile, loading }) {
   useEffect(() => {
     if (showCancel === false) {
       setPreview(blog && blog.coverphoto && blog.coverphoto.publicUrl);
-    } 
+    }
   }, [showCancel]);
 
   return (
@@ -34,13 +34,13 @@ function UploadCoverImage({ isCreate, blog, setFile, loading }) {
           <button
             type="button"
             onClick={() => setPreview(null)}
-            className="h-8 mt-4 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 dark:border-zinc-700 bg-gray-100 hover:bg-gray-200 dark:hover:bg-zinc-700 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+            className="h-8 mt-4 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 dark:border-zinc-700 bg-gray-100 hover:bg-gray-200 dark:hover:bg-zinc-700 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
           >
             Cancel
           </button>
         </div>
       ) : (
-        <label htmlFor="file" className="h-8 mt-4 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 dark:border-zinc-700 bg-gray-100 hover:bg-gray-200 dark:hover:bg-zinc-700 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+        <label htmlFor="file" className="h-8 mt-4 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 dark:border-zinc-700 bg-gray-100 hover:bg-gray-200 dark:hover:bg-zinc-700 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
           <input
             type="file"
             id="file"
@@ -55,7 +55,7 @@ function UploadCoverImage({ isCreate, blog, setFile, loading }) {
         <div>
           {loading ? <ImagePlaceholder /> :
             <img
-              src={preview ? preview :  blog?.coverphoto?.publicUrl }
+              src={preview ? preview : blog?.coverphoto?.publicUrl}
               width="300px"
               height="300px"
               className="border border-blue-400"
@@ -67,12 +67,12 @@ function UploadCoverImage({ isCreate, blog, setFile, loading }) {
               onClick={() => {
                 setShowCancel(false);
               }}
-              className="h-8 mt-4 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 dark:border-zinc-700 bg-gray-100 hover:bg-gray-200 dark:hover:bg-zinc-700 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+              className="h-8 mt-4 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 dark:border-zinc-700 bg-gray-100 hover:bg-gray-200 dark:hover:bg-zinc-700 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
             >
               Reset
             </button>
             }
-            <label htmlFor="file" className="h-8 mt-4 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 dark:border-zinc-700 bg-gray-100 hover:bg-gray-200 dark:hover:bg-zinc-700 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+            <label htmlFor="file" className="h-8 mt-4 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 dark:border-zinc-700 bg-gray-100 hover:bg-gray-200 dark:hover:bg-zinc-700 dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
               <input
                 type="file"
                 id="file"

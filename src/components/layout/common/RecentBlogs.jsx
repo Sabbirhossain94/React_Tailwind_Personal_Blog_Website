@@ -16,7 +16,7 @@ function RecentBlogs() {
     }, []);
 
     return loading ? <RecentBlogsSkeleton /> : (
-        <div className="border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900/50 p-4 flex flex-col justify-start">
+        <div className="border sm:col-span-2 md:col-span-1 border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900/50 p-4 flex flex-col justify-start">
             <div className="text-2xl dark:text-gray-200 font-semibold">Recent Blogs</div>
             <ul className="mt-4 flex flex-col gap-4">
                 {recentBlogs && recentBlogs.map((blog, key) => (

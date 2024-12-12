@@ -79,14 +79,14 @@ export default function CreateBlog() {
   };
 
   return (
-    <div className="bg-gray-100 dark:bg-zinc-800 min-h-screen">
-      <Link to="/dashboard/posts">
+    <div className="bg-gray-100 dark:bg-zinc-800 min-h-screen lg:pl-10">
+      <Link to="/dashboard/posts" className="ml-12 sm:ml-12 lg:ml-0">
         <button className="h-10 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-900/50 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-teal-500 sm:w-auto">
           <span className="text-lg"> <MdKeyboardBackspace /></span>
           <span className="ml-2">Blogs</span>
         </button>
       </Link>
-      <div className="mt-4 mx-auto px-8 xl:px-0">
+      <div className="mt-4 mx-auto">
         <form
           onSubmit={handleSubmit}
         >
