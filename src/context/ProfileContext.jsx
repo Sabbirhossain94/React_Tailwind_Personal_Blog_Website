@@ -6,7 +6,7 @@ const ProfileContext = createContext();
 export const ProfileProvider = ({ children, session }) => {
     const [profile, setProfile] = useState({ username: "", avatarUrl: "" });
     const [loading, setLoading] = useState(false);
-    
+
     useEffect(() => {
         const fetchProfile = async () => {
             setLoading(true);

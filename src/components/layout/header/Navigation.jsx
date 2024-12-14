@@ -30,7 +30,7 @@ export default function Navigation() {
           <div ref={ref} className="flex items-center">
             <div className="md:ml-4 md:flex md:flex-shrink-0 md:items-center">
               <div className="relative ml-3">
-                <div className="flex flex-row">
+                <div className="flex flex-row gap-6">
                   {session ? (
                     <img
                       onClick={() => setShowDropDown(!showDropDown)}
@@ -48,7 +48,7 @@ export default function Navigation() {
                     </Link>
                   )}
 
-                  <button onClick={toggleDarkMode} className="ml-10">
+                  <button onClick={toggleDarkMode} className="">
                     {dark ? (
                       <DarkIcon />
                     ) : (

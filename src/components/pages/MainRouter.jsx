@@ -4,6 +4,7 @@ import useSession from "../../hooks/useSession";
 import Navigation from "../layout/header/Navigation";
 import Content from "./Blog Details/Content";
 import SignIn from "./Auth/SignIn";
+import SignUp from "./Auth/SignUp";
 import ProtectedRoute from "./Dashboard/ProtectedRoute";
 import SignedProtectedRoute from "./Auth/SignedProtectedRoute"
 import Dashboard from "./Dashboard/Dashboard";
@@ -32,6 +33,9 @@ function AppRouter() {
             <SignIn />
           </SignedProtectedRoute>
         } />
+        <Route path="/signup" element={<SignedProtectedRoute>
+          <SignUp />
+        </SignedProtectedRoute>} />
         <Route path="/blog/:id" element={<Content />} />
         <Route path="/dashboard" element={
           <ProtectedRoute >

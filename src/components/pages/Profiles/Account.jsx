@@ -2,11 +2,16 @@ import { useState } from "react";
 import { ProfileImagePlaceholder } from "../../layout/skeleton/Skeleton";
 import { useProfile } from "../../../context/ProfileContext";
 import { updateProfile } from "../../../services/profile/updateProfile";
+import { passwordUpdate } from "../../../services/auth/updatePassword";
+import { MdVisibility } from "react-icons/md";
+import { MdVisibilityOff } from "react-icons/md";
 import Spinner from "../../animation/Spinner"
 
 const Account = () => {
   const { session, profile, setProfile, loading } = useProfile()
   const [preview, setPreview] = useState(null);
+  const [password, setPassword] = useState('');
+  const [showVisibility, setShowVisibility] = useState(false)
   const [file, setFile] = useState(null)
   const [updateLoading, setUpdateLoading] = useState(false);
 
@@ -21,8 +26,10 @@ const Account = () => {
     e.preventDefault();
     setUpdateLoading(true)
     updateProfile(session, profile, file, setUpdateLoading);
+    if (password) {
+      passwordUpdate(password)
+    }
   }
-
 
   return (
     <div>
@@ -55,20 +62,33 @@ const Account = () => {
             </div>
             <div className="mt-8">
               <label htmlFor="email" className="dark:text-gray-300">Email</label>
-              <div className="form-control mt-2 block w-full px-3 py-1.5 text-base font-normal text-gray-500 bg-gray-100 dark:bg-zinc-800 bg-clip-padding border border-solid border-zinc-300 dark:border-zinc-700 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+              <div className="form-control mt-2 block w-full px-3 py-1.5 text-base font-normal text-gray-500 bg-gray-100 dark:bg-zinc-800 bg-clip-padding border border-solid border-zinc-300 dark:border-zinc-700 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
                 {session.user.email}
               </div>
-              <div className="mt-4">
+              <div className="mt-6">
                 <label htmlFor="username" className="dark:text-gray-300">Name</label>
                 <input
-                  className="form-control mt-2 block w-full px-3 py-1.5 text-base font-normal dark:text-gray-400 bg-gray-100 dark:bg-zinc-800 bg-clip-padding border border-solid border-zinc-300 dark:border-zinc-700 rounded transition ease-in-out m-0 focus:border focus:border-zinc-700"
+                  className="form-control mt-2 block w-full px-3 py-1.5 text-base font-normal dark:text-gray-400 bg-gray-100 dark:bg-zinc-800 bg-clip-padding border border-solid border-zinc-300 dark:border-zinc-700 transition ease-in-out m-0 focus:border focus:border-zinc-700"
                   name="username"
                   type="text"
                   value={profile.username}
                   onChange={(e) => setProfile({ ...profile, username: e.target.value })}
                 />
               </div>
-
+              <div className="mt-6 relative">
+                <label htmlFor="password" className="dark:text-gray-300">Password (Optional)</label>
+                <input
+                  className="form-control mt-2 block w-full px-3 py-1.5 text-base font-normal dark:text-gray-400 bg-gray-100 dark:bg-zinc-800 bg-clip-padding border border-solid border-zinc-300 dark:border-zinc-700 transition ease-in-out m-0 focus:border focus:border-zinc-700"
+                  name="password"
+                  type={showVisibility ? "text": "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {showVisibility ?
+                  <MdVisibility onClick={() => setShowVisibility(!showVisibility)} className="cursor-pointer text-gray-500 absolute right-2 top-11" /> :
+                  <MdVisibilityOff onClick={() => setShowVisibility(!showVisibility)} className="cursor-pointer text-gray-500 absolute right-2 top-11" />
+                }
+              </div>
               <div className="mt-8 flex justify-end">
                 <button
                   type="submit"
