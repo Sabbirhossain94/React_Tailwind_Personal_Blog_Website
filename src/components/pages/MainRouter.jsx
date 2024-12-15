@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Navigate, Route, useLocation } from "react-router-dom";
 import Home from "./Home/Home";
 import useSession from "../../hooks/useSession";
 import Navigation from "../layout/header/Navigation";
@@ -8,18 +8,20 @@ import SignUp from "./Auth/SignUp";
 import ProtectedRoute from "./Dashboard/ProtectedRoute";
 import SignedProtectedRoute from "./Auth/SignedProtectedRoute"
 import Dashboard from "./Dashboard/Dashboard";
-import Account from "./Profiles/Account";
-import CreateBlog from "./Profiles/CreateBlog";
+import Account from "./Dashboard/Profile/Account";
+import CreateBlog from "./Dashboard/Posts/CreateBlog";
 import Footer from "../layout/static/Footer";
 import Posts from "./Dashboard/Posts";
 import Users from "./Dashboard/Users";
 import NoPage from "./Error/NoPage";
 import { Toaster } from "react-hot-toast";
 import { ProfileProvider } from "../../context/ProfileContext";
+import { useProfile } from "../../context/ProfileContext";
 
 function AppRouter() {
   const location = useLocation();
   const isDashboard = location.pathname.startsWith("/dashboard");
+  const { userRole } = useProfile();
 
   return (
     <>
@@ -42,13 +44,13 @@ function AppRouter() {
             <Dashboard />
           </ProtectedRoute>
         }>
-          <Route index element={<Navigate to="posts" />} />
+          {userRole && "user" && <Route index element={<Navigate to="profile" />} />}
+          {userRole && "admin" && <Route index element={<Navigate to="posts" />} />}
           <Route path="posts" element={<Posts />} />
           <Route path="profile" element={<Account />} />
           <Route path="createblog" element={<CreateBlog />} />
           <Route path="users" element={<Users />} />
           <Route path="blog/:id/update" element={<CreateBlog />} />
-
         </Route>
         <Route path="*" element={<NoPage />} />
       </Routes>
@@ -58,12 +60,12 @@ function AppRouter() {
 }
 
 export default function Root() {
-  const { loading, session } = useSession();
-
+  const { loading, session, userRole } = useSession();
+  
   return loading ? (
     <div></div>
   ) :
-    <ProfileProvider session={session}>
+    <ProfileProvider session={session} userRole={userRole}>
       <Router>
         <AppRouter />
       </Router>

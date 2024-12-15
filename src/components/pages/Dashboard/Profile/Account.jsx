@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { ProfileImagePlaceholder } from "../../layout/skeleton/Skeleton";
-import { useProfile } from "../../../context/ProfileContext";
-import { updateProfile } from "../../../services/profile/updateProfile";
-import { passwordUpdate } from "../../../services/auth/updatePassword";
+import { ProfileImagePlaceholder } from "../../../layout/skeleton/Skeleton";
+import { useProfile } from "../../../../context/ProfileContext";
+import { updateProfile } from "../../../../services/profile/updateProfile";
+import { passwordUpdate } from "../../../../services/auth/updatePassword";
 import { MdVisibility } from "react-icons/md";
 import { MdVisibilityOff } from "react-icons/md";
-import Spinner from "../../animation/Spinner"
+import Spinner from "../../../animation/Spinner"
 
 const Account = () => {
   const { session, profile, setProfile, loading } = useProfile()

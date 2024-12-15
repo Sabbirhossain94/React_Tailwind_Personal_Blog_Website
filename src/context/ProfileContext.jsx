@@ -3,7 +3,7 @@ import { getProfile } from "../services/profile/getProfile"
 
 const ProfileContext = createContext();
 
-export const ProfileProvider = ({ children, session }) => {
+export const ProfileProvider = ({ children, session, userRole }) => {
     const [profile, setProfile] = useState({ username: "", avatarUrl: "" });
     const [loading, setLoading] = useState(false);
 
@@ -15,10 +15,10 @@ export const ProfileProvider = ({ children, session }) => {
         };
 
         fetchProfile();
-    }, []);
+    }, [userRole]);
 
     return (
-        <ProfileContext.Provider value={{ session, profile, setProfile, loading }}>
+        <ProfileContext.Provider value={{ session, profile, setProfile, loading, userRole }}>
             {children}
         </ProfileContext.Provider>
     );

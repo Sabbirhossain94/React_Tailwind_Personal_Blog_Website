@@ -4,18 +4,22 @@ import { dashboardItems } from '../../../helpers/dashboard';
 import SignOutModal from "../../layout/modal/SignOutModal";
 import { IoMenu } from "react-icons/io5";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
+import { useProfile } from "../../../context/ProfileContext";
 
 function Dashboard() {
     const location = useLocation();
     let currentPath = location.pathname.split("/");
     let [isOpen, setIsOpen] = useState(false);
     const [sideBarOpen, setSideBarOpen] = useState(false);
+    const { userRole } = useProfile();
 
     useEffect(() => {
         if (location.pathname) {
             setSideBarOpen(!sideBarOpen)
         }
-    }, [location.pathname])
+    }, [location.pathname]);
+
+    const updatedDashboardItems = dashboardItems.filter((item) => item.roles.includes(userRole));
 
     return (
         <div className='bg-gray-100 w-full overflow-hidden flex pt-[70px] dark:bg-zinc-800 min-h-screen relative'>
@@ -32,13 +36,12 @@ function Dashboard() {
                 </button>
                 <div className="h-full px-3 py-4 overflow-y-auto ">
                     <ul className="space-y-2 font-medium flex flex-col gap-1">
-                        {dashboardItems.map((nav, key) => (
+                        {updatedDashboardItems.map((nav, key) => (
                             (
                                 nav.label === "Sign out" ?
                                     <button
                                         onClick={() => setIsOpen(true)}
                                         key={key}
-
                                     >
                                         <li key={key} className='flex items-center justify-between '>
                                             <p className={`${currentPath[2] === nav.path ? "bg-gray-100 text-blue-500 dark:text-teal-500 dark:bg-zinc-700/50" : ""} w-full space-y-2 items-center flex text-[16px] gap-2 p-2 rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-800 group`}>

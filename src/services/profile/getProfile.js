@@ -3,6 +3,11 @@ import supabase from "../global/supabaseClient";
 export const getProfile = async (session, setProfile, setLoading) => {
     setLoading(true)
     try {
+
+        if (!session?.user?.id) {
+            return;
+        }
+        
         const { user } = session
         let { data, error } = await supabase
             .from("profiles")
@@ -22,7 +27,6 @@ export const getProfile = async (session, setProfile, setLoading) => {
         } else {
             setProfile({ username: data.username, avatarUrl: avatarData.publicUrl });
         }
-
 
     } catch (error) {
         console.log(error.message);

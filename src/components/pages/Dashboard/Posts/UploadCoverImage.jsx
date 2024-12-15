@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ImagePlaceholder } from "../../layout/skeleton/Skeleton";
+import { ImagePlaceholder } from "../../../layout/skeleton/Skeleton";
 
 function UploadCoverImage({ isCreate, blog, setFile, loading }) {
   const [preview, setPreview] = useState(null);

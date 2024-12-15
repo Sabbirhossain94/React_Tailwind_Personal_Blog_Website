@@ -3,13 +3,13 @@ import { useLocation, Link, useNavigate } from "react-router-dom";
 import UploadCoverImage from "./UploadCoverImage";
 import { MdKeyboardBackspace } from "react-icons/md";
 import ReactQuill from "react-quill";
-import { modules } from "../../../helpers/textEditor";
-import { topics } from "../../../helpers/topics";
-import { createBlog } from "../../../services/blogs/createBlog";
-import { loadBlogContent } from "../../../services/blogs/loadBlogContent";
-import { updateBlog } from "../../../services/blogs/updateBlog";
-import { useProfile } from "../../../context/ProfileContext";
-import Spinner from "../../animation/Spinner";
+import { modules } from "../../../../helpers/textEditor";
+import { topics } from "../../../../helpers/topics";
+import { createBlog } from "../../../../services/blogs/createBlog";
+import { loadBlogContent } from "../../../../services/blogs/loadBlogContent";
+import { updateBlog } from "../../../../services/blogs/updateBlog";
+import { useProfile } from "../../../../context/ProfileContext";
+import Spinner from "../../../animation/Spinner";
 import 'react-quill/dist/quill.snow.css';
 
 export default function CreateBlog() {

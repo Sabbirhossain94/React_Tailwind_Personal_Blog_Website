@@ -8,27 +8,35 @@ export const dashboardItems = [
     {
         label: "Dashboard",
         path: "",
-        icon: <MdDashboard />
+        icon: <MdDashboard />,
+        roles: ["admin"]
     },
     {
         label: "Profile",
         path: "profile",
-        icon: <AiOutlineUser />
+        icon: <AiOutlineUser />,
+        roles: ["admin","user"]
+
     },
     {
         label: "Users",
         path: "users",
-        icon: <FaUsers />
+        icon: <FaUsers />,
+        roles: ["admin"]
+
     },
     {
         label: "Posts",
         path: "posts",
-        icon: <HiOutlineChatBubbleLeft />
+        icon: <HiOutlineChatBubbleLeft />,
+        roles: ["admin"]
+
 
     },
     {
         label: "Sign out",
         path: "/",
-        icon: <CiLogout />
+        icon: <CiLogout />,
+        roles: ["admin", "user"]
     }
 ]

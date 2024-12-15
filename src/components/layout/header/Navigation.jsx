@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { signOut } from "../../../services/auth/signOut";
 import { Link, useNavigate } from "react-router-dom";
 import useOutsideClick from "../../../hooks/useOutsideClick";
+import SignOutModal from "../modal/SignOutModal";
 import useDarkMode from "../../../hooks/useDarkMode";
 import { useProfile } from "../../../context/ProfileContext";
 import { DarkIcon, LightIcon } from "../../svg/Svg";
@@ -11,9 +13,10 @@ export default function Navigation() {
   const { ref, showDropDown, setShowDropDown } = useOutsideClick();
   const { dark, toggleDarkMode } = useDarkMode(false);
   const navigate = useNavigate();
+  let [isOpen, setIsOpen] = useState(false);
 
   const handleSignOut = () => {
-    signOut();
+    setIsOpen(true)
     setShowDropDown(!showDropDown)
   }
 
@@ -24,6 +27,10 @@ export default function Navigation() {
 
   return (
     <nav className="dark:bg-zinc-900 z-50 bg-white border-b border-zinc-300 dark:border-zinc-700 fixed left-0 right-0 top-0 backdrop-blur-md">
+      <SignOutModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
       <div className="mx-auto w-full px-6 sm:px-10 lg:px-6 xl:max-w-7xl xl:px-0">
         <div className="flex h-[80px] justify-between">
           <Logo />
