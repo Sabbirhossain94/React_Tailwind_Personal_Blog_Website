@@ -1,5 +1,5 @@
 import React from 'react'
-import { TableSkeleton } from '../../../layout/skeleton/Skeleton'
+import { UsersTableSkeleton } from '../../../layout/skeleton/Skeleton'
 import moment from 'moment'
 
 function TableData({ loading, users }) {
@@ -30,7 +30,7 @@ function TableData({ loading, users }) {
             <tbody>
                 {loading ? Array(5)
                     .fill(null)
-                    .map((_, index) => <TableSkeleton key={index} />)
+                    .map((_, index) => <UsersTableSkeleton key={index} />)
                     :
                     users.map((user, key) => (
                         <tr key={key} className="bg-white dark:text-gray-400 dark:bg-zinc-900/50 border-b dark:border-zinc-700">

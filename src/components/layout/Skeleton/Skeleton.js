@@ -55,11 +55,36 @@ export function SingleBlogSkeleton() {
     )
 }
 
-export function TableSkeleton() {
+export function PostsTableSkeleton() {
     return (
         <tr className="odd:bg-white animate-pulse dark:text-gray-400 odd:dark:bg-zinc-800 even:bg-gray-100 even:dark:bg-zinc-900/50 border-b dark:border-zinc-700">
             <td className="px-6 py-4 font-medium whitespace-nowrap ">
                 <div className="h-4 bg-gray-300 rounded-md dark:bg-gray-700 w-4"></div>
+            </td>
+            <td className="px-6 py-4">
+                <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
+            </td>
+            <td className="px-6 py-4">
+                <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
+            </td>
+            <td className="px-6 py-4">
+                <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
+            </td>
+            <td className="px-6 py-4">
+                <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
+            </td>
+            <td className="px-6 py-4">
+                <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
+            </td>
+        </tr>
+    )
+}
+
+export function UsersTableSkeleton() {
+    return (
+        <tr className="odd:bg-white animate-pulse dark:text-gray-400 odd:dark:bg-zinc-800 even:bg-gray-100 even:dark:bg-zinc-900/50 border-b dark:border-zinc-700">
+            <td className="px-6 py-4 font-medium whitespace-nowrap ">
+                <div className="h-4 bg-gray-300 rounded-md dark:bg-gray-700 w-full"></div>
             </td>
             <td className="px-6 py-4">
                 <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>

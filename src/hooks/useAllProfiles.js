@@ -2,18 +2,19 @@ import { useState, useEffect } from "react";
 import { getAllUsers } from "../services/users/getUsers";
 
 
-const useProfiles = () => {
+const useAllProfiles = () => {
     const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         const fetchAllUsers = async () => {
-            getAllUsers(setUsers)
+            getAllUsers(setUsers, setLoading)
         }
         fetchAllUsers();
-       
+
     }, [])
 
-    return { users }
+    return { loading, users }
 }
 
-export default useProfiles
+export default useAllProfiles

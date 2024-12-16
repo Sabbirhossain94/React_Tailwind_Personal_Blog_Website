@@ -1,8 +1,8 @@
 import supabase from "../global/supabaseClient";
 
-export const getAllUsers = async (setUsers) => {
+export const getAllUsers = async (setUsers, setLoading) => {
     try {
-
+        setLoading(true)
         let { data, error } = await supabase
             .from('profiles')
             .select('*')
@@ -29,5 +29,7 @@ export const getAllUsers = async (setUsers) => {
 
     } catch (error) {
         alert(error)
+    } finally {
+        setLoading(false)
     }
 }

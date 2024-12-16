@@ -7,7 +7,7 @@ import { MdDashboard } from "react-icons/md";
 export const dashboardItems = [
     {
         label: "Dashboard",
-        path: "",
+        path: "main",
         icon: <MdDashboard />,
         roles: ["admin"]
     },

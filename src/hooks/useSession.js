@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import supabase from "../services/global/supabaseClient";
-import useProfiles from "./useProfiles";
+import useAllProfiles from "./useAllProfiles";
 
 const useSession = () => {
     const [session, setSession] = useState(() => {
@@ -9,7 +9,7 @@ const useSession = () => {
     });
     const [loading, setLoading] = useState(!session);
     const [userRole, setUserRole] = useState(null)
-    const { users } = useProfiles();
+    const { users } = useAllProfiles();
 
     useEffect(() => {
         const fetchSession = async () => {

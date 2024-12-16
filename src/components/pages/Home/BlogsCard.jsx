@@ -32,7 +32,8 @@ function BlogsCard({ loading, blogs }) {
                                     <img
                                         className="h-48 w-full object-cover"
                                         src={`${blogCoverUrl}/${blog.thumbnail}`}
-                                        alt="error"
+                                        loading="lazy"
+                                        alt="blog cover"
                                     />
                                 </div>
                                 <div className="flex flex-1 flex-col justify-between dark:bg-zinc-900/50 bg-white p-6 ">

@@ -5,14 +5,16 @@ import Navigation from "../layout/header/Navigation";
 import Content from "./Blog Details/Content";
 import SignIn from "./Auth/SignIn";
 import SignUp from "./Auth/SignUp";
-import ProtectedRoute from "./Dashboard/ProtectedRoute";
+import ProtectedRoute from "./Dashboard/Protected Route/ProtectedRoute";
 import SignedProtectedRoute from "./Auth/SignedProtectedRoute"
 import Dashboard from "./Dashboard/Dashboard";
+import DashboardMain from "./Dashboard/Main";
 import Account from "./Dashboard/Profile/Account";
 import CreateBlog from "./Dashboard/Posts/CreateBlog";
 import Footer from "../layout/static/Footer";
 import Posts from "./Dashboard/Posts";
 import Users from "./Dashboard/Users";
+import Unauthorized from "./Dashboard/Protected Route/Unauthorized";
 import NoPage from "./Error/NoPage";
 import { Toaster } from "react-hot-toast";
 import { ProfileProvider } from "../../context/ProfileContext";
@@ -39,18 +41,63 @@ function AppRouter() {
           <SignUp />
         </SignedProtectedRoute>} />
         <Route path="/blog/:id" element={<Content />} />
-        <Route path="/dashboard" element={
-          <ProtectedRoute >
-            <Dashboard />
-          </ProtectedRoute>
-        }>
-          {userRole && "user" && <Route index element={<Navigate to="profile" />} />}
-          {userRole && "admin" && <Route index element={<Navigate to="posts" />} />}
-          <Route path="posts" element={<Posts />} />
-          <Route path="profile" element={<Account />} />
-          <Route path="createblog" element={<CreateBlog />} />
-          <Route path="users" element={<Users />} />
-          <Route path="blog/:id/update" element={<CreateBlog />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={["user", "admin"]}>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        >
+          <Route
+            index
+            element={<Navigate to={userRole === "admin" ? "main" : "profile"} replace />}
+          />
+          <Route
+            path="main"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <DashboardMain />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="posts"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <Posts />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="profile"
+            element={<Account />}
+          />
+          <Route
+            path="createblog"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <CreateBlog />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="users"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <Users />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="blog/:id/update"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <CreateBlog />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="unauthorized" element={<Unauthorized />} />
         </Route>
         <Route path="*" element={<NoPage />} />
       </Routes>
@@ -61,7 +108,7 @@ function AppRouter() {
 
 export default function Root() {
   const { loading, session, userRole } = useSession();
-  
+
   return loading ? (
     <div></div>
   ) :

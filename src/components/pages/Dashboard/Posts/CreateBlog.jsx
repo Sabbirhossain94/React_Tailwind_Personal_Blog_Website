@@ -20,15 +20,7 @@ export default function CreateBlog() {
   let slug = currentPath[3];
   const isCreate = currentPath.includes("createblog")
   const [file, setFile] = useState(null)
-  const [blog, setBlog] = useState({
-    id: null,
-    title: "",
-    introduction: "",
-    slug: "",
-    topic: "",
-    content: "",
-    coverphoto: null
-  })
+  const [blog, setBlog] = useState({})
   const [loading, setLoading] = useState(false)
 
   // adding blogs to database here

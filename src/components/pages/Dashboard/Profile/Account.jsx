@@ -80,7 +80,7 @@ const Account = () => {
                 <input
                   className="form-control mt-2 block w-full px-3 py-1.5 text-base font-normal dark:text-gray-400 bg-gray-100 dark:bg-zinc-800 bg-clip-padding border border-solid border-zinc-300 dark:border-zinc-700 transition ease-in-out m-0 focus:border focus:border-zinc-700"
                   name="password"
-                  type={showVisibility ? "text": "password"}
+                  type={showVisibility ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />

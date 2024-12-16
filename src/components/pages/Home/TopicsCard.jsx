@@ -48,7 +48,8 @@ function TopicsCard({ loading, blogs, setTopics, resetPagination }) {
                                         <img
                                             className="h-48 w-full object-cover"
                                             src={`${blogCoverUrl}/${blog.thumbnail}`}
-                                            alt="error"
+                                            alt="blog cover"
+                                            loading="lazy"
                                         />
                                     </div>
                                     <div className="flex flex-1 flex-col justify-between dark:bg-zinc-900/50 bg-white p-6 ">

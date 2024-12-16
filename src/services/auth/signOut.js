@@ -1,7 +1,7 @@
 import supabase from "../global/supabaseClient";
 import toast from "react-hot-toast";
 
-export const signOut = async () => {
+export const signOut = async (redirect) => {
     try {
         let { error } = await supabase.auth.signOut();
         if (error) {
@@ -12,6 +12,8 @@ export const signOut = async () => {
         })
     } catch (error) {
         console.error(error)
+    } finally{
+        redirect("/")
     }
 
 };

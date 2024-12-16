@@ -11,11 +11,10 @@ function SignOutModal({ isOpen, setIsOpen }) {
     const handleDelete = () => {
         setLoading(true)
         setTimeout(() => {
-            signOut()
+            signOut(redirect)
             setLoading(false)
             setIsOpen(false);
         }, 1000)
-        redirect("/")
     }
 
     return (

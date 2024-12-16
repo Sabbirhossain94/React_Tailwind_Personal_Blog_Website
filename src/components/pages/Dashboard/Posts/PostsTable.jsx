@@ -1,5 +1,5 @@
 import React from 'react'
-import { TableSkeleton } from '../../../layout/skeleton/Skeleton';
+import { PostsTableSkeleton } from '../../../layout/skeleton/Skeleton';
 import { Link } from 'react-router-dom';
 
 function PostsTable({ loading, handleCheckboxChange, handleSelectAll, blogs, selectedBlogId, totalBlogs, setIsOpen, setSingleBlogId }) {
@@ -40,7 +40,7 @@ function PostsTable({ loading, handleCheckboxChange, handleSelectAll, blogs, sel
             <tbody>
                 {loading ? Array(totalBlogs)
                     .fill(null)
-                    .map((_, index) => <TableSkeleton key={index} />)
+                    .map((_, index) => <PostsTableSkeleton key={index} />)
                     :
                     blogs.map((blog, key) => (
                         <tr key={key} className="bg-white dark:text-gray-400 dark:bg-zinc-900/50 border-b dark:border-zinc-700">

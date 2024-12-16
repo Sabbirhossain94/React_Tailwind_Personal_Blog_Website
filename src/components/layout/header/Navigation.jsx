@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { signOut } from "../../../services/auth/signOut";
 import { Link, useNavigate } from "react-router-dom";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 import SignOutModal from "../modal/SignOutModal";

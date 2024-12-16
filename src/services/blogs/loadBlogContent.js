@@ -17,16 +17,7 @@ export const loadBlogContent = async (slug, setBlog, setLoading) => {
             .from("thumbnail")
             .getPublicUrl(`Thumbnail/${blog.thumbnail}`);
 
-        setBlog((prevData) => ({
-            ...prevData,
-            id: blog.id,
-            title: blog.title,
-            introduction: blog.introduction,
-            slug: blog.slug,
-            topic: blog.topic,
-            content: blog.content,
-            coverphoto: downloadCoverUrl
-        }));
+        setBlog({ ...blog, coverphoto: downloadCoverUrl })
     } catch (error) {
         return null;
     } finally {
