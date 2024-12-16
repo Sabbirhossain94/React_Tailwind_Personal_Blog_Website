@@ -1,0 +1,1 @@
+export const blogCoverUrl = process.env.REACT_APP_STORAGE_PUBLIC_URL
