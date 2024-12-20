@@ -1,6 +1,5 @@
 import { useState } from "react";
 import useFetchBlogs from "../../../../hooks/useFetchBlogs";
-import { TableSkeleton } from "../../../layout/skeleton/Skeleton"
 import { Link } from 'react-router-dom';
 import DeleteModal from "../../../layout/modal/DeleteModal"
 import PostsTable from "./PostsTable";

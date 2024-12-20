@@ -54,12 +54,12 @@ function Dashboard() {
                                         key={key}
                                         to={nav.path}
                                     >
-                                        <li key={key} className={`${currentPath[2] === nav.path ? "border-l-4 border-blue-500 dark:border-teal-500" : ""} transition duration-300 hover:border-l-4 hover:border-blue-500 dark:hover:border-teal-500 flex items-center justify-between`}>
+                                        <li key={key} className={`${currentPath[2] === nav.path ? "border-l-4 border-blue-500 dark:border-teal-500" : ""} transition duration-300 hover:text-blue-500 dark:hover:text-teal-500 dark:hover:border-teal-500 flex items-center justify-between`}>
                                             <p className={`${currentPath[2] === nav.path ? " text-blue-500 dark:text-teal-500 " : ""} w-full space-y-2 items-center flex text-[16px] gap-2 p-2 dark:text-gray-400 group`}>
                                                 <span className='text-2xl'>{nav.icon}</span>
                                                 {nav.label}
                                             </p>
-                                            {nav.label === "Profile" && <p className={`${currentPath[2] === nav.path ? "text-blue-500 bg-blue-400/10 dark:text-teal-500 dark:bg-teal-400/10 " : "text-gray-400 dark:text-gray-500"} px-2 py-1`}>{userRole}</p>}
+                                            {nav.label === "Profile" && <p className={`${currentPath[2] === nav.path ? "text-blue-500 bg-blue-400/10 dark:text-teal-500 dark:bg-teal-400/10 " : "text-gray-500 dark:text-gray-500 bg-gray-400/20"} px-2 py-1`}>{userRole}</p>}
                                         </li>
                                     </Link>
                             )

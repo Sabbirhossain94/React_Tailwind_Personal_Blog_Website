@@ -1,5 +1,5 @@
 import React from 'react'
-import { PostsTableSkeleton } from '../../../layout/skeleton/Skeleton';
+import { PostsTableSkeleton } from "../../../layout/skeleton/Skeleton"
 import { Link } from 'react-router-dom';
 
 function PostsTable({ loading, handleCheckboxChange, handleSelectAll, blogs, selectedBlogId, totalBlogs, setIsOpen, setSingleBlogId }) {
