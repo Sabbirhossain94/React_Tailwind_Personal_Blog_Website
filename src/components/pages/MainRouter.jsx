@@ -109,12 +109,15 @@ function AppRouter() {
 export default function Root() {
   const { loading, session, userRole } = useSession();
 
-  return loading ? (
-    <div></div>
-  ) :
+  if (loading) {
+    return <div></div>;
+  }
+
+  return (
     <ProfileProvider session={session} userRole={userRole}>
       <Router>
         <AppRouter />
       </Router>
     </ProfileProvider>
+  )
 }
