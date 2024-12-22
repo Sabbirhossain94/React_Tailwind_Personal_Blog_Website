@@ -6,13 +6,24 @@ const ProfileContext = createContext();
 export const ProfileProvider = ({ children, session, userRole }) => {
     const [profile, setProfile] = useState({ username: "", avatarUrl: "" });
     const [loading, setLoading] = useState(false);
+    const [profileLoaded, setProfileLoaded] = useState(false);
 
-    const fetchProfile = useCallback(() => {
-        getProfile(session, setProfile, setLoading);
-    }, [userRole])
+    const fetchProfile = useCallback(async () => {
+        if (session && !profileLoaded) {
+            setProfileLoaded(true);
+            await getProfile(session, setProfile, setLoading);
+        }
+    }, [session, profileLoaded]);
 
     useEffect(() => {
-        fetchProfile()
+        if (!session) {
+            setProfile({ username: "", avatarUrl: "" });
+            setProfileLoaded(false);
+        }
+    }, [session]);
+
+    useEffect(() => {
+        fetchProfile();
     }, [fetchProfile]);
 
     return (

@@ -1,31 +1,43 @@
 import supabase from "../global/supabaseClient";
 
 export const getProfile = async (session, setProfile, setLoading) => {
-    setLoading(true)
-    try {
 
-        if (!session?.user?.id) {
-            return;
-        }
-        
+    if (!session?.user?.id) {
+        return;
+    }
+
+    setLoading(true)
+
+    try {
         const { user } = session
-        let { data, error } = await supabase
+
+        let { data: profileData, error: ProfileError } = await supabase
             .from("profiles")
             .select(`username, avatar_url`)
             .eq("id", user?.id)
             .single();
 
-        if (error) {
-            console.error(error)
+        if (ProfileError) {
+            console.error(ProfileError)
+            return
         }
 
-        let { data: avatarData, error: avatarError } = supabase.storage
-            .from("avatars")
-            .getPublicUrl(`Profile Photo/${data.avatar_url}`);
-        if (avatarError) {
-            console.error(error)
+        if (profileData?.avatar_url) {
+            const { data: avatarData, error: avatarError } = supabase.storage
+                .from("avatars")
+                .getPublicUrl(`Profile Photo/${profileData.avatar_url}`);
+
+            if (avatarError) {
+                console.error("Error fetching avatar URL:", avatarError);
+                return;
+            }
+
+            setProfile({
+                username: profileData.username,
+                avatarUrl: avatarData.publicUrl,
+            });
         } else {
-            setProfile({ username: data.username, avatarUrl: avatarData.publicUrl });
+            setProfile({ username: profileData.username, avatarUrl: "" });
         }
 
     } catch (error) {
