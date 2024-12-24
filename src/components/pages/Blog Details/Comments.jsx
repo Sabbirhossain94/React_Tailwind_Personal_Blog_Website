@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { createComment } from '../../../services/blogs/addComment';
 import useSession from '../../../hooks/useSession';
-import CommentModal from '../../layout/modal/CommentModal';
+import CommentModal from '../../layout/modal/comment/CommentModal';
+import DeleteModal from '../../layout/modal/comment/DeleteModal';
 import { loadComment } from '../../../services/blogs/loadComment';
 import { FaUserCircle } from "react-icons/fa";
 import { MdOutlineAccessTime } from "react-icons/md";
@@ -11,12 +12,14 @@ import { SlLike } from "react-icons/sl";
 function Comments({ blogId }) {
     const { session } = useSession();
     const [comments, setComments] = useState("");
+    const [selectedComment, setSelectedComment] = useState(null);
     const [allComments, setAllComments] = useState([]);
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const fetchComments = useCallback(async () => {
-        if(blogId === undefined) return;
+        if (blogId === undefined) return;
         try {
             const commentsData = await loadComment(blogId);
             setAllComments(commentsData);
@@ -27,7 +30,7 @@ function Comments({ blogId }) {
 
     useEffect(() => {
         fetchComments();
-    }, [fetchComments]);
+    }, [fetchComments, selectedComment]);
 
     const submitComment = async (e) => {
         e.preventDefault();
@@ -47,9 +50,21 @@ function Comments({ blogId }) {
         }
     };
 
+    const handleDeleteComment = useCallback(async (commentId) => {
+        setIsDeleteModalOpen(true);
+        setSelectedComment(commentId)
+    }, [selectedComment])
+
+
     return (
         <div className="mt-6">
             <CommentModal isOpen={isOpen} setIsOpen={setIsOpen} />
+            <DeleteModal
+                isDeleteModalOpen={isDeleteModalOpen}
+                setIsDeleteModalOpen={setIsDeleteModalOpen}
+                selectedComment={selectedComment}
+                setSelectedComment={setSelectedComment}
+            />
             <p className="text-xl dark:text-gray-400">Leave a comment</p>
             <div className="mt-2">
                 <form onSubmit={submitComment}>
@@ -84,9 +99,9 @@ function Comments({ blogId }) {
                                     <p className='text-[14px] font-normal text-gray-900 dark:text-gray-400'>{comment.content}</p>
                                 </div>
                                 <div className='flex gap-4 items-center mt-2'>
-                                    <SlLike className='text-sm text-gray-500 cursor-pointer'/>
+                                    <SlLike className='text-sm text-gray-500 cursor-pointer' />
                                     {session?.user?.id === comment.profiles.id && <p className='text-sm text-gray-500 cursor-pointer'>Edit</p>}
-                                    {session?.user?.id === comment.profiles.id && <p className='text-sm text-gray-500 cursor-pointer'>Delete</p>}
+                                    {session?.user?.id === comment.profiles.id && <button onClick={() => handleDeleteComment(comment.id)} className='text-sm text-gray-500 hover:text-blue-500 dark:hover:text-teal-500'>Delete</button>}
                                 </div>
                             </div>
                         </li>
