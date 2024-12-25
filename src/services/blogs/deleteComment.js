@@ -1,12 +1,13 @@
 import supabase from "../global/supabaseClient";
 import toast from "react-hot-toast";
 
-export const deleteComment = async (selectedComment) => {
+export const deleteComment = async (createComment) => {
+    const { commentId } = createComment
     try {
         const { error: deleteError } = await supabase
             .from('comments')
             .delete()
-            .eq('id', selectedComment);
+            .eq('id', commentId);
 
         if (deleteError) {
             console.error(deleteError);

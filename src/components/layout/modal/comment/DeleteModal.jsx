@@ -3,30 +3,30 @@ import { Dialog, DialogPanel, DialogBackdrop, DialogTitle } from '@headlessui/re
 import Spinner from '../../../animation/Spinner'
 import { deleteComment } from '../../../../services/blogs/deleteComment'
 
-function DeleteModal({ isDeleteModalOpen, setIsDeleteModalOpen, selectedComment, setSelectedComment }) {
-   
+function DeleteModal({ createComment, setCreateComment, fetchComments }) {
+
     const [loading, setLoading] = useState(false);
 
     const handleModalClose = () => {
-        setIsDeleteModalOpen(false)
+        setCreateComment({ ...createComment, isDeleteModalOpen: false })
     }
 
     const handleDelete = async () => {
         try {
             setLoading(true)
-            await deleteComment(selectedComment);
-            setIsDeleteModalOpen(false)
+            await deleteComment(createComment);
         } catch (error) {
             console.error("Failed to delete comment:", error);
         } finally {
-            setSelectedComment(null)
+            setCreateComment({ ...createComment, isDeleteModalOpen: false, commentId: false })
             setLoading(false)
+            fetchComments()
         }
     }
 
     return (
         <Dialog
-            open={isDeleteModalOpen}
+            open={createComment.isDeleteModalOpen}
             onClose={handleModalClose}
             className="relative z-50"
         >

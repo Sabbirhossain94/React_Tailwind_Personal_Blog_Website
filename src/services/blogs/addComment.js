@@ -2,7 +2,7 @@ import supabase from "../global/supabaseClient"
 import moment from "moment"
 import toast from "react-hot-toast";
 
-export const createComment = async (session, comments, blogId) => {
+export const addComment = async (session, comment, blogId) => {
 
     if (!session?.user?.id) {
         return;
@@ -17,7 +17,7 @@ export const createComment = async (session, comments, blogId) => {
                 user_id: session?.user?.id,
                 created_at: date,
                 blog_id: blogId,
-                content: comments
+                content: comment
             })
             .single();
 
@@ -27,5 +27,5 @@ export const createComment = async (session, comments, blogId) => {
         toast.success("Comment added successfully")
     } catch (error) {
         console.error(error)
-    } 
+    }
 }
