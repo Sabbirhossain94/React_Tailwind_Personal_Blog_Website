@@ -44,10 +44,10 @@ function TableData({ loading, users }) {
                                 {user.email}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                                {moment(user.created_at, "MM/DD/YYYY").format("MMMM D, YYYY")}
+                                {user.created_at}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                                {moment(user.updated_at, "MM/DD/YYYY").format("MMMM D, YYYY")}
+                                {user.updated_at}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                                 {user.role === "admin" ? <span className={`px-2 py-1 bg-green-100 text-green-500 dark:bg-teal-400/20 dark:text-teal-500`}>{user.role}</span> :
