@@ -1,4 +1,4 @@
-import supabase from "../global/supabaseClient";
+import supabase from "../../global/supabaseClient";
 import toast from "react-hot-toast";
 
 export const deleteComment = async (createComment) => {

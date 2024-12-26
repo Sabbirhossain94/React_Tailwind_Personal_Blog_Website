@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Dialog, DialogPanel, DialogBackdrop, DialogTitle } from '@headlessui/react'
 import Spinner from '../../../animation/Spinner'
-import { deleteComment } from '../../../../services/blogs/deleteComment'
+import { deleteComment } from '../../../../services/blogs/comments/deleteComment'
 
 function DeleteModal({ createComment, setCreateComment, fetchComments }) {
 

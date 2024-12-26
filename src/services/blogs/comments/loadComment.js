@@ -1,10 +1,10 @@
-import supabase from "../global/supabaseClient";
+import supabase from "../../global/supabaseClient";
 
 export const loadComment = async (blogId) => {
     try {
         let { data: commentsData, error } = await supabase
             .from('comments')
-            .select(`*, profiles(*)`)
+            .select(`*, profiles(*),likes(*)`)
             .eq("blog_id", blogId);
 
         if (error) throw error;

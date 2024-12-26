@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
-import { loadComment } from '../../../services/blogs/loadComment';
-import { addComment } from '../../../services/blogs/addComment';
-import { updateComment } from '../../../services/blogs/updateComment';
+import { loadComment } from '../../../services/blogs/comments/loadComment';
+import { addComment } from '../../../services/blogs/comments/addComment';
+import { updateComment } from '../../../services/blogs/comments/updateComment';
+import { addLike } from '../../../services/blogs/comments/addLike';
 import useSession from '../../../hooks/useSession';
 import CommentModal from '../../layout/modal/comment/CommentModal';
 import DeleteModal from '../../layout/modal/comment/DeleteModal';
@@ -52,6 +53,11 @@ function Comments({ blogId }) {
             return;
         }
 
+        if (edit.isEdit && edit.content.trim() === '') {
+            setEdit((prevState) => ({ ...prevState, isEdit: false, commentId: null, loading: false }));
+            return;
+        }
+
         if (edit.isEdit) {
             setEdit({ ...edit, loading: true });
             try {
@@ -60,11 +66,13 @@ function Comments({ blogId }) {
             } catch (error) {
                 console.error("Failed to update comment:", error);
             } finally {
-                setEdit((prevState) => ({ ...prevState, isEdit: !prevState.isEdit, content: '', commentId: null, loading: false }));
+                setEdit((prevState) => ({ ...prevState, isEdit: false, content: '', commentId: null, loading: false }));
             }
             return
         }
+
         setCreateComment({ ...createComment, loading: true });
+
         try {
             await addComment(session, createComment.content, blogId);
             setCreateComment({ ...createComment, content: "" });
@@ -82,14 +90,26 @@ function Comments({ blogId }) {
     }, [createComment.commentId])
 
     const handleEdit = (commentId) => {
-        setEdit((prevState) => ({ ...prevState, isEdit: !prevState.isEdit, commentId: commentId }))
+        setEdit((prevState) => ({ ...prevState, isEdit: true, commentId: commentId }))
     }
 
     const cancelEdit = () => {
-        setEdit((prevState) => ({ ...prevState, isEdit: !prevState.isEdit, commentId: null }))
+        setEdit((prevState) => ({ ...prevState, isEdit: false, commentId: null }))
     }
 
-    console.log(edit)
+    const handleLike = async (commentId) => {
+        
+        if (!session?.user?.id) {
+            return;
+        }
+
+        try {
+            await addLike(session, commentId);
+            fetchComments();
+        } catch (error) {
+            console.error("Failed to like comment:", error);
+        }
+    }
 
     return (
         <div className="mt-6">
@@ -142,8 +162,10 @@ function Comments({ blogId }) {
                                     </div>
                                     :
                                     <div className='flex gap-4 items-center mt-2'>
-                                        <SlLike className='text-sm text-gray-500 cursor-pointer' />
-                                        {session?.user?.id === comment.profiles.id && <button onClick={() => handleEdit(comment.id)} className='text-sm text-gray-500 hover:text-blue-500 dark:hover:text-teal-500 cursor-pointer'>Edit</button>}
+                                        <button className='inline-flex items-center gap-2' onClick={() => handleLike(comment.id)} ><SlLike className={`${comment.likes.some((like) => like.user_id === session?.user?.id) ? 'text-blue-500 dark:text-teal-500' : 'text-gray-500 hover:text-blue-500 dark:hover:text-teal-500'}`} />
+                                            {comment.likes.length > 0 && <span className='text-sm text-blue-600 dark:text-teal-500'> {comment.likes.length} </span>}
+                                        </button>
+                                        {session?.user?.id === comment.profiles.id && <button onClick={() => handleEdit(comment.id)} className='text-sm text-gray-500 hover:text-blue-500 dark:hover:text-teal-500'>Edit</button>}
                                         {session?.user?.id === comment.profiles.id && <button onClick={() => handleDeleteComment(comment.id)} className='text-sm text-gray-500 hover:text-blue-500 dark:hover:text-teal-500'>Delete</button>}
                                     </div>}
                             </div>

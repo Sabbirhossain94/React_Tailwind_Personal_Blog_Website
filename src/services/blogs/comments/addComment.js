@@ -1,4 +1,4 @@
-import supabase from "../global/supabaseClient"
+import supabase from "../../global/supabaseClient";
 import moment from "moment"
 import toast from "react-hot-toast";
 
