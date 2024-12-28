@@ -2,13 +2,13 @@ import supabase from "../../global/supabaseClient";
 import moment from "moment"
 import toast from "react-hot-toast";
 
-export const addComment = async (session, comment, blogId) => {
+export const addComment = async (session, createComment, blogId) => {
 
     if (!session?.user?.id) {
         return;
     }
 
-    const date = moment().format("MMMM D, YYYY");
+    const date = moment().toISOString();
 
     try {
         let { error: commentError } = await supabase
@@ -17,7 +17,8 @@ export const addComment = async (session, comment, blogId) => {
                 user_id: session?.user?.id,
                 created_at: date,
                 blog_id: blogId,
-                content: comment
+                content: createComment.content,
+                rating: createComment.rating ? createComment.rating : null
             })
             .single();
 
