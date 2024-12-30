@@ -4,6 +4,7 @@ import { blogCoverUrl } from '../../../helpers/storage'
 import { BsArrowRight } from "react-icons/bs";
 import { MdKeyboardBackspace } from "react-icons/md";
 import { NoBlogs } from '../../svg/Svg';
+import moment from 'moment';
 
 function TopicsCard({ loading, blogs, setTopics, resetPagination }) {
     const navigate = useNavigate();
@@ -60,7 +61,7 @@ function TopicsCard({ loading, blogs, setTopics, resetPagination }) {
                                                 </p>
                                                 <p className="mt-2 text-md flex items-center gap-4">
                                                     <span className="dark:text-teal-600 text-blue-500">
-                                                        {blog.inserted_at}
+                                                         {moment(blog.inserted_at).format("MMMM D, YYYY")}
                                                     </span>
                                                     <span className="text-[10px] font-semibold bg-blue-50 dark:bg-teal-900/30 rounded-xl border border-blue-500 dark:border-teal-500 px-2 py-[2px] dark:text-teal-600 text-blue-500">
                                                         {blog.topic}

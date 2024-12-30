@@ -5,7 +5,7 @@ import DeleteModal from "../../../layout/modal/DeleteModal"
 import PostsTable from "./PostsTable";
 
 function Posts() {
-    const { loading, blogs, totalBlogs } = useFetchBlogs();
+    const { loading, blogs } = useFetchBlogs();
     const [singleBlogId, setSingleBlogId] = useState(null);
     const [selectedBlogId, setSelectedBlogId] = useState([])
     let [isOpen, setIsOpen] = useState(false);
@@ -16,7 +16,7 @@ function Posts() {
 
     const handleSelectAll = (isChecked) => {
         if (isChecked) {
-            setSelectedBlogId(blogs.map((blog) => blog.id));
+            setSelectedBlogId(blogs?.all?.map((blog) => blog.id));
         } else {
             setSelectedBlogId([]);
         }
@@ -26,7 +26,7 @@ function Posts() {
         <div className="flex flex-col">
             <div className='flex justify-end gap-6'>
                 {selectedBlogId.length > 0 && <button onClick={() => setIsOpen(true)} className="h-10 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-900/50 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                    Delete selected
+                    Delete selected ({selectedBlogId.length})
                 </button>}
                 <Link to="/dashboard/createblog">
                     <button className="h-10 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-900/50 px-4 py-2 text-sm font-medium text-blue-500 dark:text-teal-500 hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
@@ -49,7 +49,6 @@ function Posts() {
                     handleSelectAll={handleSelectAll}
                     blogs={blogs}
                     selectedBlogId={selectedBlogId}
-                    totalBlogs={totalBlogs}
                     setIsOpen={setIsOpen}
                     setSingleBlogId={setSingleBlogId}
                 />

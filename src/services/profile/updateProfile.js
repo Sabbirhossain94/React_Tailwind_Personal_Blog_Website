@@ -3,7 +3,8 @@ import moment from "moment";
 import toast from "react-hot-toast";
 
 export const updateProfile = async (session, profile, file, setUpdateLoading) => {
-    const date = moment().format("MMMM D, YYYY");
+    
+    const date = moment().toISOString();
 
     try {
 

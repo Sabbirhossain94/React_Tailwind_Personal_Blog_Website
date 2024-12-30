@@ -19,7 +19,7 @@ export const signUp = async (formData, setLoading) => {
         if (error) throw error;
 
         const { user } = data
-        const date = moment(user.created_at).format("MMMM D, YYYY")
+        const date = moment(user.created_at).toISOString()
 
         let { error: blogError } = await supabase
             .from("profiles")

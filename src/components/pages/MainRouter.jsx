@@ -49,7 +49,6 @@ function AppRouter() {
             </ProtectedRoute>
           }
         >
-         
           <Route
             index
             element={
@@ -58,14 +57,56 @@ function AppRouter() {
               ) : null
             }
           />
-          <Route path="main" element={<DashboardMain />} />
-          <Route path="posts" element={<Posts />} />
-          <Route path="profile" element={<Account />} />
-          <Route path="createblog" element={<CreateBlog />} />
-          <Route path="users" element={<Users />} />
-          <Route path="blog/:id/update" element={<CreateBlog />} />
+          <Route
+            path="main"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]} session={session} userRole={userRole}>
+                <DashboardMain />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="posts"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]} session={session} userRole={userRole}>
+                <Posts />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="profile"
+            element={
+              <ProtectedRoute allowedRoles={["user", "admin"]} session={session} userRole={userRole}>
+                <Account />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="createblog"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]} session={session} userRole={userRole}>
+                <CreateBlog />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="users"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]} session={session} userRole={userRole}>
+                <Users />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="blog/:id/update"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]} session={session} userRole={userRole}>
+                <CreateBlog />
+              </ProtectedRoute>
+            }
+          />
         </Route>
-        <Route path="/dashboard/:routeName/unauthorized" element={<Unauthorized />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
       {!isDashboard && <Footer />}

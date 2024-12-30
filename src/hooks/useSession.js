@@ -23,7 +23,7 @@ const useSession = () => {
         } else {
             const userId = session?.user?.id;
 
-            const user = users?.find(user => user.id === userId);
+            const user = users?.all?.find(user => user.id === userId);
 
             if (user) {
                 setUserRole(user.role);
@@ -35,7 +35,7 @@ const useSession = () => {
                 setSession(session);
                 setLoading(false);
                 const userId = session?.user?.id;
-                const user = users?.find(user => user.id === userId);
+                const user = users?.all?.find(user => user.id === userId);
                 if (user) {
                     setUserRole(user.role);
                 } else {

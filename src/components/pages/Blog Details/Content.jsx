@@ -5,7 +5,7 @@ import AboutMe from "../../layout/static/AboutMe";
 import { SingleBlogSkeleton } from "../../layout/skeleton/Skeleton";
 import { loadBlogContent } from "../../../services/blogs/loadBlogContent";
 import Comments from "./Comments";
-import { TfiCommentAlt } from "react-icons/tfi";
+import moment from 'moment';
 
 export default function Content() {
   const location = useLocation();
@@ -51,7 +51,7 @@ export default function Content() {
 
                     <div className="mt-3 px-6 flex flex-col sm:flex-row gap-4 items-start">
                       <p className="text-md text-gray-600 dark:text-gray-400">
-                        {blog.inserted_at} By <span className='text-blue-500 dark:text-teal-500'>Sabbir Hossain</span>
+                        {moment(blog.inserted_at).format("MMMM D, YYYY")} By <span className='text-blue-500 dark:text-teal-500'>Sabbir Hossain</span>
                       </p>
                       <span className="text-[10px] font-semibold bg-blue-50 dark:bg-teal-900/30 rounded-xl border border-blue-500 dark:border-teal-500 px-2 py-[2px] dark:text-teal-600 text-blue-500">
                         {blog.topic}
