@@ -1,13 +1,24 @@
 import supabase from "../../global/supabaseClient";
 
-export const loadComment = async (blogId) => {
+export const loadComment = async (blogId, filter) => {
     try {
-        let { data: commentsData, error } = await supabase
+        let query = supabase
             .from('comments')
-            .select(`*, profiles(*),likes(*)`)
-            .eq("blog_id", blogId);
+            .select(`*, profiles(*), likes(*)`)
+            .eq("blog_id", blogId)
+            .order('created_at', { ascending: filter.sortBy === "latest" ? false : true });
 
-        if (error) throw error;
+        if (filter.rating === 6) {
+            query = query.is("rating", null); 
+        } else if (filter.rating && filter.rating !== 0) {
+            query = query.eq("rating", filter.rating); 
+        }
+
+        const { data: commentsData, error } = await query;
+
+        if (error) {
+            throw error; 
+        }
 
         const updatedComments = await Promise.all(
             commentsData.map(async (comment) => {

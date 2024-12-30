@@ -5,6 +5,7 @@ import AboutMe from "../../layout/static/AboutMe";
 import { SingleBlogSkeleton } from "../../layout/skeleton/Skeleton";
 import { loadBlogContent } from "../../../services/blogs/loadBlogContent";
 import Comments from "./Comments";
+import { TfiCommentAlt } from "react-icons/tfi";
 
 export default function Content() {
   const location = useLocation();
@@ -24,8 +25,10 @@ export default function Content() {
 
   return (
     <div className="min-h-screen relative bg-gray-100 dark:bg-zinc-800">
-      <div className="flex flex-col xl:flex-row w-full xl:max-w-7xl mx-auto gap-16 items-start py-20 px-6 sm:px-10 lg:px-6 xl:px-0">
-        <div className="flex flex-col w-full xl:w-3/4 ">
+    
+      <div className="flex flex-col relative xl:flex-row w-full xl:max-w-7xl mx-auto gap-16 items-start py-20 px-6 sm:px-10 lg:px-6 xl:px-0">
+
+        <div className="flex flex-col w-full xl:w-3/4">
           {loading ? <SingleBlogSkeleton /> :
             (
               <div
@@ -67,7 +70,7 @@ export default function Content() {
                 </div>
               </div>
             )}
-          <Comments blogId={blog.id}/>
+          <Comments blogId={blog.id} />
         </div>
         <div className="w-full xl:w-1/4 mt-20 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-1 gap-10">
           <AboutMe />
