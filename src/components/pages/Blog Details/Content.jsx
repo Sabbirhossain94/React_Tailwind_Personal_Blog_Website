@@ -4,7 +4,7 @@ import RecentBlogs from "../../layout/common/RecentBlogs";
 import AboutMe from "../../layout/static/AboutMe";
 import { SingleBlogSkeleton } from "../../layout/skeleton/Skeleton";
 import { loadBlogContent } from "../../../services/blogs/loadBlogContent";
-import Comments from "./Comments";
+import Comments from "./Comments/Comments";
 import moment from 'moment';
 
 export default function Content() {

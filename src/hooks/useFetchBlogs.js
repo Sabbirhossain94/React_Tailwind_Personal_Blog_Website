@@ -9,7 +9,6 @@ const useFetchBlogs = () => {
         length: 4,
         sinceLastMonth: null
     });
-    // const [totalBlogs, setTotalBlogs] = useState(4);
 
     useEffect(() => {
         const fetchBlogs = async () => {
@@ -25,7 +24,7 @@ const useFetchBlogs = () => {
                     .order('id', { ascending: true });
 
                 if (error) throw error;
-                
+
                 const { data: recentBlogsData, error: recentError } = await supabase
                     .from("blogs")
                     .select(`*`)

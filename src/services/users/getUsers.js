@@ -11,6 +11,7 @@ export const getAllUsers = async (setUsers, setLoading) => {
         let { data, error } = await supabase
             .from('profiles')
             .select('*')
+            .order('created_at', { ascending: false })
 
         if (error) throw error;
 
@@ -37,7 +38,7 @@ export const getAllUsers = async (setUsers, setLoading) => {
             .select('*')
             .gte('created_at', lastMonthStart)
             .lte('created_at', currentDate);
-            
+
         if (recentError) throw error;
 
         setUsers((prevState) => ({ ...prevState, sinceLastMonth: recentUsersData }))

@@ -9,7 +9,8 @@ export const allComments = async () => {
 
         const { data: allCommentsData, error } = await supabase
             .from('comments')
-            .select(`*`)
+            .select(`*,likes(*),profiles(*)`)
+            .order('created_at', { ascending: false });
 
         if (error) throw error;
 
