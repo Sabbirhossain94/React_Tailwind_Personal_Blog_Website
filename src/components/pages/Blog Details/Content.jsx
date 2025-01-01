@@ -25,9 +25,7 @@ export default function Content() {
 
   return (
     <div className="min-h-screen relative bg-gray-100 dark:bg-zinc-800">
-    
       <div className="flex flex-col relative xl:flex-row w-full xl:max-w-7xl mx-auto gap-16 items-start py-20 px-6 sm:px-10 lg:px-6 xl:px-0">
-
         <div className="flex flex-col w-full xl:w-3/4">
           {loading ? <SingleBlogSkeleton /> :
             (

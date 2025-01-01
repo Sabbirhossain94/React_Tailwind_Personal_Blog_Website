@@ -39,7 +39,7 @@ function SignUp() {
                                 >
                                     Full name
                                 </label>
-                                <div className="mt-4">
+                                <div className="mt-2">
                                     <input
                                         required
                                         id="fullname"
@@ -56,7 +56,7 @@ function SignUp() {
                                 >
                                     Email address
                                 </label>
-                                <div className="mt-4">
+                                <div className="mt-2">
                                     <input
                                         required
                                         id="email"
@@ -73,7 +73,7 @@ function SignUp() {
                                 >
                                     Password
                                 </label>
-                                <div className="mt-4 relative">
+                                <div className="mt-2 relative">
                                     <input
                                         required
                                         id="password"

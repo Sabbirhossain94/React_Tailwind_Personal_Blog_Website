@@ -3,8 +3,8 @@ import { ProfileImagePlaceholder } from "../../../layout/skeleton/Skeleton";
 import { useProfile } from "../../../../context/ProfileContext";
 import { updateProfile } from "../../../../services/profile/updateProfile";
 import { passwordUpdate } from "../../../../services/auth/updatePassword";
-import { MdVisibility } from "react-icons/md";
-import { MdVisibilityOff } from "react-icons/md";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { AiOutlineUser } from "react-icons/ai";
 import Spinner from "../../../animation/Spinner"
 
 const Account = () => {
@@ -39,11 +39,13 @@ const Account = () => {
         >
           <div className="flex flex-col sm:flex-row items-center">
             <div className="sm:w-1/2">
-              {loading ? <ProfileImagePlaceholder /> : <img
-                src={preview ? preview : profile.avatarUrl}
-                alt="avatar"
-                className="focus:ring-offset-2 w-[200px] h-[200px] md:w-[150px] md:h-[150px] ring-2 dark:ring-teal-500 rounded-full object-fit"
-              />}
+              {!profile.avatarUrl && !preview ? <AiOutlineUser className="w-[150px] h-[150px] dark:text-gray-400 border-2 border-zinc-300 dark:border-zinc-700 rounded-full" /> :
+                loading ? <ProfileImagePlaceholder /> : <img
+                  src={preview ? preview : profile.avatarUrl}
+                  alt="avatar"
+                  className="focus:ring-offset-2 w-[200px] h-[200px] md:w-[150px] md:h-[150px] ring-2 dark:ring-teal-500 rounded-full object-fit"
+                />
+              }
             </div>
             <div className="w-full sm:w-1/2 h-full flex justify-center">
               <label htmlFor="uploadPic"

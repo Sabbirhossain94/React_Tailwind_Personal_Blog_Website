@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { signIn } from "../../../services/auth/signIn";
+import { signInUser } from "../../../services/auth/signIn";
 import Spinner from "../../animation/Spinner";
 import { Link } from "react-router-dom";
 import { MdVisibility } from "react-icons/md";
@@ -15,7 +15,7 @@ export default function SignIn() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    await signIn(formData, setLoading)
+    await signInUser(formData, setLoading)
   };
 
 

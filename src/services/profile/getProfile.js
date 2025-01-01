@@ -41,7 +41,7 @@ export const getProfile = async (session, setProfile, setLoading) => {
         }
 
     } catch (error) {
-        console.log(error.message);
+        console.error(error.message);
     }
     finally {
         setLoading(false)

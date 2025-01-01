@@ -38,6 +38,7 @@ export const signUp = async (formData, setLoading) => {
     } catch (error) {
         toast.error(error.message)
     } finally {
+        window.location.reload()
         setLoading(false)
     }
 
