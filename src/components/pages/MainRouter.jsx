@@ -14,6 +14,7 @@ import CreateBlog from "./Dashboard/Posts/CreateBlog";
 import Footer from "../layout/static/Footer";
 import Posts from "./Dashboard/Posts";
 import Users from "./Dashboard/Users";
+import Comments from "./Dashboard/Comments";
 import Unauthorized from "./Dashboard/Protected Route/Unauthorized";
 import NoPage from "./Error/NoPage";
 import { Toaster } from "react-hot-toast";
@@ -66,26 +67,10 @@ function AppRouter() {
             }
           />
           <Route
-            path="posts"
-            element={
-              <ProtectedRoute allowedRoles={["admin"]} session={session} userRole={userRole}>
-                <Posts />
-              </ProtectedRoute>
-            }
-          />
-          <Route
             path="profile"
             element={
               <ProtectedRoute allowedRoles={["user", "admin"]} session={session} userRole={userRole}>
                 <Account />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="createblog"
-            element={
-              <ProtectedRoute allowedRoles={["admin"]} session={session} userRole={userRole}>
-                <CreateBlog />
               </ProtectedRoute>
             }
           />
@@ -97,6 +82,31 @@ function AppRouter() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="comments"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]} session={session} userRole={userRole}>
+                <Comments />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="posts"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]} session={session} userRole={userRole}>
+                <Posts />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="createblog"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]} session={session} userRole={userRole}>
+                <CreateBlog />
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path="blog/:id/update"
             element={

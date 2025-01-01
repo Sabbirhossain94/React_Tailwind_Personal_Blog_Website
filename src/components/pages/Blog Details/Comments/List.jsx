@@ -4,6 +4,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { MdOutlineAccessTime } from "react-icons/md";
 import { SlLike } from "react-icons/sl";
 import moment from 'moment';
+import { FaInbox } from "react-icons/fa";
 import { individualRating } from '../../../../helpers/rating';
 import Spinner from '../../../animation/Spinner';
 import useSession from '../../../../hooks/useSession';
@@ -30,7 +31,7 @@ function List({ loading, isLiking, createComment, setCreateComment, allComments,
             <ul className='max-h-[1000px] w-full overflow-y-auto p-1'>
                 {
                     loading && !isLiking ?
-                        (Array(allComments && allComments.length)
+                        (Array(2)
                             .fill(null)
                             .map((_, index) => <CommentSkeleton key={index} />
                             ))
@@ -100,7 +101,16 @@ function List({ loading, isLiking, createComment, setCreateComment, allComments,
                                         </p>
                                     </div>}
                                 </li>
-                            )) : <li className='text-center text-xl py-6 dark:text-gray-400'>No Comments Found!</li>
+                            )) : <li className='text-center text-xl dark:text-gray-400'>
+                                <div>
+                                    <li className='flex justify-center py-10 dark:text-gray-400 px-2 font-medium border-zinc-300 dark:border-zinc-700'>
+                                        <div className='flex flex-col items-center justify-center'>
+                                            <FaInbox className='text-7xl text-blue-500 dark:text-teal-500' />
+                                            <p className='dark:text-gray-400 text-xl'>No Data</p>
+                                        </div>
+                                    </li>
+                                </div>
+                            </li>
                         )}
             </ul>
         </div>

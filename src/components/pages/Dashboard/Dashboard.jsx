@@ -51,8 +51,8 @@ function Dashboard() {
                                         key={key}
                                         to={nav.path}
                                     >
-                                        <li key={key} className={`${currentPath[2] === nav.path ? "border-l-4 border-blue-500 dark:border-teal-500" : ""} transition duration-300 hover:text-blue-500 dark:hover:text-teal-500 dark:hover:border-teal-500 flex items-center justify-between`}>
-                                            <p className={`${currentPath[2] === nav.path ? " text-blue-500 dark:text-teal-500 " : ""} w-full space-y-2 items-center flex text-[16px] gap-2 p-2 dark:text-gray-400 group`}>
+                                        <li key={key} className={`${currentPath[2] === nav.path ? "border-l-4 border-blue-500 dark:border-teal-500" : ""} transition duration-300 hover:text-blue-500 flex items-center justify-between`}>
+                                            <p className={`${currentPath[2] === nav.path ? " text-blue-500 dark:text-teal-500 " : ""} w-full dark:hover:text-teal-500 space-y-2 items-center flex text-[16px] gap-2 p-2 dark:text-gray-400 group`}>
                                                 <span className='text-2xl'>{nav.icon}</span>
                                                 {nav.label}
                                             </p>

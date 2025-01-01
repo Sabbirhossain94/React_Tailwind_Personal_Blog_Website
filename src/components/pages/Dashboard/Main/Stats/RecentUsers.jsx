@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
+import { FaInbox } from "react-icons/fa";
 
 function RecentUsers({ users }) {
     return (
@@ -23,7 +24,7 @@ function RecentUsers({ users }) {
                         <div><p>User</p></div>
                         <div><p>Joined</p></div>
                     </li>
-                    {users?.all?.slice(0, 5).map((user, index) => (
+                    {users?.all?.length > 0 ? users?.all?.slice(0, 5).map((user, index) => (
                         <li key={index} className={`${index === users?.all?.slice(0, 5).length - 1 ? 'border-none' : 'border-b'} border-zinc-300 dark:border-zinc-700 pb-4`}>
                             <div className='flex justify-between'>
                                 <div className='flex flex-col gap-4'>
@@ -40,7 +41,16 @@ function RecentUsers({ users }) {
                                 </div>
                             </div>
                         </li>
-                    ))}
+                    )) :
+                        <div>
+                            <li className='flex justify-center py-10 dark:text-gray-400 px-2 font-medium border-zinc-300 dark:border-zinc-700'>
+                                <div className='flex flex-col items-center justify-center'>
+                                    <FaInbox className='text-7xl text-blue-500 dark:text-teal-500' />
+                                    <p className='dark:text-gray-400 text-xl'>No Data</p>
+                                </div>
+                            </li>
+                        </div>
+                    }
                 </ul>
             </div>
         </div>

@@ -55,6 +55,31 @@ export function SingleBlogSkeleton() {
     )
 }
 
+export function UsersTableSkeleton() {
+    return (
+        <tr className="odd:bg-white animate-pulse dark:text-gray-400 odd:dark:bg-zinc-800 even:bg-gray-100 even:dark:bg-zinc-900/50 border-b dark:border-zinc-700">
+            <td className="px-6 py-4 font-medium whitespace-nowrap ">
+                <div className="h-4 bg-gray-300 rounded-md dark:bg-gray-700 w-full"></div>
+            </td>
+            <td className="px-6 py-4">
+                <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
+            </td>
+            <td className="px-6 py-4">
+                <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
+            </td>
+            <td className="px-6 py-4">
+                <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
+            </td>
+            <td className="px-6 py-4">
+                <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
+            </td>
+            <td className="px-6 py-4">
+                <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
+            </td>
+        </tr>
+    )
+}
+
 export function PostsTableSkeleton() {
     return (
         <tr className="odd:bg-white animate-pulse dark:text-gray-400 odd:dark:bg-zinc-800 even:bg-gray-100 even:dark:bg-zinc-900/50 border-b dark:border-zinc-700">
@@ -80,16 +105,20 @@ export function PostsTableSkeleton() {
     )
 }
 
-export function UsersTableSkeleton() {
+export function CommentsTableSkeleton() {
     return (
         <tr className="odd:bg-white animate-pulse dark:text-gray-400 odd:dark:bg-zinc-800 even:bg-gray-100 even:dark:bg-zinc-900/50 border-b dark:border-zinc-700">
+            <td className="px-6 py-4 font-medium whitespace-nowrap ">
+                <div className="h-4 bg-gray-300 rounded-md dark:bg-gray-700 w-4"></div>
+            </td>
             <td className="px-6 py-4 font-medium whitespace-nowrap ">
                 <div className="h-4 bg-gray-300 rounded-md dark:bg-gray-700 w-full"></div>
             </td>
             <td className="px-6 py-4">
-                <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
+                <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-8"></div>
             </td>
-            <td className="px-6 py-4">
+            <td className="px-6 py-4 flex flex-col gap-2">
+                <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
                 <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-700 w-full"></div>
             </td>
             <td className="px-6 py-4">
@@ -295,10 +324,10 @@ export function DashboardRecentUsersSkeletion() {
         <div className='animate-pulse flex flex-col gap-6 border border-zinc-300 dark:border-zinc-700 w-full lg:w-full xl:w-1/2 bg-white dark:bg-zinc-900/50 p-6'>
             <div className='flex flex-row justify-between items-center py-2'>
                 <div>
-                    <p className='h-8 bg-gray-300 dark:bg-gray-700 w-52 rounded-full'></p>
+                    <p className='h-6 bg-gray-300 dark:bg-gray-700 w-52 rounded-full'></p>
                 </div>
                 <div>
-                    <button className="h-8 bg-gray-300 dark:bg-gray-700 w-24 rounded-full">
+                    <button className="h-6 bg-gray-300 dark:bg-gray-700 w-24 rounded-full">
                     </button>
                 </div>
             </div>

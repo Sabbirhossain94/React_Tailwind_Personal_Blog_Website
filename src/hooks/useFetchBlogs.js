@@ -10,43 +10,45 @@ const useFetchBlogs = () => {
         sinceLastMonth: null
     });
 
+
+    const fetchBlogs = async () => {
+        try {
+            const lastMonthStart = moment().subtract(1, 'month').startOf('day').toISOString();
+            const currentDate = moment().toISOString()
+
+            setLoading(true);
+
+            const { data, error } = await supabase
+                .from("blogs")
+                .select(`*`)
+                .order('id', { ascending: true });
+
+            if (error) throw error;
+
+            const { data: recentBlogsData, error: recentError } = await supabase
+                .from("blogs")
+                .select(`*`)
+                .order('id', { ascending: true })
+                .gte('inserted_at', lastMonthStart)
+                .lte('inserted_at', currentDate);
+
+            if (recentError) throw recentError;
+
+            setBlogs({ ...blogs, all: data || [], length: data?.length, sinceLastMonth: recentBlogsData })
+
+        } catch (err) {
+            console.error(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchBlogs = async () => {
-            try {
-                const lastMonthStart = moment().subtract(1, 'month').startOf('day').toISOString();
-                const currentDate = moment().toISOString()
-
-                setLoading(true);
-
-                const { data, error } = await supabase
-                    .from("blogs")
-                    .select(`*`)
-                    .order('id', { ascending: true });
-
-                if (error) throw error;
-
-                const { data: recentBlogsData, error: recentError } = await supabase
-                    .from("blogs")
-                    .select(`*`)
-                    .order('id', { ascending: true })
-                    .gte('inserted_at', lastMonthStart)
-                    .lte('inserted_at', currentDate);
-
-                if (recentError) throw recentError;
-
-                setBlogs({ ...blogs, all: data || [], length: data?.length, sinceLastMonth: recentBlogsData })
-
-            } catch (err) {
-                console.error(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchBlogs();
-    }, [supabase]);
+    }, []);
 
-    return { loading, blogs };
+
+    return { loading, blogs, refetch: fetchBlogs };
 };
 
 export default useFetchBlogs;

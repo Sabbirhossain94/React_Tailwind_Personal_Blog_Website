@@ -1,11 +1,11 @@
 import { useState } from "react";
 import useFetchBlogs from "../../../../hooks/useFetchBlogs";
 import { Link } from 'react-router-dom';
-import DeleteModal from "../../../layout/modal/DeleteModal"
+import DeleteModal from "../../../layout/modal/blogs/DeleteModal"
 import PostsTable from "./PostsTable";
 
 function Posts() {
-    const { loading, blogs } = useFetchBlogs();
+    const { loading, blogs, refetch } = useFetchBlogs();
     const [singleBlogId, setSingleBlogId] = useState(null);
     const [selectedBlogId, setSelectedBlogId] = useState([])
     let [isOpen, setIsOpen] = useState(false);
@@ -33,11 +33,11 @@ function Posts() {
                         Create new
                     </button>
                 </Link>
-
             </div>
             <DeleteModal
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
+                refetch={refetch}
                 singleBlogId={singleBlogId}
                 selectedBlogId={selectedBlogId}
                 setSelectedBlogId={setSelectedBlogId}

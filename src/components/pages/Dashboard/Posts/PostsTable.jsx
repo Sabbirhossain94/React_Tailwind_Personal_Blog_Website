@@ -65,7 +65,7 @@ function PostsTable({ loading, handleCheckboxChange, handleSelectAll, blogs, sel
                                 {moment(blog.inserted_at).format("MMMM D, YYYY")}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                                {moment(blog.updated_at).format("MMMM D, YYYY")}
+                                { blog.updated_at ? moment(blog.updated_at).format("MMMM D, YYYY") : ""}
                             </td>
                             <td className="px-6 py-4 flex">
                                 <button onClick={() => {
