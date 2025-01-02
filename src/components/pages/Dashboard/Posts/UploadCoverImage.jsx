@@ -55,7 +55,7 @@ function UploadCoverImage({ isCreate, blog, setFile, loading }) {
         <div>
           {loading ? <ImagePlaceholder /> :
             <img
-              src={preview ? preview : blog?.coverphoto?.publicUrl}
+              src={preview ? preview : blog?.coverphoto}
               width="300px"
               height="300px"
               className="border border-blue-400"

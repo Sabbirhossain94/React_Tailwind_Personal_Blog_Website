@@ -29,7 +29,7 @@ function RecentUsers({ users }) {
                             <div className='flex justify-between'>
                                 <div className='flex flex-col gap-4'>
                                     <div className='flex gap-4'>
-                                        <img src={user.avatar_url} className='h-12 w-12 object-cover border border-blue-500 dark:border-teal-500 rounded-full' />
+                                        <img src={user.avatar_url} alt="avatar" className='h-12 w-12 object-cover border border-blue-500 dark:border-teal-500 rounded-full' />
                                         <div>
                                             <p className='font-semibold dark:text-gray-400'>{user.username}</p>
                                             <p className='text-sm text-gray-700 dark:text-gray-500'>{user.email}</p>

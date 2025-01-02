@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import RecentBlogs from "../../layout/common/RecentBlogs";
 import AboutMe from "../../layout/static/AboutMe";
@@ -14,14 +14,22 @@ export default function Content() {
   const [blog, setBlog] = useState({})
   const [loading, setLoading] = useState(false);
 
-  const showBlog = async () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    await loadBlogContent(slug, setBlog, setLoading);
-  };
+  const showBlog = useCallback(async () => {
+    try {
+      setLoading(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const blogData = await loadBlogContent(slug);
+      setBlog(blogData);
+    } catch (error) {
+      console.error("Failed to load blog content:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [slug]);
 
   useEffect(() => {
     showBlog();
-  }, [slug]);
+  }, [showBlog]);
 
   return (
     <div className="min-h-screen relative bg-gray-100 dark:bg-zinc-800">
@@ -35,7 +43,7 @@ export default function Content() {
                 <div className="relative">
                   <div className="flex flex-col justify-center">
                     <img
-                      src={blog && blog.coverphoto && blog.coverphoto.publicUrl}
+                      src={blog && blog.coverphoto}
                       className="w-full"
                       loading="lazy"
                       alt="blog cover"

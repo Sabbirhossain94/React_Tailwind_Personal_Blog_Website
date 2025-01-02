@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import UploadCoverImage from "./UploadCoverImage";
 import { MdKeyboardBackspace } from "react-icons/md";
@@ -23,7 +23,6 @@ export default function CreateBlog() {
   const [blog, setBlog] = useState({})
   const [loading, setLoading] = useState(false)
 
-  // adding blogs to database here
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isCreate) {
@@ -33,11 +32,25 @@ export default function CreateBlog() {
     }
   };
 
+  const showBlog = useCallback(async () => {
+    try {
+      setLoading(true);
+      const blogData = await loadBlogContent(slug);
+      setBlog(blogData);
+    } catch (error) {
+      console.error("Failed to load blog content:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [slug]);
+
   useEffect(() => {
     if (!isCreate) {
-      loadBlogContent(slug, setBlog, setLoading);
+      showBlog()
     }
-  }, [isCreate]);
+  }, [showBlog, isCreate]);
+
+  console.log(blog)
 
   const resetForm = () => {
     setBlog({
