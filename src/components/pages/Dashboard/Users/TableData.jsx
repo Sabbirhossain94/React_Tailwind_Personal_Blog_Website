@@ -37,7 +37,7 @@ function TableData({ loading, users }) {
                                 {user.username}
                             </td>
                             <td className="px-6 py-4">
-                                <img src={user.avatar_url} className='h-12 w-12 rounded-full border border-blue-500 dark:border-teal-500' />
+                                <img src={user.avatar_url} alt='avatar' className='h-12 w-12 rounded-full border border-blue-500 dark:border-teal-500' />
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                                 {user.email}

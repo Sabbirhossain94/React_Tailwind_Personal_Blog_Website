@@ -57,7 +57,6 @@ export function individualRating(rating) {
 
     let fullStars = [];
     let emptyStars = [];
-    let halfStar = false;
 
     const integerPart = Math.floor(rating);
     const decimalPart = rating - integerPart;
@@ -68,7 +67,6 @@ export function individualRating(rating) {
 
     if (decimalPart >= 0.5) {
         fullStars.push(<IoStarHalfSharp className="text-lg" />);
-        halfStar = true;
     }
 
     const emptyStarsCount = 5 - fullStars.length;
