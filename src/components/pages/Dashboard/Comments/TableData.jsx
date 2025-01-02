@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { CommentsTableSkeleton } from '../../../layout/skeleton/Skeleton'
+import { CommentsTableSkeleton } from '../../../layout/skeleton/skeleton'
 import { FaInbox } from "react-icons/fa";
 
 function TableData({ comments, commentLoading, handleCheckboxChange, handleSelectAll, selectedCommentId, setSelectedCommentId, setIsModalOpen, isSingleDelete, setIsSingleDelete }) {

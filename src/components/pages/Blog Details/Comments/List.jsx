@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { CommentSkeleton } from '../../../layout/skeleton/Skeleton'
+import { CommentSkeleton } from '../../../layout/skeleton/skeleton'
 import { FaUserCircle } from "react-icons/fa";
 import { MdOutlineAccessTime } from "react-icons/md";
 import { SlLike } from "react-icons/sl";

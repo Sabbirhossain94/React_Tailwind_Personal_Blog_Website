@@ -1,4 +1,4 @@
-import { UsersTableSkeleton } from '../../../layout/skeleton/Skeleton'
+import { UsersTableSkeleton } from '../../../layout/skeleton/skeleton'
 import moment from 'moment'
 
 function TableData({ loading, users }) {

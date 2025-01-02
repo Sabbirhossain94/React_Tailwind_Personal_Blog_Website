@@ -1,4 +1,4 @@
-import { PostsTableSkeleton } from "../../../layout/skeleton/Skeleton"
+import { PostsTableSkeleton } from "../../../layout/skeleton/skeleton"
 import { Link } from 'react-router-dom';
 import moment from "moment";
 

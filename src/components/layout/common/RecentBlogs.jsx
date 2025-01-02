@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { fetchRecentBlogs } from '../../../services/blogs/fetchRecentBlogs';
 import { Link } from 'react-router-dom';
-import { RecentBlogsSkeleton } from '../../layout/skeleton/Skeleton';
+import { RecentBlogsSkeleton } from '../skeleton/skeleton';
 import { blogCoverUrl } from '../../../helpers/storage';
 import moment from 'moment';
 
