@@ -102,13 +102,11 @@ function List({ loading, isLiking, createComment, setCreateComment, allComments,
                                     </div>}
                                 </li>
                             )) : <li className='text-center text-xl dark:text-gray-400'>
-                                <div>
-                                    <li className='flex justify-center py-10 dark:text-gray-400 px-2 font-medium border-zinc-300 dark:border-zinc-700'>
-                                        <div className='flex flex-col items-center justify-center'>
-                                            <FaInbox className='text-7xl text-blue-500 dark:text-teal-500' />
-                                            <p className='dark:text-gray-400 text-xl'>No Data</p>
-                                        </div>
-                                    </li>
+                                <div className='flex justify-center py-10 dark:text-gray-400 px-2 font-medium border-zinc-300 dark:border-zinc-700'>
+                                    <div className='flex flex-col items-center justify-center'>
+                                        <FaInbox className='text-7xl text-blue-500 dark:text-teal-500' />
+                                        <p className='dark:text-gray-400 text-xl'>No Data</p>
+                                    </div>
                                 </div>
                             </li>
                         )}
