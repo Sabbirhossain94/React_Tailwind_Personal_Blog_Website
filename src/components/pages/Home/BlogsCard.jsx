@@ -1,4 +1,4 @@
-import { CardSkeleton } from '../../layout/skeleton/skeleton'
+import { CardSkeleton } from '../../layout/skeleton'
 import { Link } from 'react-router-dom'
 import { blogCoverUrl } from '../../../helpers/storage';
 import { BsArrowRight } from "react-icons/bs";

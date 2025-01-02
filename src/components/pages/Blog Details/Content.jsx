@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import RecentBlogs from "../../layout/common/RecentBlogs";
 import AboutMe from "../../layout/static/AboutMe";
-import { SingleBlogSkeleton } from "../../layout/skeleton/skeleton";
+import { SingleBlogSkeleton } from "../../layout/skeleton";
 import { loadBlogContent } from "../../../services/blogs/loadBlogContent";
 import Comments from "./Comments/Comments";
 import moment from 'moment';

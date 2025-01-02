@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ProfileImagePlaceholder } from "../../../layout/skeleton/skeleton";
+import { ProfileImagePlaceholder } from "../../../layout/skeleton";
 import { useProfile } from "../../../../context/ProfileContext";
 import { updateProfile } from "../../../../services/profile/updateProfile";
 import { AiOutlineUser } from "react-icons/ai";

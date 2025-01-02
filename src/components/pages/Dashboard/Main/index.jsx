@@ -6,7 +6,7 @@ import TotalComments from './Stats/TotalComments';
 import TotalPosts from './Stats/TotalPosts';
 import RecentUsers from './Stats/RecentUsers';
 import RecentComments from './Stats/RecentComments';
-import { DashboardCardsSkeleton, DashboardRecentUsersSkeletion, DashboardRecentCommentsSkeletion } from '../../../layout/skeleton/skeleton';
+import { DashboardCardsSkeleton, DashboardRecentUsersSkeletion, DashboardRecentCommentsSkeletion } from '../../../layout/skeleton';
 
 function DashboardMain() {
   const { loading: usersLoading, users } = useAllProfiles();
