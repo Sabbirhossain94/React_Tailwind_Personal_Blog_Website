@@ -148,7 +148,7 @@ export default function CreateBlog() {
                 </div>
                 <div className="mt-8">
                   <label htmlFor="topic" className="mt-1 block text-sm font-medium text-blue-500 dark:text-teal-500">Topic</label>
-                  <select id="topic" name="topic" value={blog.topic} onChange={handleChange} className="bg-gray-50 mt-1 border border-zinc-300 text-sm block w-[300px] px-2 py-2 dark:bg-zinc-800 dark:border-zinc-700 dark:placeholder-teal-500 dark:text-white">
+                  <select required id="topic" name="topic" value={blog.topic ?? ""} onChange={handleChange} className="bg-gray-50 mt-1 border border-zinc-300 text-sm block w-[300px] px-2 py-2 dark:bg-zinc-800 dark:border-zinc-700 dark:placeholder-teal-500 dark:text-white">
                     <option value="" disabled>Choose a topic</option>
                     {topics.map((topic, index) => (
                       <option key={index} value={topic}>{topic}</option>

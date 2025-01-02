@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useOutsideClick from "../../../hooks/useOutsideClick";
-import SignOutModal from "../modal/SignOutModal";
+import SignOutModal from "../modal/auth/SignOutModal";
 import useDarkMode from "../../../hooks/useDarkMode";
 import { useProfile } from "../../../context/ProfileContext";
 import { DarkIcon, LightIcon } from "../../svg/Svg";
 import Logo from "../static/Logo";
+import { AiOutlineUser } from "react-icons/ai";
 
 export default function Navigation() {
   const { session, profile } = useProfile();
@@ -36,14 +37,23 @@ export default function Navigation() {
           <div ref={ref} className="flex items-center">
             <div className="md:ml-4 md:flex md:flex-shrink-0 md:items-center">
               <div className="relative ml-3">
-                <div className="flex flex-row gap-6">
+                <div className="flex flex-row gap-3 items-center">
                   {session ? (
-                    <img
-                      onClick={() => setShowDropDown(!showDropDown)}
-                      className="cursor-pointer h-7 w-7 rounded-full ring-2 ring-blue-500 dark:ring-teal-500 object-cover"
-                      src={profile && profile.avatarUrl}
-                      alt="error"
-                    />
+                    (profile && profile.avatarUrl ?
+                      <>
+                        <img
+                          onClick={() => setShowDropDown(!showDropDown)}
+                          className="cursor-pointer h-7 w-7 rounded-full ring-2 ring-blue-500 dark:ring-teal-500 object-cover"
+                          src={profile.avatarUrl}
+                          alt="error"
+                        />
+                      </>
+                      :
+                      <>
+                        <AiOutlineUser onClick={() => setShowDropDown(!showDropDown)} className="cursor-pointer border-2 dark:text-gray-400 border-zinc-300 dark:border-zinc-700 text-3xl rounded-full" />
+                         <span className="dark:text-gray-400 font-medium">{profile.username}</span>
+                      </>
+                    )
                   ) : (
                     <Link
                       to="/signin"
@@ -54,7 +64,7 @@ export default function Navigation() {
                     </Link>
                   )}
 
-                  <button onClick={toggleDarkMode} className="">
+                  <button onClick={toggleDarkMode} className="ml-6">
                     {dark ? (
                       <DarkIcon />
                     ) : (

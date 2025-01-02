@@ -1,4 +1,3 @@
-import React from 'react'
 import { UsersTableSkeleton } from '../../../layout/skeleton/Skeleton'
 import moment from 'moment'
 
@@ -32,7 +31,7 @@ function TableData({ loading, users }) {
                     .fill(null)
                     .map((_, index) => <UsersTableSkeleton key={index} />)
                     :
-                    users.map((user, key) => (
+                    users.all.map((user, key) => (
                         <tr key={key} className="bg-white dark:text-gray-400 dark:bg-zinc-900/50 border-b dark:border-zinc-700">
                             <td className="px-6 py-4 font-medium whitespace-nowrap ">
                                 {user.username}
@@ -44,10 +43,10 @@ function TableData({ loading, users }) {
                                 {user.email}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                                {moment(user.created_at).format("MMMM D, YYYY")}
+                                {moment(user.created_at).format("MMMM DD, YYYY")}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                                {moment(user.updated_at).format("MMMM D, YYYY")}
+                                {moment(user.updated_at).format("MMMM DD, YYYY")}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                                 {user.role === "admin" ? <span className={`px-2 py-1 bg-green-100 text-green-500 dark:bg-teal-400/20 dark:text-teal-500`}>{user.role}</span> :

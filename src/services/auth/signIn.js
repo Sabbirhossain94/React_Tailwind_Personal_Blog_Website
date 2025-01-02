@@ -1,19 +1,19 @@
 import supabase from "../global/supabaseClient";
 import toast from "react-hot-toast";
 
-export const signIn = async (formData, setLoading) => {
+export const signInUser = async (formData, setLoading) => {
     try {
-        setLoading(true)
+        setLoading(true);
         const { error } = await supabase.auth.signInWithPassword({
             email: formData.email,
             password: formData.password,
-        })
+        });
         if (error) throw error;
-        toast.success("Successfully logged in!")
+        toast.success("Successfully logged in!");
     } catch (error) {
-        toast.error(error.message)
+        console.log(error);
+        toast.error(error.message);
     } finally {
-        setLoading(false)
+        setLoading(false);
     }
-
-}
+};

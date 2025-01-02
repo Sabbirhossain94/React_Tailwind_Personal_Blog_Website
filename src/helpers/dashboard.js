@@ -3,6 +3,7 @@ import { FaUsers } from "react-icons/fa";
 import { HiOutlineChatBubbleLeft } from "react-icons/hi2";
 import { CiLogout } from "react-icons/ci";
 import { MdDashboard } from "react-icons/md";
+import { TfiCommentAlt } from "react-icons/tfi";
 
 export const dashboardItems = [
     {
@@ -22,6 +23,13 @@ export const dashboardItems = [
         label: "Users",
         path: "users",
         icon: <FaUsers />,
+        roles: ["admin"]
+
+    },
+    {
+        label: "Comments",
+        path: "comments",
+        icon: <TfiCommentAlt />,
         roles: ["admin"]
 
     },

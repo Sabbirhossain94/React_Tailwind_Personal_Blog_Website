@@ -3,9 +3,13 @@ import moment from "moment";
 import toast from "react-hot-toast";
 
 export const updateBlog = async (session, blog, file, navigate, setLoading) => {
-    const date = moment().format("MMMM D, YYYY");
+
+    const date = moment().toISOString();
+
     const { id, title, introduction, slug, topic, content, thumbnail: existingThumbnail } = blog;
+
     setLoading(true)
+
     try {
         const updateData = {
             user_id: session.user.id,

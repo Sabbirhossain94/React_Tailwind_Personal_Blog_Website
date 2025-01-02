@@ -1,8 +1,8 @@
-import React from 'react'
-import { PostsTableSkeleton } from '../../../layout/skeleton/Skeleton';
+import { PostsTableSkeleton } from "../../../layout/skeleton/Skeleton"
 import { Link } from 'react-router-dom';
+import moment from "moment";
 
-function PostsTable({ loading, handleCheckboxChange, handleSelectAll, blogs, selectedBlogId, totalBlogs, setIsOpen, setSingleBlogId }) {
+function PostsTable({ loading, handleCheckboxChange, handleSelectAll, blogs, selectedBlogId, setIsOpen, setSingleBlogId }) {
     return (
         <table className="w-full text-sm text-left rtl:text-right dark:text-gray-200">
             <thead className="border-b border-zinc-300 dark:border-zinc-700 h-[20px] uppercase text-white dark:text-gray-800 bg-blue-500 dark:bg-teal-500 dark:bg-zinc-900/50">
@@ -14,7 +14,7 @@ function PostsTable({ loading, handleCheckboxChange, handleSelectAll, blogs, sel
                                     id="checkbox-all"
                                     type="checkbox"
                                     onChange={(e) => handleSelectAll(e.target.checked)}
-                                    checked={selectedBlogId.length === blogs.length && blogs.length > 0}
+                                    checked={selectedBlogId.length === blogs?.all?.length && blogs?.all?.length > 0}
                                     className="w-4 h-4 text-blue-600 bg-gray-100 border-zinc-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-zinc-700" />
                                 <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
                             </div>
@@ -38,11 +38,11 @@ function PostsTable({ loading, handleCheckboxChange, handleSelectAll, blogs, sel
                 </tr>
             </thead>
             <tbody>
-                {loading ? Array(totalBlogs)
+                {loading ? Array(blogs?.length)
                     .fill(null)
                     .map((_, index) => <PostsTableSkeleton key={index} />)
                     :
-                    blogs.map((blog, key) => (
+                    blogs?.all?.map((blog, key) => (
                         <tr key={key} className="bg-white dark:text-gray-400 dark:bg-zinc-900/50 border-b dark:border-zinc-700">
                             <td className="w-4 pl-4">
                                 <div className="flex items-center">
@@ -62,10 +62,10 @@ function PostsTable({ loading, handleCheckboxChange, handleSelectAll, blogs, sel
                                 {blog.topic}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                                {blog.inserted_at}
+                                {moment(blog.inserted_at).format("MMMM D, YYYY")}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                                {blog.updated_at}
+                                { blog.updated_at ? moment(blog.updated_at).format("MMMM D, YYYY") : ""}
                             </td>
                             <td className="px-6 py-4 flex">
                                 <button onClick={() => {

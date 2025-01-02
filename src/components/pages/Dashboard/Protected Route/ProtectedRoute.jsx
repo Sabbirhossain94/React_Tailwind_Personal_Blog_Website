@@ -1,17 +1,27 @@
-import { Navigate } from "react-router-dom";
-import { useProfile } from "../../../../context/ProfileContext";
+import { Navigate, useLocation } from "react-router-dom";
 
-const ProtectedRoute = ({ children, allowedRoles }) => {
-    const { session, userRole } = useProfile();
+const ProtectedRoute = ({ children, allowedRoles, session, userRole }) => {
+    const location = useLocation();
+    const isProfileRoute = location.pathname.includes("profile");
+    
     if (!session) {
         return <Navigate to="/signin" replace />
     }
 
-    if (allowedRoles && !allowedRoles.includes(userRole)) {
-        return <Navigate to="unauthorized" replace />;
+    if (userRole === undefined || userRole === null) {
+        return null;
     }
 
-    return children;
+    if (allowedRoles.includes(userRole)) {
+        if (isProfileRoute) {
+            return children;
+        }
+
+        return children;
+    }
+
+    return <Navigate to="/unauthorized" replace />;
+
 }
 
 export default ProtectedRoute;

@@ -1,7 +1,7 @@
 import supabase from "../global/supabaseClient";
 import toast from "react-hot-toast";
 
-export const passwordUpdate = async (updatedPass) => {
+export const passwordUpdate = async (updatedPass, navigate) => {
     try {
         const { error } = await supabase.auth.updateUser({
             password: updatedPass,
@@ -9,6 +9,8 @@ export const passwordUpdate = async (updatedPass) => {
         if (error) throw error;
         toast.success("Password updated successfully!")
     } catch (error) {
-        alert(error)
+        toast.error(error)
+    } finally {
+        navigate("/")
     }
 }

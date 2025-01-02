@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { fetchRecentBlogs } from '../../../services/blogs/fetchRecentBlogs';
 import { Link } from 'react-router-dom';
-import { RecentBlogsSkeleton } from '../skeleton/Skeleton';
+import { RecentBlogsSkeleton } from '../../layout/skeleton/Skeleton';
 import { blogCoverUrl } from '../../../helpers/storage';
+import moment from 'moment';
 
 function RecentBlogs() {
     const [recentBlogs, setRecentBlogs] = useState([]);
@@ -29,7 +30,7 @@ function RecentBlogs() {
                                 </p>
                                 <p>
                                     <span className="text-[12px] dark:text-teal-600 text-blue-500">
-                                        {blog.inserted_at}
+                                        {moment(blog.inserted_at).format("MMMM D, YYYY")}
                                     </span>
                                 </p>
                             </div>

@@ -3,7 +3,9 @@ import moment from "moment";
 import toast from "react-hot-toast";
 
 export const createBlog = async (session, blog, file, navigate, setLoading) => {
-    const date = moment().format("MMMM D, YYYY");
+    
+    const date = moment().toISOString();
+
     const { title, introduction, slug, topic, content } = blog;
     setLoading(true)
     try {
@@ -21,14 +23,14 @@ export const createBlog = async (session, blog, file, navigate, setLoading) => {
             })
             .single();
         if (blogError) {
-            console.log(blogError)
+            console.error(blogError)
         }
 
         let { error: uploadError } = await supabase.storage
             .from("thumbnail")
             .upload(`Thumbnail/${file.name}`, file);
         if (uploadError) {
-            console.log(uploadError);
+            console.error(uploadError);
         }
 
         toast.success("Blog created successfully", {

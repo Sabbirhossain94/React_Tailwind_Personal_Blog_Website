@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import moment from "moment";
 
 export const signUp = async (formData, setLoading) => {
-    const date = moment().format("MMMM D, YYYY");
+
     try {
         setLoading(true);
 
@@ -19,6 +19,7 @@ export const signUp = async (formData, setLoading) => {
         if (error) throw error;
 
         const { user } = data
+        const date = moment(user.created_at).toISOString()
 
         let { error: blogError } = await supabase
             .from("profiles")
@@ -26,17 +27,18 @@ export const signUp = async (formData, setLoading) => {
                 id: user.id,
                 username: formData.fullName,
                 role: "user",
-                created_at: user.created_at,
+                created_at: date,
                 email: user.email
             })
             .single();
-            
+
         if (blogError) throw blogError
 
         toast.success("Successfully registered!")
     } catch (error) {
         toast.error(error.message)
     } finally {
+        window.location.reload()
         setLoading(false)
     }
 
