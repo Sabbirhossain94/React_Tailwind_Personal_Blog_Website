@@ -3,7 +3,7 @@ import moment from "moment";
 import toast from "react-hot-toast";
 
 export const updateProfile = async (session, profile, file, setUpdateLoading) => {
-    
+
     const date = moment().toISOString();
 
     try {
@@ -60,7 +60,9 @@ export const updateProfile = async (session, profile, file, setUpdateLoading) =>
         setTimeout(() => {
             setUpdateLoading(false);
         }, 1500)
+
         window.location.reload()
+
         toast.success("Profile updated successfully!", {
             duration: 1500
         })

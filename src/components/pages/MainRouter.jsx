@@ -5,6 +5,7 @@ import Navigation from "../layout/header/Navigation";
 import Content from "./Blog Details/Content";
 import SignIn from "./Auth/SignIn";
 import SignUp from "./Auth/SignUp";
+import ResetPassword from "./Auth/ResetPassword";
 import ProtectedRoute from "./Dashboard/Protected Route/ProtectedRoute";
 import SignedProtectedRoute from "./Auth/SignedProtectedRoute"
 import Dashboard from "./Dashboard/Dashboard";
@@ -41,6 +42,7 @@ function AppRouter() {
         <Route path="/signup" element={<SignedProtectedRoute>
           <SignUp />
         </SignedProtectedRoute>} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/blog/:id" element={<Content />} />
         <Route
           path="/dashboard"

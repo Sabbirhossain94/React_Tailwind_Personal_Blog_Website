@@ -2,16 +2,12 @@ import { useState } from "react";
 import { ProfileImagePlaceholder } from "../../../layout/skeleton/Skeleton";
 import { useProfile } from "../../../../context/ProfileContext";
 import { updateProfile } from "../../../../services/profile/updateProfile";
-import { passwordUpdate } from "../../../../services/auth/updatePassword";
-import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { AiOutlineUser } from "react-icons/ai";
 import Spinner from "../../../animation/Spinner"
 
 const Account = () => {
   const { session, profile, setProfile, loading } = useProfile()
   const [preview, setPreview] = useState(null);
-  const [password, setPassword] = useState('');
-  const [showVisibility, setShowVisibility] = useState(false)
   const [file, setFile] = useState(null)
   const [updateLoading, setUpdateLoading] = useState(false);
 
@@ -22,12 +18,15 @@ const Account = () => {
     setFile(file)
   }
 
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    setUpdateLoading(true)
-    updateProfile(session, profile, file, setUpdateLoading);
-    if (password) {
-      passwordUpdate(password)
+    try {
+      setUpdateLoading(true)
+      await updateProfile(session, profile, file, setUpdateLoading);
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setUpdateLoading(false);
     }
   }
 
@@ -66,7 +65,7 @@ const Account = () => {
             <div className="form-control mt-2 block w-full px-3 py-1.5 text-base font-normal text-gray-500 bg-gray-100 dark:bg-zinc-800 bg-clip-padding border border-solid border-zinc-300 dark:border-zinc-700 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
               {session.user.email}
             </div>
-            <div className="mt-6">
+            <div className="mt-4">
               <label htmlFor="username" className="dark:text-gray-300">Name</label>
               <input
                 className="form-control mt-2 block w-full px-3 py-1.5 text-base font-normal dark:text-gray-400 bg-gray-100 dark:bg-zinc-800 bg-clip-padding border border-solid border-zinc-300 dark:border-zinc-700 transition ease-in-out m-0 focus:border focus:border-zinc-700"
@@ -76,21 +75,7 @@ const Account = () => {
                 onChange={(e) => setProfile({ ...profile, username: e.target.value })}
               />
             </div>
-            <div className="mt-6 relative">
-              <label htmlFor="password" className="dark:text-gray-300">Password (Optional)</label>
-              <input
-                className="form-control mt-2 block w-full px-3 py-1.5 text-base font-normal dark:text-gray-400 bg-gray-100 dark:bg-zinc-800 bg-clip-padding border border-solid border-zinc-300 dark:border-zinc-700 transition ease-in-out m-0 focus:border focus:border-zinc-700"
-                name="password"
-                type={showVisibility ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {showVisibility ?
-                <MdVisibility onClick={() => setShowVisibility(!showVisibility)} className="cursor-pointer text-gray-500 absolute right-2 top-11" /> :
-                <MdVisibilityOff onClick={() => setShowVisibility(!showVisibility)} className="cursor-pointer text-gray-500 absolute right-2 top-11" />
-              }
-            </div>
-            <div className="mt-8 flex justify-end">
+            <div className="mt-4 flex justify-end">
               <button
                 type="submit"
                 className="h-10 flex gap-2 items-center cursor-pointer border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 px-10 whitespace-nowrap w-full py-2 text-sm font-medium text-blue-500 dark:text-teal-500 shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-teal-500 sm:w-auto"

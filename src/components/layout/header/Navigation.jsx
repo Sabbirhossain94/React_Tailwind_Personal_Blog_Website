@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useOutsideClick from "../../../hooks/useOutsideClick";
-import SignOutModal from "../modal/SignOutModal";
+import SignOutModal from "../modal/auth/SignOutModal";
 import useDarkMode from "../../../hooks/useDarkMode";
 import { useProfile } from "../../../context/ProfileContext";
 import { DarkIcon, LightIcon } from "../../svg/Svg";

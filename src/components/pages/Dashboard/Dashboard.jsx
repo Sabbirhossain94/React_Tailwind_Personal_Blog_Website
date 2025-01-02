@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { dashboardItems } from '../../../helpers/dashboard';
-import SignOutModal from "../../layout/modal/SignOutModal";
+import SignOutModal from "../../layout/modal/auth/SignOutModal";
 import { IoMenu } from "react-icons/io5";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { useProfile } from "../../../context/ProfileContext";

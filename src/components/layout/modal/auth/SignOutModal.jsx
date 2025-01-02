@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Dialog, DialogPanel, DialogBackdrop, DialogTitle } from '@headlessui/react'
-import { signOut } from '../../../services/auth/signOut';
+import { signOut } from '../../../../services/auth/signOut';
 import { useNavigate } from 'react-router-dom';
-import Spinner from '../../animation/Spinner';
+import Spinner from '../../../animation/Spinner';
 
 function SignOutModal({ isOpen, setIsOpen }) {
     const [loading, setLoading] = useState(false)
