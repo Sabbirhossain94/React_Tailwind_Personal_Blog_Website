@@ -8,6 +8,7 @@ import BlogsCard from "./BlogsCard";
 import TopicsCard from "./TopicsCard";
 import AboutMe from "../../layout/static/AboutMe";
 import Topics from "../../../components/layout/common/Topics";
+import { baseUrl } from "../../../helpers/url";
 
 function Home() {
     const { currentPage, setCurrentPage, totalLength, setTotalLength, resetPagination } = usePagination();
@@ -17,6 +18,8 @@ function Home() {
         topics: []
     })
     const [topics, setTopics] = useState("")
+
+    console.log(baseUrl)
 
     const fetchBlogs = useCallback(() => {
         if (topics) {
