@@ -15,6 +15,6 @@ export const deleteMultipleComments = async (commentIds) => {
     } catch (error) {
         console.error(error)
     } finally {
-        toast.success("Successfully deleted blogs!")
+        toast.success("Successfully deleted comments!")
     }
 }
