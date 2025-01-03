@@ -5,7 +5,7 @@ function Users() {
   const { loading, users } = useAllProfiles()
 
   return (
-    <div className="relative border border-zinc-300 dark:border-zinc-700 mt-12 overflow-y-auto">
+    <div className="relative border border-zinc-300 dark:border-zinc-700 mt-16 overflow-y-auto">
       <TableData
         loading={loading}
         users={users}

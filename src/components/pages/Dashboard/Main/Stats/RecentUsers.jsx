@@ -20,24 +20,27 @@ function RecentUsers({ users }) {
             </div>
             <div>
                 <ul className='space-y-6'>
-                    <li className='flex  justify-between border dark:text-gray-400 py-2 px-4 font-medium bg-gray-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700'>
-                        <div><p>User</p></div>
-                        <div><p>Joined</p></div>
+                    <li className='flex justify-between border dark:text-gray-400 py-2 px-4 font-medium bg-gray-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700'>
+                        <div className='hidden sm:block'><p>User</p></div>
+                        <div className='block sm:hidden'><p>User Details</p></div>
+                        <div className='hidden sm:block'><p>Joined</p></div>
                     </li>
                     {users?.all?.length > 0 ? users?.all?.slice(0, 5).map((user, index) => (
                         <li key={index} className={`${index === users?.all?.slice(0, 5).length - 1 ? 'border-none' : 'border-b'} border-zinc-300 dark:border-zinc-700 pb-4`}>
-                            <div className='flex justify-between'>
-                                <div className='flex flex-col gap-4'>
-                                    <div className='flex gap-4'>
-                                        <img src={user.avatar_url} alt="avatar" className='h-12 w-12 object-cover border border-blue-500 dark:border-teal-500 rounded-full' />
-                                        <div>
-                                            <p className='font-semibold dark:text-gray-400'>{user.username}</p>
-                                            <p className='text-sm text-gray-700 dark:text-gray-500'>{user.email}</p>
-                                        </div>
+                            <div className='flex flex-col sm:flex-row sm:justify-between'>
+                                <div className='flex gap-4'>
+                                    <img src={user.avatar_url} alt="avatar" className='h-12 w-12 object-cover border border-blue-500 dark:border-teal-500 rounded-full' />
+                                    <div>
+                                        <p className='font-semibold dark:text-gray-400'>{user.username}</p>
+                                        <p className='text-sm text-gray-700 dark:text-gray-500 break-words'>{user.email}</p>
                                     </div>
                                 </div>
-                                <div className='flex items-center text-sm text-gray-700 dark:text-gray-500'>
+                                <div className='hidden sm:flex items-center text-sm text-gray-700 dark:text-gray-500'>
                                     <p>{moment(user.created_at).format("MMM D, YYYY")}</p>
+                                </div>
+                                <div className='flex ml-16 sm:hidden items-center text-sm text-gray-700 dark:text-gray-500'>
+                                    <p className='font-bold'>Joined:</p>
+                                    <p className='ml-2'>{moment(user.created_at).format("MMM D, YYYY")}</p>
                                 </div>
                             </div>
                         </li>
