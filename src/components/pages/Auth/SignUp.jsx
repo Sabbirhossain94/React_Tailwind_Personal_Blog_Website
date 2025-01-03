@@ -27,7 +27,7 @@ function SignUp() {
                     <h2 className="text-center text-2xl font-bold tracking-tight dark:text-gray-300 text-slate-900">
                         Sign Up
                     </h2>
-                    <p className="text-center mt-4">Already have an account? <Link to='/signin'><span className="text-blue-500 underline">Sign in</span></Link></p>
+                    <p className="text-center dark:text-gray-400 mt-4">Already have an account? <Link to='/signin'><span className="text-blue-500 dark:text-teal-500 underline">Sign in</span></Link></p>
                     <div className="mt-4 px-2">
                         <form className="space-y-6"
                             onSubmit={handleSignup}
