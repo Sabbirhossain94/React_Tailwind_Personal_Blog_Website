@@ -19,8 +19,6 @@ function Home() {
     })
     const [topics, setTopics] = useState("")
 
-    console.log(baseUrl)
-
     const fetchBlogs = useCallback(() => {
         if (topics) {
             fetchBlogsByTopic(
