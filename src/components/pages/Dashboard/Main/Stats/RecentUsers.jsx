@@ -2,6 +2,8 @@ import React from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { FaInbox } from "react-icons/fa";
+import { AiOutlineUser } from "react-icons/ai";
+
 
 function RecentUsers({ users }) {
     return (
@@ -29,7 +31,9 @@ function RecentUsers({ users }) {
                         <li key={index} className={`${index === users?.all?.slice(0, 5).length - 1 ? 'border-none' : 'border-b'} border-zinc-300 dark:border-zinc-700 pb-4`}>
                             <div className='flex flex-col sm:flex-row sm:justify-between'>
                                 <div className='flex gap-4'>
-                                    <img src={user.avatar_url} alt="avatar" className='h-12 w-12 object-cover border border-blue-500 dark:border-teal-500 rounded-full' />
+                                    {user?.avatar_url ? <img src={user.avatar_url} alt="avatar" className='h-12 w-12 object-cover border border-blue-500 dark:border-teal-500 rounded-full' /> :
+                                        <AiOutlineUser className='w-12 h-12 border-2 border-zinc-300 dark:border-zinc-700 dark:text-gray-400 rounded-full' />
+                                    }
                                     <div>
                                         <p className='font-semibold dark:text-gray-400'>{user.username}</p>
                                         <p className='text-sm text-gray-700 dark:text-gray-500 break-words'>{user.email}</p>

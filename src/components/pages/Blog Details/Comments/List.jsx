@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { CommentSkeleton } from '../../../layout/skeleton'
-// import { FaUserCircle } from "react-icons/fa";
 import { MdOutlineAccessTime } from "react-icons/md";
 import { SlLike } from "react-icons/sl";
 import moment from 'moment';
@@ -42,7 +41,7 @@ function List({ loading, isLiking, createComment, setCreateComment, allComments,
                                 <li key={index} className='flex flex-row py-6 border-b border-zinc-300 dark:border-zinc-700'>
                                     <div className='w-full flex flex-col sm:flex-row gap-1 xl:gap-2'>
                                         <div className='w-[60px] flex items-start xl:justify-center'>
-                                            {comment.avatar_url ? <img src={comment.avatar_url} alt='user' className='w-12 h-12 rounded-full object-cover ring-2 ring-blue-500 dark:ring-teal-500' /> : <AiOutlineUser className='w-10 border-2 border-zinc-300 rounded-full h-10 dark:border-zinc-700 dark:text-zinc-500' />}
+                                            {comment.avatar_url ? <img src={comment.avatar_url} alt='user' className='w-12 h-12 rounded-full object-cover ring-2 ring-blue-500 dark:ring-teal-500' /> : <AiOutlineUser className='w-12 border-2 border-zinc-300 rounded-full h-12 dark:border-zinc-700 dark:text-zinc-500' />}
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <div className='inline-flex items-center gap-2'>

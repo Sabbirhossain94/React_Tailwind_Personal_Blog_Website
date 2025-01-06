@@ -1,5 +1,6 @@
 import { UsersTableSkeleton } from '../../../layout/skeleton'
 import moment from 'moment'
+import { AiOutlineUser } from "react-icons/ai";
 
 function TableData({ loading, users }) {
     return (
@@ -37,7 +38,9 @@ function TableData({ loading, users }) {
                                 {user.username}
                             </td>
                             <td className="px-6 py-4">
-                                <img src={user.avatar_url} alt='avatar' className='h-12 w-12 rounded-full border border-blue-500 dark:border-teal-500' />
+                                {user?.avatar_url ? <img src={user.avatar_url} alt='avatar' className='h-12 w-12 rounded-full border border-blue-500 dark:border-teal-500' /> :
+                                    <AiOutlineUser className='w-12 h-12 border-2 border-zinc-300 dark:border-zinc-700 dark:text-gray-400 rounded-full' />
+                                }
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                                 {user.email}
@@ -46,7 +49,7 @@ function TableData({ loading, users }) {
                                 {moment(user.created_at).format("MMMM DD, YYYY")}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                                {moment(user.updated_at).format("MMMM DD, YYYY")}
+                                {user.updated_at && moment(user.updated_at).format("MMMM DD, YYYY")}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                                 {user.role === "admin" ? <span className={`px-2 py-1 bg-green-100 text-green-500 dark:bg-teal-400/20 dark:text-teal-500`}>{user.role}</span> :
