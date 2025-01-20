@@ -1,17 +1,12 @@
 {
-  "name": "react-hooks-practice",
-  "homepage": "https://blog.sabbirontheweb.com",
+  "name": "blog-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@supabase/supabase-js": "^2.46.2",
     "@tailwindcss/line-clamp": "^0.4.4",
-    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "dompurify": "^3.1.7",
-    "flowbite-react": "^0.10.2",
     "framer-motion": "^9.0.2",
     "moment": "^2.29.4",
     "react": "^18.2.0",
@@ -20,9 +15,7 @@
     "react-icons": "^4.7.1",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.4.1",
-    "react-scripts": "^5.0.1",
-    "react-transition-group": "^4.4.5",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -49,8 +42,6 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.12",
-    "postcss": "^8.4.17",
     "tailwindcss": "^3.1.8"
   }
 }
