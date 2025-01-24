@@ -32,7 +32,7 @@ function PostsTable({ loading, handleCheckboxChange, handleSelectAll, blogs, sel
                     <th scope="col" className="px-6 py-4 text-[12px] whitespace-nowrap">
                         {loading ? <div className="h-4 animate-pulse bg-gray-300 rounded-full dark:bg-gray-700 w-44"></div> : 'Updated at'}
                     </th>
-                    <th scope="col" className="px-6 py-4 text-[12px] whitespace-nowrap">
+                    <th scope="col" className="px-6 py-4 text-[12px] text-center whitespace-nowrap">
                         {loading ? <div className="h-4 animate-pulse bg-gray-300 rounded-full dark:bg-gray-700 w-44"></div> : 'Action'}
                     </th>
                 </tr>
@@ -67,7 +67,13 @@ function PostsTable({ loading, handleCheckboxChange, handleSelectAll, blogs, sel
                             <td className="px-6 py-4 whitespace-nowrap">
                                 { blog.updated_at ? moment(blog.updated_at).format("MMMM D, YYYY") : ""}
                             </td>
-                            <td className="px-6 py-4 flex">
+                            <td className="px-6 py-4 flex justify-center gap-4">
+                                <Link to={`/blog/${blog.slug}`}>
+                                <button 
+                                 className="h-full cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-4 py-1 text-sm font-medium text-blue-500 dark:text-teal-500 hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 sm:w-auto">
+                                    View
+                                </button>
+                                </Link>
                                 <button onClick={() => {
                                     setIsOpen(true);
                                     setSingleBlogId(blog.id)
@@ -78,7 +84,7 @@ function PostsTable({ loading, handleCheckboxChange, handleSelectAll, blogs, sel
                                 <Link
                                     to={`/dashboard/blog/${blog.slug}/update`}
                                 >
-                                    <button className="h-full ml-4 cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-4 py-1 text-sm font-medium text-blue-500 dark:text-teal-500 hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 sm:w-auto">
+                                    <button className="h-full cursor-pointer overflow-hidden inline-flex items-center justify-center border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-4 py-1 text-sm font-medium text-blue-500 dark:text-teal-500 hover:bg-gray-200 dark:hover:bg-zinc-700 hover:text-blue-700 sm:w-auto">
                                         Edit
                                     </button>
                                 </Link>

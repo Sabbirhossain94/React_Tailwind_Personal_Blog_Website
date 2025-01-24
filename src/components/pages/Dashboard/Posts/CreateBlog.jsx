@@ -182,7 +182,7 @@ export default function CreateBlog() {
                       value={blog.content}
                       onChange={handleEditorChange}
                       modules={modules}
-                      theme="snow"
+                     
                     />
                   </div>
                 </div>

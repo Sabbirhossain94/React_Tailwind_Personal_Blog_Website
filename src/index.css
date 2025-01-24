@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ql-snow .ql-editor pre.ql-syntax {
+    background-color: #273447;
+    color: #e8e8f1;
+    overflow: visible;
+}

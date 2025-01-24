@@ -38,7 +38,7 @@ function TableData({ loading, users }) {
                                 {user.username}
                             </td>
                             <td className="px-6 py-4">
-                                {user?.avatar_url ? <img src={user.avatar_url} alt='avatar' className='h-12 w-12 rounded-full border border-blue-500 dark:border-teal-500' /> :
+                                {user?.avatar_url ? <img src={user.avatar_url} alt='avatar' className='h-12 w-12 rounded-full border border-blue-500 dark:border-teal-500 object-center object-cover' /> :
                                     <AiOutlineUser className='w-12 h-12 border-2 border-zinc-300 dark:border-zinc-700 dark:text-gray-400 rounded-full' />
                                 }
                             </td>
